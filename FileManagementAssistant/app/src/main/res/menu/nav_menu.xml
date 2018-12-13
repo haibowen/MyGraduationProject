@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="项目"
+          app:showAsAction="ifRoom">
+        <menu>
+
+
+
+
+
+    <group android:checkableBehavior="single">
+
+
+        <item
+                android:id="@+id/nav_fist"
+                android:title="第一"
+                android:icon="@drawable/ic_menu_black_24dp">
+
+        </item>
+        <item
+                android:id="@+id/nav_second"
+                android:title="文档"
+                android:icon="@drawable/ic_menu_black_24dp">
+
+        </item>
+        <item
+                android:id="@+id/nav_third"
+                android:title="图片"
+                android:icon="@drawable/ic_menu_black_24dp">
+
+        </item>
+        <item
+                android:id="@+id/nav_fourth"
+                android:title="文字"
+                android:icon="@drawable/ic_menu_black_24dp">
+
+        </item>
+    </group>
+
+        </menu>
+
+    </item>
+
+    <item
+            app:showAsAction="ifRoom"
+            android:title="设置">
+
+        <menu>
+
+
+            <item
+                    android:id="@+id/zhuti"
+                    android:title="夜间"
+                    android:icon="@drawable/ic_menu_black_24dp">
+
+
+            </item>
+
+            <item
+                    android:id="@+id/tuichu"
+                    android:title="退出"
+                    android:icon="@drawable/ic_menu_black_24dp">
+
+
+            </item>
+        </menu>
+    </item>
+
+
+</menu>

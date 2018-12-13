@@ -1,29 +1,73 @@
-package com.example.administrator.filemanagementassistant;
+package com.example.administrator.filemanagementassistant.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+import com.example.administrator.filemanagementassistant.R;
+import com.example.administrator.filemanagementassistant.fragment.FileFragment;
+import com.example.administrator.filemanagementassistant.fragment.FindFragment;
+import com.example.administrator.filemanagementassistant.fragment.MyFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener{
 
     @BindView(R.id.btnagationbar)
     public BottomNavigationBar bottomNavigationBar;
+
+    @BindView(R.id.drawerlayout)
+    public DrawerLayout drawerLayout;
+
+    @BindView(R.id.toolbar)
+    public Toolbar toolbar;
+
+
+
     private FileFragment fileFragment;
     private FindFragment findFragment;
     private MyFragment myFragment;
     private  int lastselection=0;
 
 
+    /**
+     *
+     * <android.support.v7.widget.Toolbar
+     *             android:layout_width="match_parent"
+     *             android:layout_height="?attr/actionBarSize"
+     *             android:id="@+id/toobar"
+     *             android:background="@color/colorPrimary"
+     *             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+     *             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
+     *
+     *
+     *     </android.support.v7.widget.Toolbar>
+     * @param savedInstanceState
+     */
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        ActionBar actionBar=getSupportActionBar();
+        if (actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayShowTitleEnabled(false);
+        }
+
+
         /**
          *  setMode() 内的参数有三种模式类型：
          *  MODE_DEFAULT 自动模式：导航栏Item的个数<=3 用 MODE_FIXED 模式，否则用 MODE_SHIFTING 模式
@@ -55,6 +99,39 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         SetDefaultFragment();
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.toolbar,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+                break;
+
+            case R.id.search:
+
+                break;
+
+            case R.id.openWifi:
+
+                break;
+                default:
+                    break;
+        }
+        return true;
+    }
+
     public  void SetDefaultFragment(){
 
         FragmentManager fragmentManager=getSupportFragmentManager();
@@ -62,6 +139,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         findFragment=new FindFragment();
         fragmentTransaction.replace(R.id.tb,findFragment);
         fragmentTransaction.commit();
+
+
 
 
     }

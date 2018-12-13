@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+            android:id="@+id/openWifi"
+            android:title="打开wifi"
+            app:showAsAction="never"/>
+
+
+    <item
+            android:id="@+id/search"
+            android:title="搜索设备"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/creat"
+            android:title="创建群组"
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/discreat"
+            android:title="移除群组"
+            app:showAsAction="never"/>
+</menu>
