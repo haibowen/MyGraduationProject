@@ -1,6 +1,13 @@
 package com.example.administrator.filemanagementassistant.activity;
 
+import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.ServiceConnection;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +22,13 @@ import butterknife.ButterKnife;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.administrator.filemanagementassistant.R;
+import com.example.administrator.filemanagementassistant.bean.FileTransfer;
 import com.example.administrator.filemanagementassistant.fragment.FileFragment;
 import com.example.administrator.filemanagementassistant.fragment.FindFragment;
 import com.example.administrator.filemanagementassistant.fragment.MyFragment;
+import com.example.administrator.filemanagementassistant.service.WifiServerService;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener{
 
@@ -30,6 +41,66 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
 
+    private WifiP2pManager wifiP2pManager;
+    private WifiP2pManager.Channel channel;
+    private BroadcastReceiver broadcastReceiver;
+    private WifiServerService wifiServerService;
+    private ProgressDialog progressDialog;
+
+    private ServiceConnection serviceConnection=new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            WifiServerService.MyBinder binder= (WifiServerService.MyBinder) service;
+
+            wifiServerService=binder.getService();
+            wifiServerService.setOnprogressChangListener( progressChangListener);
+
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+            wifiServerService=null;
+           bindService();
+
+        }
+    };
+    private WifiServerService.OnprogressChangListener progressChangListener=new WifiServerService.OnprogressChangListener() {
+        @Override
+        public void onProgressChanged(final FileTransfer fileTransfer, final int progress) {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.setMessage("文件名"+new File(fileTransfer.getFilePath()).getName());
+
+                    progressDialog.setProgress(progress);
+                    progressDialog.show();
+
+
+
+                }
+            });
+        }
+
+        @Override
+        public void onTransferFinshed(final File file) {
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.cancel();
+                    if (file!=null&&file.exists()){
+
+                        openFile(file.getPath());
+                    }
+                }
+            });
+
+        }
+    };
+
 
 
     private FileFragment fileFragment;
@@ -38,20 +109,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private  int lastselection=0;
 
 
-    /**
-     *
-     * <android.support.v7.widget.Toolbar
-     *             android:layout_width="match_parent"
-     *             android:layout_height="?attr/actionBarSize"
-     *             android:id="@+id/toobar"
-     *             android:background="@color/colorPrimary"
-     *             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-     *             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
-     *
-     *
-     *     </android.support.v7.widget.Toolbar>
-     * @param savedInstanceState
-     */
 
 
     @Override
@@ -59,6 +116,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
+
+        wifiP2pManager= (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+
+        channel=wifiP2pManager.initialize(this,getMainLooper(),this);
+
         setSupportActionBar(toolbar);
         ActionBar actionBar=getSupportActionBar();
         if (actionBar!=null){
@@ -124,6 +186,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 break;
 
             case R.id.openWifi:
+
+                break;
+
+            case R.id.creat:
+
+                break;
+
+            case R.id.discreat:
 
                 break;
                 default:
