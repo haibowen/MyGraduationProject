@@ -8,24 +8,30 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.administrator.filemanagementassistant.R;
+import com.example.administrator.filemanagementassistant.adapter.MydeviceAdapter;
 import com.example.administrator.filemanagementassistant.bean.FileTransfer;
 import com.example.administrator.filemanagementassistant.broadcast.DirectBroadCastReceiver;
 import com.example.administrator.filemanagementassistant.callback.DirectActionListener;
@@ -35,10 +41,12 @@ import com.example.administrator.filemanagementassistant.fragment.MyFragment;
 import com.example.administrator.filemanagementassistant.service.WifiServerService;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener,DirectActionListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener, DirectActionListener {
 
     @BindView(R.id.btnagationbar)
     public BottomNavigationBar bottomNavigationBar;
@@ -49,19 +57,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
 
+
+
+
     private WifiP2pManager wifiP2pManager;
     private WifiP2pManager.Channel channel;
     private BroadcastReceiver broadcastReceiver;
     private WifiServerService wifiServerService;
+
+    private boolean WifiEnable=false;
+
     private ProgressDialog progressDialog;
 
-    private ServiceConnection serviceConnection=new ServiceConnection() {
+
+    private FileFragment fileFragment;
+    private FindFragment findFragment;
+    private MyFragment myFragment;
+    private int lastselection = 0;
+
+
+    private ServiceConnection serviceConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
 
-            WifiServerService.MyBinder binder= (WifiServerService.MyBinder) service;
-            wifiServerService=binder.getService();
-            wifiServerService.setOnprogressChangListener( progressChangListener);
+            WifiServerService.MyBinder binder = (WifiServerService.MyBinder) service;
+            wifiServerService = binder.getService();
+            wifiServerService.setOnprogressChangListener(progressChangListener);
 
 
         }
@@ -69,23 +90,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         @Override
         public void onServiceDisconnected(ComponentName name) {
 
-            wifiServerService=null;
-           bindService();
+            wifiServerService = null;
+            bindService();
 
         }
     };
-    private WifiServerService.OnprogressChangListener progressChangListener=new WifiServerService.OnprogressChangListener() {
+    private WifiServerService.OnprogressChangListener progressChangListener = new WifiServerService.OnprogressChangListener() {
         @Override
         public void onProgressChanged(final FileTransfer fileTransfer, final int progress) {
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    progressDialog.setMessage("文件名"+new File(fileTransfer.getFilePath()).getName());
+                    progressDialog.setMessage("文件名" + new File(fileTransfer.getFilePath()).getName());
 
                     progressDialog.setProgress(progress);
                     progressDialog.show();
-
 
 
                 }
@@ -99,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 @Override
                 public void run() {
                     progressDialog.cancel();
-                    if (file!=null&&file.exists()){
+                    if (file != null && file.exists()) {
 
                         openFile(file.getPath());
                     }
@@ -109,13 +129,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
     };
 
-    private FileFragment fileFragment;
-    private FindFragment findFragment;
-    private MyFragment myFragment;
-    private  int lastselection=0;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,13 +136,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
 
-        wifiP2pManager= (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
 
-        channel=wifiP2pManager.initialize(this,getMainLooper(),this);
-        broadcastReceiver=new DirectBroadCastReceiver(wifiP2pManager,channel, (DirectActionListener) this);
-        registerReceiver(broadcastReceiver,DirectBroadCastReceiver.getIntentFilter());
+
+        wifiP2pManager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
+
+        channel = wifiP2pManager.initialize(this, getMainLooper(), this);
+        broadcastReceiver = new DirectBroadCastReceiver(wifiP2pManager, channel, (DirectActionListener) this);
+        registerReceiver(broadcastReceiver, DirectBroadCastReceiver.getIntentFilter());
         bindService();
-        progressDialog =new ProgressDialog(this);
+        progressDialog = new ProgressDialog(this);
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -138,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
         setSupportActionBar(toolbar);
-        ActionBar actionBar=getSupportActionBar();
-        if (actionBar!=null){
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayShowTitleEnabled(false);
@@ -159,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
                 .setActiveColor("#3F51B5")//选中颜色
                 .setInActiveColor("#807d7d");//未选中
-               // .setBarBackgroundColor("#1ccbae");//导航栏颜色
+        // .setBarBackgroundColor("#1ccbae");//导航栏颜色
         /**
          *  setBackgroundStyle() 内的参数有三种样式
          *  BACKGROUND_STYLE_DEFAULT: 默认样式 如果设置的Mode为MODE_FIXED，将使用BACKGROUND_STYLE_STATIC
@@ -169,9 +184,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
          */
 
         bottomNavigationBar
-                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp,"Home"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_insert_drive_file_black_24dp,"File"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_account_circle_black_24dp,"My"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "Home"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_insert_drive_file_black_24dp, "File"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_account_circle_black_24dp, "My"))
                 .setFirstSelectedPosition(lastselection)
                 .initialise();
         SetDefaultFragment();
@@ -181,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.toolbar,menu);
+        getMenuInflater().inflate(R.menu.toolbar, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -189,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     public boolean onOptionsItemSelected(MenuItem item) {
 
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
             case android.R.id.home:
 
@@ -199,68 +214,100 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
             case R.id.search:
 
+                if (!WifiEnable){
+                    Toast.makeText(MainActivity.this,"需要打开wifi",Toast.LENGTH_SHORT).show();
+
+
+                }
+                Toast.makeText(MainActivity.this,"正在搜索设备",Toast.LENGTH_SHORT).show();
+
+                wifiP2pManager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(MainActivity.this,"成功",Toast.LENGTH_SHORT).show();
+
+                    }
+
+                    @Override
+                    public void onFailure(int reason) {
+                        Toast.makeText(MainActivity.this,"失败",Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+
                 break;
 
             case R.id.openWifi:
 
+                if (wifiP2pManager!=null&&channel!=null){
+                    startActivity(new Intent(Settings.ACTION_WEBVIEW_SETTINGS));
+                }else {
+                    Toast.makeText(MainActivity.this,"当前设备不支持Wifi Direct",Toast.LENGTH_SHORT).show();
+
+                }
+
+
                 break;
 
             case R.id.creat:
+                CreateGroup();
 
                 break;
 
             case R.id.discreat:
 
+                removeGroup();
+
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
         return true;
     }
 
     /**
-     *
      * 设置默认显示的fragment
      */
-    public  void SetDefaultFragment(){
+    public void SetDefaultFragment() {
 
-        FragmentManager fragmentManager=getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        findFragment=new FindFragment();
-        fragmentTransaction.replace(R.id.tb,findFragment);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        findFragment = new FindFragment();
+        fragmentTransaction.replace(R.id.tb, findFragment);
         fragmentTransaction.commit();
 
     }
 
     /**
+     * 底部导航栏的显示和切换
      *
-     *底部导航栏的显示和切换
      * @param position
      */
 
     @Override
     public void onTabSelected(int position) {
-        FragmentManager fragmentManager=this.getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        switch (position){
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        switch (position) {
             case 0:
 
-                findFragment=new FindFragment();
-                fragmentTransaction.replace(R.id.tb,findFragment);
+                findFragment = new FindFragment();
+                fragmentTransaction.replace(R.id.tb, findFragment);
                 break;
             case 1:
 
-                fileFragment=new FileFragment();
-                fragmentTransaction.replace(R.id.tb,fileFragment);
+                fileFragment = new FileFragment();
+                fragmentTransaction.replace(R.id.tb, fileFragment);
                 break;
             case 2:
 
-                myFragment=new MyFragment();
-                fragmentTransaction.replace(R.id.tb,myFragment);
+                myFragment = new MyFragment();
+                fragmentTransaction.replace(R.id.tb, myFragment);
                 break;
 
-                default:
-                    break;
+            default:
+                break;
         }
         fragmentTransaction.commit();
 
@@ -285,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     protected void onDestroy() {
         super.onDestroy();
 
-        if (wifiServerService!=null){
+        if (wifiServerService != null) {
 
             wifiServerService.setOnprogressChangListener(null);
             unbindService(serviceConnection);
@@ -293,14 +340,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
         unregisterReceiver(broadcastReceiver);
 
-        stopService(new Intent(this,WifiServerService.class));
+        stopService(new Intent(this, WifiServerService.class));
 
 
     }
 
     /**
-     *
      * 实现接口重写的方法
+     *
      * @param enabled
      */
 
@@ -334,88 +381,104 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
-    public void  CreateGroup(View view){
-        Toast.makeText(MainActivity.this,"正在创建群组",Toast.LENGTH_SHORT).show();
+    public void CreateGroup() {
+        Toast.makeText(MainActivity.this, "正在创建群组", Toast.LENGTH_SHORT).show();
         wifiP2pManager.createGroup(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(MainActivity.this,"创建成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "创建成功", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(int reason) {
-                Toast.makeText(MainActivity.this,"创建失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "创建失败", Toast.LENGTH_SHORT).show();
 
             }
         });
 
 
-
-
-
-    }
-    public  void  removeGroup(View view){
-        removeGroup();
-
-
     }
 
-    public  void  removeGroup(){
+    public void removeGroup() {
 
         wifiP2pManager.removeGroup(channel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                Toast.makeText(MainActivity.this,"解除成功",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "解除成功", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
             public void onFailure(int reason) {
-                Toast.makeText(MainActivity.this,"解除失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "解除失败", Toast.LENGTH_SHORT).show();
 
 
             }
         });
     }
 
-    private void  bindService(){
+    private void bindService() {
 
-        Intent intent=new Intent(MainActivity.this,WifiServerService.class);
-        bindService(intent,serviceConnection,Context.BIND_AUTO_CREATE);
+        Intent intent = new Intent(MainActivity.this, WifiServerService.class);
+        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE);
 
     }
 
 
-    public  void  openFile(String filePath){
+    public void openFile(String filePath) {
 
-        String ext=filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
+        String ext = filePath.substring(filePath.lastIndexOf('.')).toLowerCase(Locale.US);
 
 
         try {
-            MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
-            String mime=mimeTypeMap.getExtensionFromMimeType(ext.substring(1));
-            mime= TextUtils.isEmpty(mime)?"":mime;
-            Intent intent=new Intent();
+            MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+            String mime = mimeTypeMap.getExtensionFromMimeType(ext.substring(1));
+            mime = TextUtils.isEmpty(mime) ? "" : mime;
+            Intent intent = new Intent();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setAction(android.content.Intent.ACTION_VIEW);
-            intent.setDataAndType(Uri.fromFile(new File(filePath)),mime);
+            intent.setDataAndType(Uri.fromFile(new File(filePath)), mime);
             startActivity(intent);
 
-        }catch (Exception e){
-            Toast.makeText(MainActivity.this,"文件打开异常",Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(MainActivity.this, "文件打开异常", Toast.LENGTH_SHORT).show();
 
 
         }
 
 
-
-
-
-
-
     }
 
 
 
+
+
+    public static String getDeviceStatus(int deviceStatus) {
+
+        switch (deviceStatus) {
+
+            case WifiP2pDevice.AVAILABLE:
+
+                return "可用的";
+
+            case WifiP2pDevice.CONNECTED:
+
+                return "已连接";
+
+            case WifiP2pDevice.FAILED:
+
+                return "失败的";
+
+            case WifiP2pDevice.INVITED:
+                return "邀请中";
+
+            case WifiP2pDevice.UNAVAILABLE:
+                return "不可用";
+
+            default:
+                return "未知";
+        }
+
+    }
 }

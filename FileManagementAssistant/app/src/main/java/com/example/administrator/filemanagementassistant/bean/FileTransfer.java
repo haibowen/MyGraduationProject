@@ -8,6 +8,12 @@ public class FileTransfer implements Serializable {
     private Long fileLength;
     private String md5;
 
+    public FileTransfer(String path, long length) {
+
+        this.filePath=path;
+        this.fileLength=length;
+    }
+
     public String getFilePath() {
         return filePath;
     }
