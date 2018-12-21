@@ -222,43 +222,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 startActivity(intent1);
                 break;
 
-            case R.id.search:
 
-                if (!WifiEnable){
-                    Toast.makeText(MainActivity.this,"需要打开wifi",Toast.LENGTH_SHORT).show();
-
-
-                }
-                Toast.makeText(MainActivity.this,"正在搜索设备",Toast.LENGTH_SHORT).show();
-
-                wifiP2pManager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
-                    @Override
-                    public void onSuccess() {
-                        Toast.makeText(MainActivity.this,"成功",Toast.LENGTH_SHORT).show();
-
-                    }
-
-                    @Override
-                    public void onFailure(int reason) {
-                        Toast.makeText(MainActivity.this,"失败",Toast.LENGTH_SHORT).show();
-
-
-                    }
-                });
-
-                break;
-
-            case R.id.openWifi:
-
-                if (wifiP2pManager!=null&&channel!=null){
-                    startActivity(new Intent(Settings.ACTION_WEBVIEW_SETTINGS));
-                }else {
-                    Toast.makeText(MainActivity.this,"当前设备不支持Wifi Direct",Toast.LENGTH_SHORT).show();
-
-                }
-
-
-                break;
 
             case R.id.creat:
                 CreateGroup();

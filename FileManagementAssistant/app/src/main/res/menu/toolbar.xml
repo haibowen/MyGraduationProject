@@ -12,16 +12,7 @@
             android:title="接收文件"
             app:showAsAction="never"/>
 
-    <item
-            android:id="@+id/openWifi"
-            android:title="打开wifi"
-            app:showAsAction="never"/>
 
-
-    <item
-            android:id="@+id/search"
-            android:title="搜索设备"
-            app:showAsAction="never"/>
     <item
             android:id="@+id/creat"
             android:title="创建群组"

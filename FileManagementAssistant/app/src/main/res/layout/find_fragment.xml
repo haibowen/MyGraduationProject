@@ -11,27 +11,5 @@
             android:layout_height="?attr/actionBarSize">
 
     </View>
-    <include
-            layout="@layout/find_header"></include>
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="搜索设备列表"
-            android:gravity="center_horizontal"
-            android:layout_margin="3dp"/>
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#696666">
-
-    </View>
-
-
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recycler_view">
-
-    </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>
