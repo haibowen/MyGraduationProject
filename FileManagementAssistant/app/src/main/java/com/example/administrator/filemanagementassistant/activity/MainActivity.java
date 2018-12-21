@@ -224,16 +224,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
 
-            case R.id.creat:
-                CreateGroup();
 
-                break;
-
-            case R.id.discreat:
-
-                removeGroup();
-
-                break;
             default:
                 break;
         }

@@ -5,8 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
 
-
-    <android.support.v7.widget.Toolbar
+  <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:id="@+id/toolbar_receive"
@@ -15,6 +14,7 @@
             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
+
     <include
             layout="@layout/receive_header"></include>
     <TextView

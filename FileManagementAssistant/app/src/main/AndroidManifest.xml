@@ -32,6 +32,8 @@
         </activity>
         <activity android:name=".activity.ReciveActivity">
         </activity>
+        <activity android:name=".activity.ReceiveActivity">
+        </activity>
     </application>
 
 </manifest>

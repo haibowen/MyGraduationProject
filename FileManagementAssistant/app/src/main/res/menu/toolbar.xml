@@ -13,12 +13,5 @@
             app:showAsAction="never"/>
 
 
-    <item
-            android:id="@+id/creat"
-            android:title="创建群组"
-            app:showAsAction="never"/>
-    <item
-            android:id="@+id/discreat"
-            android:title="移除群组"
-            app:showAsAction="never"/>
+
 </menu>
