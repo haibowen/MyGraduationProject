@@ -212,6 +212,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
                 break;
 
+            case R.id.sendfile:
+
+                Intent intent=new Intent(MainActivity.this,SendActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.receivefile:
+                Intent intent1=new Intent(MainActivity.this,ReciveActivity.class);
+                startActivity(intent1);
+                break;
+
             case R.id.search:
 
                 if (!WifiEnable){
