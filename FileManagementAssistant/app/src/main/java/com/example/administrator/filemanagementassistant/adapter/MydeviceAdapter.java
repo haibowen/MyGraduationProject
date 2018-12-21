@@ -14,19 +14,19 @@ import com.example.administrator.filemanagementassistant.activity.MainActivity;
 import java.util.List;
 
 public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHolder> {
+    private List<WifiP2pDevice> devicesList;
 
+  static   class ViewHolder extends RecyclerView.ViewHolder{
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-
-        private TextView devicename;
-        private TextView deviceip;
-        private TextView devicestatus;
-        private CardView cardView;
+         TextView devicename;
+         TextView deviceip;
+         TextView devicestatus;
+        // CardView cardView;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView= (CardView) itemView;
+           // cardView= (CardView) itemView;
             devicename=itemView.findViewById(R.id.device_name);
             deviceip=itemView.findViewById(R.id.device_ip);
             devicestatus=itemView.findViewById(R.id.device_status);
@@ -34,7 +34,7 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
         }
     }
 
-    private List<WifiP2pDevice> devicesList;
+
     public MydeviceAdapter(List<WifiP2pDevice> devicesList1){
         this.devicesList=devicesList1;
 
@@ -46,6 +46,10 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
 
        View view= LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recyclerview_item,viewGroup,false);
 
+       ViewHolder holder=new ViewHolder(view);
+       return holder;
+
+         /**
        final ViewHolder viewHolder=new ViewHolder(view);
        viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -55,9 +59,9 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
            }
        });
 
+**/
 
-
-        return null;
+        //return null;
     }
 
     @Override

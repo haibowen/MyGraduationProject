@@ -58,13 +58,20 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
     @BindView(R.id.text_status)
     public TextView textView2;
 
+    @BindView(R.id.text_devicetarget)
+    public TextView textView3;
+    @BindView(R.id.text_addresstarget)
+    public TextView textView4;
+    @BindView(R.id.text_statustarget)
+    public TextView textView5;
+
     @BindView(R.id.bt_disconnect)
     public Button button;
 
     @BindView(R.id.bt_find)
     public Button button1;
 
-    @BindView(R.id.recycler_view)
+    @BindView(R.id.recycler_view_send)
     public RecyclerView recyclerView;
 
 
@@ -73,13 +80,12 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
     private BroadcastReceiver broadcastReceiver;
     private WifiServerService wifiServerService;
     private WifiP2pDevice wifiP2pDevice;
-    private boolean isWifiEnable=false;
+    private boolean isWifiEnable = false;
     private WifiP2pInfo wifiP2pInfo;
 
     private List<WifiP2pDevice> mdevicelist;
     private MydeviceAdapter mydeviceAdapter;
 
-    private boolean WifiEnable=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +120,7 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-
+        switch (v.getId()) {
 
 
             case R.id.bt_disconnect:
@@ -152,27 +157,26 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
         }
 
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.send_menu,menu);
+        getMenuInflater().inflate(R.menu.send_menu, menu);
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
             case android.R.id.home:
                 finish();
                 break;
 
             case R.id.search:
-                if (!isWifiEnable){
-                    AlertDialog.Builder builder=new AlertDialog.Builder(SendActivity.this);
+                if (!isWifiEnable) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(SendActivity.this);
                     builder.setMessage("wifi还没有打开,请打开wifi");
                     builder.setCancelable(false);
                     builder.setPositiveButton("打开", new DialogInterface.OnClickListener() {
@@ -187,18 +191,18 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
                     return true;
 
                 }
-                Toast.makeText(SendActivity.this,"正在搜索附近的设备",Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendActivity.this, "正在搜索附近的设备", Toast.LENGTH_SHORT).show();
 
                 wifiP2pManager.discoverPeers(channel, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(SendActivity.this,"成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendActivity.this, "成功", Toast.LENGTH_SHORT).show();
 
                     }
 
                     @Override
                     public void onFailure(int reason) {
-                        Toast.makeText(SendActivity.this,"失败",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SendActivity.this, "失败", Toast.LENGTH_SHORT).show();
 
 
                     }
@@ -244,11 +248,11 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
     public void connect() {
 
-        WifiP2pConfig config=new WifiP2pConfig();
-        if (config.deviceAddress!=null&&mdevicelist!=null){
-            config.deviceAddress=wifiP2pDevice.deviceAddress;
-            config.wps.setup= WpsInfo.PBC;
-            Toast.makeText(this,"正在连接"+wifiP2pDevice.deviceName,Toast.LENGTH_SHORT).show();
+        WifiP2pConfig config = new WifiP2pConfig();
+        if (config.deviceAddress != null && mdevicelist != null) {
+            config.deviceAddress = wifiP2pDevice.deviceAddress;
+            config.wps.setup = WpsInfo.PBC;
+            Toast.makeText(this, "正在连接" + wifiP2pDevice.deviceName, Toast.LENGTH_SHORT).show();
             wifiP2pManager.connect(channel, config, new WifiP2pManager.ActionListener() {
                 @Override
                 public void onSuccess() {
@@ -257,7 +261,7 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
                 @Override
                 public void onFailure(int reason) {
-                    Toast.makeText(SendActivity.this,"连接失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SendActivity.this, "连接失败", Toast.LENGTH_SHORT).show();
 
 
                 }
@@ -265,9 +269,9 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
         }
     }
 
-    private String getPath(Context context,Uri uri){
+    private String getPath(Context context, Uri uri) {
 
-        if ("context".equalsIgnoreCase(uri.getScheme())){
+        if ("context".equalsIgnoreCase(uri.getScheme())) {
 
             Cursor cursor = context.getContentResolver().query(uri, new String[]{"_data"}, null, null, null);
             if (cursor != null) {
@@ -286,33 +290,59 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
     }
 
     /**
-     *
      * Directionlistener接口中的回调方法的实现
+     *
      * @param enabled
      */
 
     @Override
     public void wifiP2pEnabled(boolean enabled) {
-        isWifiEnable=enabled;
+        isWifiEnable = enabled;
 
     }
 
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
 
+
+        mdevicelist.clear();
+        mydeviceAdapter.notifyDataSetChanged();
+        button.setEnabled(true);
+        button1.setEnabled(true);
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (wifiP2pDevice != null) {
+
+            textView3.setText("设备名称:" + wifiP2pDevice.deviceName);
+            textView4.setText("设备地址:" + wifiP2pDevice.deviceAddress);
+            textView5.setText("设备状态:" + stringBuilder.append(wifiP2pInfo.isGroupOwner ? "是群主" : "非群主"));
+        }
+
+        if (wifiP2pInfo.groupFormed && !wifiP2pInfo.isGroupOwner) {
+            this.wifiP2pInfo = wifiP2pInfo;
+        }
+
     }
 
     @Override
     public void onDisconnection() {
+        button1.setEnabled(false);
+        button.setEnabled(false);
+        Toast.makeText(SendActivity.this, "已断开连接", Toast.LENGTH_SHORT).show();
+
+        mdevicelist.clear();
+        mydeviceAdapter.notifyDataSetChanged();
+        textView2.setText(null);
+        this.wifiP2pInfo = null;
 
     }
 
     @Override
     public void onSelfDeviceAvailable(WifiP2pDevice wifiP2pDevice) {
 
-        textView.setText(wifiP2pDevice.deviceName);
-        textView1.setText(wifiP2pDevice.deviceAddress);
-        textView2.setText(getDeviceStatus(wifiP2pDevice.status));
+        textView.setText("设备名称:" + "  " + wifiP2pDevice.deviceName);
+        textView1.setText("设备地址:" + "  " + wifiP2pDevice.deviceAddress);
+        textView2.setText("设备状态:" + "  " + getDeviceStatus(wifiP2pDevice.status));
 
     }
 
@@ -320,10 +350,11 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
     public void onPeersAvailable(Collection<WifiP2pDevice> wifiP2pDeviceList) {
 
 
-        Log.e("01010", "onPeersAvailable: "+wifiP2pDeviceList.toString() );
+        Log.e("01010", "onPeersAvailable: " + wifiP2pDeviceList.toString());
 
         this.mdevicelist.clear();
-        this.mdevicelist.addAll(mdevicelist);
+        this.mdevicelist.addAll(wifiP2pDeviceList);
+        Log.e("77777", "onPeersAvailable: "+mdevicelist.toString() );
         mydeviceAdapter.notifyDataSetChanged();
     }
 
@@ -332,5 +363,26 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
     }
 
+    public static String getDeviceStatus(int deviceStatus) {
+        switch (deviceStatus) {
+            case WifiP2pDevice.AVAILABLE:
+                return "可用";
+            case WifiP2pDevice.INVITED:
+                return "邀请中";
+            case WifiP2pDevice.CONNECTED:
+                return "已连接";
+            case WifiP2pDevice.FAILED:
+                return "失败的";
+            case WifiP2pDevice.UNAVAILABLE:
+                return "不可用";
+            default:
+                return "未知";
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
 }
