@@ -9,14 +9,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.activity.MainActivity;
+import com.example.administrator.filemanagementassistant.activity.SendActivity;
 
 import java.util.List;
 
 public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHolder> {
     private List<WifiP2pDevice> devicesList;
     private Context mContext;
+    private SendActivity senContext;
 
   static   class ViewHolder extends RecyclerView.ViewHolder{
 
@@ -37,8 +40,9 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
     }
 
 
-    public MydeviceAdapter(List<WifiP2pDevice> devicesList1){
+    public MydeviceAdapter(List<WifiP2pDevice> devicesList1,SendActivity asenContext){
         this.devicesList=devicesList1;
+        this.senContext=asenContext;
 
 
     }
@@ -51,6 +55,18 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
       }
        View view= LayoutInflater.from(mContext).inflate(R.layout.recyclerview_item,viewGroup,false);
 
+
+      final  ViewHolder viewHolder=new ViewHolder(view);
+      viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              int postion=viewHolder.getAdapterPosition();
+              //Toast.makeText(mContext, "正在连接"+devicesList.get(postion).deviceName, Toast.LENGTH_SHORT).show();
+              senContext.connect();
+
+          }
+      });
+
        return new ViewHolder(view);
 
 
@@ -59,9 +75,9 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
-        viewHolder.devicename.setText(devicesList.get(i).deviceName);
-        viewHolder.deviceip.setText(devicesList.get(i).deviceAddress);
-        viewHolder.devicestatus.setText(MainActivity.getDeviceStatus(devicesList.get(i).status));
+        viewHolder.devicename.setText("设备名称:"+"  "+devicesList.get(i).deviceName);
+        viewHolder.deviceip.setText("设备地址:"+"  "+devicesList.get(i).deviceAddress);
+        viewHolder.devicestatus.setText("设备状态:"+"  "+MainActivity.getDeviceStatus(devicesList.get(i).status));
 
     }
 

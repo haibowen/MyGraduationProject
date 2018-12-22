@@ -111,7 +111,7 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
         button1.setOnClickListener(this);
 
         mdevicelist = new ArrayList<>();
-        mydeviceAdapter = new MydeviceAdapter(mdevicelist);
+        mydeviceAdapter = new MydeviceAdapter(mdevicelist,this);
         recyclerView.setAdapter(mydeviceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -246,7 +246,7 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
     }
 
 
-    public void connect() {
+    public  void connect() {
 
         WifiP2pConfig config = new WifiP2pConfig();
         if (config.deviceAddress != null && mdevicelist != null) {
