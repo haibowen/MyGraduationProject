@@ -10,7 +10,22 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
+
     </View>
+    <com.youth.banner.Banner
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:id="@+id/banner"/>
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:id="@+id/recycler_2">
+
+    </android.support.v7.widget.RecyclerView>
 
 
 
