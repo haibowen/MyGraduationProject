@@ -1,12 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <CalendarView
+<android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:fab="http://schemas.android.com/tools"
+>
+
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recycler_file">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/actionBarSize">
+            android:id="@+id/bt_menu"
+            android:layout_marginBottom="@dimen/bottom_navigation_height"
 
-    </CalendarView>
+            android:layout_gravity="bottom|end"
+            android:layout_marginLeft="400dp"
+            app:fab_labelStyle="@style/menu_labels_style"
 
-</LinearLayout>
+            app:fab_labelsPosition="left"
+
+
+    >
+        <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_image"
+                app:fab_size="mini"
+                app:fab_icon="@drawable/ic_image_black_24dp"
+                app:fab_title="图片"
+
+
+        />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_file"
+                app:fab_icon="@drawable/ic_insert_drive_file_black_24dp"
+                app:fab_size="mini"
+                app:fab_title="文件"
+
+
+        />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_video"
+
+                app:fab_title="视频"
+                app:fab_icon="@drawable/ic_slow_motion_video_black_24dp"
+                app:fab_size="mini"
+        />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_audio"
+                app:fab_size="mini"
+               app:fab_title="音频"
+                app:fab_icon="@drawable/ic_audiotrack_black_24dp"
+
+        />
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</android.support.design.widget.CoordinatorLayout>

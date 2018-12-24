@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.vincent.filepicker:MultiTypeFilePicker-1.0.8">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MultiTypeFilePicker-1.0.8.aar/4f6ad716ab3639e5c1298d567d9d1d74/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/MultiTypeFilePicker-1.0.8.aar/4f6ad716ab3639e5c1298d567d9d1d74/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.vincent.filepicker/MultiTypeFilePicker/1.0.8/d1d8d7c29f8a3fff6ea49dae935476ed44716b71/MultiTypeFilePicker-1.0.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
