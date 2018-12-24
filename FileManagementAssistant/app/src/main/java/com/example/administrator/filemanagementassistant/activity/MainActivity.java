@@ -10,6 +10,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import butterknife.BindView;
@@ -20,6 +21,11 @@ import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.fragment.FileFragment;
 import com.example.administrator.filemanagementassistant.fragment.FindFragment;
 import com.example.administrator.filemanagementassistant.fragment.MyFragment;
+import com.example.administrator.filemanagementassistant.util.MyHttpUtil;
+import okhttp3.Call;
+import okhttp3.Response;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
@@ -34,11 +40,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     private FindFragment findFragment;
     private MyFragment myFragment;
     private int lastselection = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
+
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -207,4 +215,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
 
     }
+
+
+
 }
