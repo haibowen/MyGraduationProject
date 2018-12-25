@@ -3,6 +3,7 @@ import android.content.*;
 import android.net.wifi.p2p.WifiP2pDevice;
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -13,19 +14,19 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.fragment.FileFragment;
 import com.example.administrator.filemanagementassistant.fragment.FindFragment;
 import com.example.administrator.filemanagementassistant.fragment.MyFragment;
-import com.example.administrator.filemanagementassistant.util.MyHttpUtil;
-import okhttp3.Call;
-import okhttp3.Response;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
 
@@ -36,6 +37,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     @BindView(R.id.toolbar)
     public Toolbar toolbar;
 
+    @BindView(R.id.nav_view)
+    public NavigationView navigationView;
+
+
+
+
+
+
+    private CircleImageView circleImageView;
     private FileFragment fileFragment;
     private FindFragment findFragment;
     private MyFragment myFragment;
@@ -46,6 +56,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
+
+        View nav_header=navigationView.inflateHeaderView(R.layout.nav_header);
+        circleImageView=nav_header.findViewById(R.id.image_header);
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(MainActivity.this, "我被点击了", Toast.LENGTH_SHORT).show();
+                onTabSelected(2);
+                drawerLayout.closeDrawers();
+
+                /**
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                findFragment = new FindFragment();
+                fragmentTransaction.replace(R.id.tb, myFragment);
+                fragmentTransaction.commit();
+                 **/
+
+            }
+        });
+
 
 
         setSupportActionBar(toolbar);
