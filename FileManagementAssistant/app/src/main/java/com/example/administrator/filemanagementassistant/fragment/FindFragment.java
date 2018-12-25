@@ -48,6 +48,7 @@ public class FindFragment extends Fragment {
 
     private List<String> mtitle=new ArrayList<>();
     private List<String> mimage=new ArrayList<>();
+    private List<String> mcontent=new ArrayList<>();
     private List<Historydata> mydata=new ArrayList<>();
    private String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0&month=11&day=1";
 
@@ -86,7 +87,7 @@ public class FindFragment extends Fragment {
 
         //请求数据
        // String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0"+"&"+month+"&"+day;
-        String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0&month=11&day=1";
+        String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0&month="+month+"&day="+day;
         GetInternetData(url);
 
         return mview;
@@ -127,6 +128,7 @@ public class FindFragment extends Fragment {
             //mcontent.clear();
             mtitle.clear();
             mimage.clear();
+            mcontent.clear();
             mydata.clear();
         }
         try {
@@ -144,12 +146,24 @@ public class FindFragment extends Fragment {
 
                 String image=jsonObject2.getString("pic");
 
+                String content=jsonObject2.getString("des");
+
+                if (image.equals("")){
+                   mtitle.remove(title);
+                   mimage.remove(image);
+
+                }else {
+                    mtitle.add(title);
+                    mimage.add(image);
+                    mcontent.add(content);
+
+                }
+
                 Log.e("2222", "DealWithResponseData: "+image );
 
 
                // mcontent.add(url);
-                mtitle.add(title);
-                mimage.add(image);
+
 
 
 
@@ -157,22 +171,24 @@ public class FindFragment extends Fragment {
 
 
             }
-            GetDataSource(mtitle);
+
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        GetDataSource();
 
     }
     //适配器的数据源
-    public  void GetDataSource(final List<String> mtitle){
+    public  void GetDataSource(){
 
 
         Historydata [] news=new Historydata[mtitle.size()];
         for (int i=0;i<mtitle.size();i++){
 
 
-            news[i]=new Historydata(mtitle.get(i),mimage.get(i));
+            news[i]=new Historydata(mtitle.get(i),mimage.get(i),mcontent.get(i));
 
             Log.e("888888", "GetDataSource: "+news[i].getTitle() );
             //Log.e("99999", "GetDataSource: "+news[i].getImageid() );
@@ -194,7 +210,7 @@ public class FindFragment extends Fragment {
             @Override
             public void run() {
 
-                MyHistroyAdapter myAdapter=new MyHistroyAdapter(mydata);
+                MyHistroyAdapter myAdapter=new MyHistroyAdapter(mydata,getActivity());
                 myAdapter.notifyDataSetChanged();
                 recyclerview.setAdapter(myAdapter);
             }

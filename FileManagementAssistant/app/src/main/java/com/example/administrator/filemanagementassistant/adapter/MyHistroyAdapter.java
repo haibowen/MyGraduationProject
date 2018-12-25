@@ -1,5 +1,6 @@
 package com.example.administrator.filemanagementassistant.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.administrator.filemanagementassistant.R;
+import com.example.administrator.filemanagementassistant.activity.MainActivity;
 import com.example.administrator.filemanagementassistant.bean.Historydata;
 
 import java.util.List;
@@ -23,9 +25,10 @@ public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.View
     private Context context;
     private List<Historydata> mlists;
 
-    public  MyHistroyAdapter(List<Historydata> lists){
+    public  MyHistroyAdapter(List<Historydata> lists,Context mcontext){
 
         mlists=lists;
+        context=mcontext;
     }
 
     static class  ViewHolder extends  RecyclerView.ViewHolder{
@@ -53,6 +56,17 @@ public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.View
         }
         View view= LayoutInflater.from(context).inflate(R.layout.recycler_history,viewGroup,false);
         final  ViewHolder holder=new ViewHolder(view);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int postion=holder.getAdapterPosition();
+                Historydata historydata=mlists.get(postion);
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setMessage(historydata.getContent());
+                builder.create().show();
+
+            }
+        });
 
         return holder;
 
