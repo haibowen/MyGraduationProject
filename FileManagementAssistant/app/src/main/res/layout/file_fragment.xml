@@ -5,13 +5,11 @@
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:fab="http://schemas.android.com/tools"
 >
-
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/recycler_file">
-
-    </android.support.v7.widget.RecyclerView>
+            android:id="@+id/recycler_file"
+            android:layout_marginBottom="@dimen/bottom_navigation_height"/>
 
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -62,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_audio"
                 app:fab_size="mini"
-               app:fab_title="音频"
+                app:fab_title="音频"
                 app:fab_icon="@drawable/ic_audiotrack_black_24dp"
 
         />
