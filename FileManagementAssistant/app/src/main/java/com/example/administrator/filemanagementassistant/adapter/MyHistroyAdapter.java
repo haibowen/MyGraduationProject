@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bumptech.glide.Glide;
@@ -62,8 +63,11 @@ public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.View
                 int postion=holder.getAdapterPosition();
                 Historydata historydata=mlists.get(postion);
                 AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setTitle("历史上的今天");
                 builder.setMessage(historydata.getContent());
                 builder.create().show();
+
+
 
             }
         });

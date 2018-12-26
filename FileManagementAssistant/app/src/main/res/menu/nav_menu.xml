@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:title="项目"
+    <item android:title="文件类型"
           app:showAsAction="ifRoom">
         <menu>
 
@@ -14,26 +14,26 @@
 
         <item
                 android:id="@+id/nav_fist"
-                android:title="第一"
-                android:icon="@drawable/ic_menu_black_24dp">
+                android:title="相册"
+                android:icon="@drawable/ic_image_black_24dp">
 
         </item>
         <item
                 android:id="@+id/nav_second"
                 android:title="文档"
-                android:icon="@drawable/ic_menu_black_24dp">
+                android:icon="@drawable/ic_insert_drive_file_black_24dp">
 
         </item>
         <item
                 android:id="@+id/nav_third"
-                android:title="图片"
-                android:icon="@drawable/ic_menu_black_24dp">
+                android:title="声音"
+                android:icon="@drawable/ic_audiotrack_black_24dp">
 
         </item>
         <item
                 android:id="@+id/nav_fourth"
-                android:title="文字"
-                android:icon="@drawable/ic_menu_black_24dp">
+                android:title="视频"
+                android:icon="@drawable/ic_video_library_black_24dp">
 
         </item>
     </group>
@@ -52,7 +52,7 @@
             <item
                     android:id="@+id/zhuti"
                     android:title="夜间"
-                    android:icon="@drawable/ic_menu_black_24dp">
+                    android:icon="@drawable/ic_assistant_black_24dp">
 
 
             </item>
@@ -60,7 +60,7 @@
             <item
                     android:id="@+id/tuichu"
                     android:title="退出"
-                    android:icon="@drawable/ic_menu_black_24dp">
+                    android:icon="@drawable/ic_power_settings_new_black_24dp">
 
 
             </item>

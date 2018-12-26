@@ -1,8 +1,11 @@
 package com.example.administrator.filemanagementassistant.activity;
 import android.content.*;
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.wifi.p2p.WifiP2pDevice;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +13,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -25,7 +29,15 @@ import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.fragment.FileFragment;
 import com.example.administrator.filemanagementassistant.fragment.FindFragment;
 import com.example.administrator.filemanagementassistant.fragment.MyFragment;
+import com.vincent.filepicker.Constant;
+import com.vincent.filepicker.activity.AudioPickActivity;
+import com.vincent.filepicker.activity.ImagePickActivity;
+import com.vincent.filepicker.activity.NormalFilePickActivity;
+import com.vincent.filepicker.activity.VideoPickActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static com.vincent.filepicker.activity.AudioPickActivity.IS_NEED_RECORDER;
+import static com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA;
 
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationBar.OnTabSelectedListener {
@@ -45,20 +57,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
 
 
+
+
+
+
+
     private CircleImageView circleImageView;
     private FileFragment fileFragment;
     private FindFragment findFragment;
     private MyFragment myFragment;
     private int lastselection = 0;
+    private int mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //夜间模式的设置
+        mode=getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
 
-        View nav_header=navigationView.inflateHeaderView(R.layout.nav_header);
-        circleImageView=nav_header.findViewById(R.id.image_header);
+        //头像更换跳转页面
+
+        View nav_header=navigationView.inflateHeaderView(R.layout.myfragment_header);
+        circleImageView=nav_header.findViewById(R.id.image_header_myfragment);
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,17 +88,71 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 onTabSelected(2);
                 drawerLayout.closeDrawers();
 
-                /**
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                findFragment = new FindFragment();
-                fragmentTransaction.replace(R.id.tb, myFragment);
-                fragmentTransaction.commit();
-                 **/
 
             }
         });
+        //侧滑菜单的点击事件
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_fist:
+                        Intent intent1 = new Intent(MainActivity.this, ImagePickActivity.class);
+                        intent1.putExtra(IS_NEED_CAMERA, true);
+                        intent1.putExtra(Constant.MAX_NUMBER, 9);
+                        startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE);
 
+                        break;
+
+                    case R.id.nav_second:
+                        Intent intent4 = new Intent(MainActivity.this, NormalFilePickActivity.class);
+                        intent4.putExtra(Constant.MAX_NUMBER, 9);
+                        intent4.putExtra(NormalFilePickActivity.SUFFIX, new String[]{"xlsx", "xls", "doc", "docx", "ppt", "pptx", "pdf"});
+                        startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
+
+
+                        break;
+                    case R.id.nav_third:
+                        Intent intent3 = new Intent(MainActivity.this, AudioPickActivity.class);
+                        intent3.putExtra(IS_NEED_RECORDER, true);
+                        intent3.putExtra(Constant.MAX_NUMBER, 9);
+                        startActivityForResult(intent3, Constant.REQUEST_CODE_PICK_AUDIO);
+
+
+                        break;
+                    case R.id.nav_fourth:
+                        Intent intent2 = new Intent(MainActivity.this, VideoPickActivity.class);
+                        intent2.putExtra(IS_NEED_CAMERA, true);
+                        intent2.putExtra(Constant.MAX_NUMBER, 9);
+                        startActivityForResult(intent2, Constant.REQUEST_CODE_PICK_VIDEO);
+                        break;
+
+                    case R.id.zhuti:
+                        if(mode == Configuration.UI_MODE_NIGHT_YES) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        } else if(mode == Configuration.UI_MODE_NIGHT_NO) {
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        } else {
+                            // blah blah
+                        }
+
+                        recreate();
+                        break;
+
+                    case R.id.tuichu:
+
+                        finish();
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+
+                return true;
+            }
+        });
 
 
         setSupportActionBar(toolbar);
@@ -119,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         SetDefaultFragment();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -246,7 +323,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         }
 
     }
-
-
 
 }

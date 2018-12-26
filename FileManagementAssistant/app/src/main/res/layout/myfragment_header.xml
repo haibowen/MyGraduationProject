@@ -11,18 +11,17 @@
 
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:id="@+id/image_header"
+            android:id="@+id/image_header_myfragment"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_launcher_background"/>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_1"
+            android:id="@+id/text_sign"
             android:textColor="#FFF"
             android:textSize="14sp"
-            android:text="我是一个好人"
+            android:text="个性签名"
             android:layout_centerInParent="true"
-
             android:layout_alignParentBottom="true"
     />
     <TextView
@@ -31,8 +30,8 @@
             android:id="@+id/text_2"
             android:textColor="#FFF"
             android:textSize="14sp"
-            android:text="我也是一个好人"
-            android:layout_above="@+id/text_1"
+            android:text="换个头像"
+            android:layout_above="@+id/text_sign"
             android:layout_centerInParent="true"/>
 
 
