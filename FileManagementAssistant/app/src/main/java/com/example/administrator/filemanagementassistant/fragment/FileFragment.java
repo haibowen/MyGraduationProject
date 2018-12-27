@@ -38,6 +38,7 @@ public class FileFragment extends Fragment {
     private View mview;
 
 
+
    @OnClick({R.id.bt_image,R.id.bt_audio,R.id.bt_file,R.id.bt_video})
    public void onClick(View view){
        switch (view.getId()){
@@ -77,6 +78,7 @@ public class FileFragment extends Fragment {
 
 
    }
+     
 
 
     @Nullable

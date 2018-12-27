@@ -1,28 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:fab="http://schemas.android.com/tools"
->
-    <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recycler_file"
-            android:layout_marginBottom="@dimen/bottom_navigation_height"/>
+        xmlns:android="http://schemas.android.com/apk/res/android"
+
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
+
+        tools:context=".MainActivity">
+
+    <View
+            android:layout_width="56dp
+"
+            android:layout_height="56dp"
+            android:id="@+id/btdishow"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+
+    />
 
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/bt_menu"
-            android:layout_marginBottom="@dimen/bottom_navigation_height"
-
-            android:layout_gravity="bottom|end"
-            android:layout_marginLeft="400dp"
-            app:fab_labelStyle="@style/menu_labels_style"
-
-            app:fab_labelsPosition="left"
+            android:layout_above="@+id/btdishow"
+            android:layout_alignParentRight="true"
+            fab:fab_addButtonColorNormal="@color/colorAccent"
+            fab:fab_icon="@drawable/ic_add_black_24dp"
+            fab:fab_labelStyle="@style/menu_labels_style"
+            fab:fab_labelsPosition="left"
 
 
     >
@@ -30,42 +36,37 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_image"
-                app:fab_size="mini"
-                app:fab_icon="@drawable/ic_image_black_24dp"
-                app:fab_title="图片"
-
-
-        />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bt_file"
-                app:fab_icon="@drawable/ic_insert_drive_file_black_24dp"
-                app:fab_size="mini"
-                app:fab_title="文件"
-
-
-        />
-        <com.getbase.floatingactionbutton.FloatingActionButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/bt_video"
-
-                app:fab_title="视频"
-                app:fab_icon="@drawable/ic_slow_motion_video_black_24dp"
-                app:fab_size="mini"
-        />
+                fab:fab_colorNormal="@color/colorAccent"
+                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_image_black_24dp"
+                fab:fab_title="图片分享"/>
         <com.getbase.floatingactionbutton.FloatingActionButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/bt_audio"
-                app:fab_size="mini"
-                app:fab_title="音频"
-                app:fab_icon="@drawable/ic_audiotrack_black_24dp"
-
-        />
+                fab:fab_colorNormal="@color/colorAccent"
+                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_audiotrack_black_24dp"
+                fab:fab_title="声音分享"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_file"
+                fab:fab_colorNormal="@color/colorAccent"
+                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_drafts_black_24dp"
+                fab:fab_title="文件分享"/>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/bt_video"
+                fab:fab_colorNormal="@color/colorAccent"
+                fab:fab_size="mini"
+                fab:fab_icon="@drawable/ic_video_library_black_24dp"
+                fab:fab_title="视频分享"/>
 
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
+

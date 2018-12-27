@@ -7,12 +7,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -24,6 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bumptech.glide.request.transition.BitmapTransitionFactory;
 import com.example.administrator.filemanagementassistant.R;
+import com.example.administrator.filemanagementassistant.activity.ReciveActivity;
+import com.example.administrator.filemanagementassistant.activity.SendActivity;
 import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.ImagePickActivity;
 import com.vincent.filepicker.filter.entity.ImageFile;
@@ -43,6 +48,9 @@ public class MyFragment extends Fragment {
     public CircleImageView  circleImageView;
     @BindView(R.id.text_sign)
     public TextView textView;
+
+    @BindView(R.id.nav_view)
+    public NavigationView navigationView;
 
 
     @OnClick({R.id.image_header_myfragment,R.id.text_sign})
@@ -89,17 +97,53 @@ public class MyFragment extends Fragment {
 
 
 
-    private String [] data={"设置一","设置二","设置三","设置四","设置无","设置刘"};
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mview=inflater.inflate(R.layout.my_fragment,null);
         ButterKnife.bind(this, mview);
 
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,data);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                switch (menuItem.getItemId()){
+
+                    case R.id.nav_sendfile:
+
+                        Intent intent=new Intent(getActivity(), SendActivity.class);
+                        startActivity(intent);
+
+                        break;
+                    case R.id.nav_receivefile:
+                        Intent intent1=new Intent(getActivity(), ReciveActivity.class);
+                        startActivity(intent1);
+
+                        break;
+
+                    case R.id.nav_sdcard:
+
+                        File sdDir = null;
+                        boolean sdCardExist = Environment.getExternalStorageState()
+                                .equals(android.os.Environment.MEDIA_MOUNTED);//判断sd卡是否存在
+                        if(sdCardExist)
+                        {
+                            sdDir = Environment.getExternalStorageDirectory();//获取跟目录
+                            Log.e("77777", "onNavigationItemSelected: "+sdDir );
+                        }
+
+
+                    break;
+                    case R.id.nav_overfile:
+                        break;
+                }
+
+
+
+                return true;
+            }
+        });
+
 
 
 
