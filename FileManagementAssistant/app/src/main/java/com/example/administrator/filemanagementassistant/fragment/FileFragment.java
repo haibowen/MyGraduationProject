@@ -11,10 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.administrator.filemanagementassistant.R;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.AudioPickActivity;
 import com.vincent.filepicker.activity.ImagePickActivity;
@@ -36,12 +39,26 @@ import static com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA;
 public class FileFragment extends Fragment {
 
     private View mview;
+    @BindView(R.id.display)
+    public TextView textView;
+
+    @BindView(R.id.bt_fabMenu)
+    public FloatingActionsMenu  floatingActionsMenu;
 
 
 
-   @OnClick({R.id.bt_image,R.id.bt_audio,R.id.bt_file,R.id.bt_video})
+   @OnClick({R.id.bt_fabMenu,R.id.bt_image,R.id.bt_audio,R.id.bt_file,R.id.bt_video})
    public void onClick(View view){
        switch (view.getId()){
+           case R.id.bt_fabMenu:
+               textView.setVisibility(View.VISIBLE);
+               Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
+
+
+
+
+               break;
+
            case R.id.bt_image:
                Intent intent1 = new Intent(getActivity(), ImagePickActivity.class);
                intent1.putExtra(IS_NEED_CAMERA, true);
@@ -78,7 +95,25 @@ public class FileFragment extends Fragment {
 
 
    }
-     
+
+   //悬浮按钮菜单的点击事件
+    public  void display(){
+
+       floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
+           @Override
+           public void onMenuExpanded() {
+               textView.setVisibility(View.VISIBLE);
+               Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
+
+           }
+
+           @Override
+           public void onMenuCollapsed() {
+               textView.setVisibility(View.GONE);
+
+           }
+       });
+    }
 
 
     @Nullable
@@ -86,6 +121,8 @@ public class FileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mview=inflater.inflate(R.layout.file_fragment,null);
         ButterKnife.bind(this,mview);
+
+
         return mview;
 
 
