@@ -42,7 +42,7 @@
         <item
 
                 android:id="@+id/nav_sdcard"
-                android:title="我的Sdcard"
+                android:title="存储空间"
                 android:icon="@drawable/ic_sd_card_black_24dp">
 
         </item>

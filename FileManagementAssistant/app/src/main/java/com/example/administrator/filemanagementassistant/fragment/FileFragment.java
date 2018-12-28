@@ -1,22 +1,29 @@
 package com.example.administrator.filemanagementassistant.fragment;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.example.administrator.filemanagementassistant.R;
+import com.example.administrator.filemanagementassistant.adapter.MySdcardFileAdapter;
+import com.example.administrator.filemanagementassistant.bean.SdcardFile;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.AudioPickActivity;
@@ -38,12 +45,21 @@ import static com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA;
 
 public class FileFragment extends Fragment {
 
+    private String mResult = new String();
+    private String[] mFileList = null;
+
+    private List<String> mydata=new ArrayList<String>();
+    private List<SdcardFile> myfile=new ArrayList<SdcardFile>();
     private View mview;
+
     @BindView(R.id.display)
     public TextView textView;
 
     @BindView(R.id.bt_fabMenu)
     public FloatingActionsMenu  floatingActionsMenu;
+
+    @BindView(R.id.recycler_show_file)
+    public RecyclerView recyclerView;
 
 
 
@@ -122,11 +138,89 @@ public class FileFragment extends Fragment {
         mview=inflater.inflate(R.layout.file_fragment,null);
         ButterKnife.bind(this,mview);
 
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        MySdcardFileAdapter adapter=new MySdcardFileAdapter(myfile);
+        recyclerView.setAdapter(adapter);
+
+
+        //权限申请
+
+        if(ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        }else {
+
+            search();
+        }
+
+
 
         return mview;
 
 
 
+    }
+
+
+    public void search() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                File path = Environment.getExternalStorageDirectory();
+                Log.e("333333", "onCreate: " + path);
+
+
+                File flist = new File(String.valueOf(Environment.getRootDirectory()));
+                mFileList = flist.list();
+
+                for (String str : mFileList) {
+                    mydata.add(str);
+                    mResult += str;
+                    mResult += "\n";
+
+
+                }
+                SdcardFile [] sdcardFiles=new SdcardFile[mydata.size()];
+                for (int i=0;i<mydata.size();i++){
+
+                   sdcardFiles[i]=new SdcardFile(mydata.get(i));
+                    myfile.add(sdcardFiles[i]);
+                }
+
+
+                Log.e("333333", "onCreate: " + mResult);
+
+
+            }
+        }).start();
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+
+
+        switch (requestCode){
+            case 1:
+                if(grantResults.length>0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+
+                    //处理逻辑
+                    search();
+
+                }else {
+
+                    Toast.makeText(getActivity(), "拒绝权限导致功能不可用", Toast.LENGTH_SHORT).show();
+
+                }
+                break;
+
+        }
     }
 
     @Override

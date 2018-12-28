@@ -1,18 +1,23 @@
 package com.example.administrator.filemanagementassistant.fragment;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.StatFs;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,6 +34,7 @@ import com.bumptech.glide.request.transition.BitmapTransitionFactory;
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.activity.ReciveActivity;
 import com.example.administrator.filemanagementassistant.activity.SendActivity;
+import com.example.administrator.filemanagementassistant.util.SdCardUtil;
 import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.ImagePickActivity;
 import com.vincent.filepicker.filter.entity.ImageFile;
@@ -104,6 +110,7 @@ public class MyFragment extends Fragment {
         ButterKnife.bind(this, mview);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
@@ -122,6 +129,7 @@ public class MyFragment extends Fragment {
                         break;
 
                     case R.id.nav_sdcard:
+                        /**
 
                         File sdDir = null;
                         boolean sdCardExist = Environment.getExternalStorageState()
@@ -131,6 +139,26 @@ public class MyFragment extends Fragment {
                             sdDir = Environment.getExternalStorageDirectory();//获取跟目录
                             Log.e("77777", "onNavigationItemSelected: "+sdDir );
                         }
+
+                         **/
+
+
+                        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                        String a="";
+                        if (SdCardUtil.isExternalStorageAvailable()){
+                             a="存在";
+                        }else {
+                            a="不存在";
+                        }
+                        builder.setTitle("存储空间");
+                        builder.setMessage("SD卡状态："+a+"\n"+"SD卡总空间:"+SdCardUtil.getInternalMemorySize(getActivity())+"\n"
+                        +"SD卡可用空间:"+SdCardUtil.getAvailableInternalMemorySize(getActivity())+"\n"+"手机存储空间大小:"+SdCardUtil.getExternalMemorySize(getActivity())+"\n"
+                        +"手机剩余存储空间:"+SdCardUtil.getAvailableExternalMemorySize(getActivity()));
+                        builder.create().show();
+
+
+
+
 
 
                     break;
@@ -224,5 +252,8 @@ public class MyFragment extends Fragment {
         intent.putExtra("return-data", true);
         startActivityForResult(intent, 3);
     }
+
+
+
 
 }
