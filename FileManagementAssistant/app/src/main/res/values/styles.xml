@@ -25,6 +25,10 @@
     </style>
 
 
+    <!--item的高度-->
+    <style name="ItemHeight">
+        <item name="listPreferredItemHeightSmall">3dp</item>
+    </style>
 
 
 </resources>

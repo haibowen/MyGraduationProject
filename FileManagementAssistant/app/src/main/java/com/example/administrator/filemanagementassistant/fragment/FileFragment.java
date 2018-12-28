@@ -67,8 +67,8 @@ public class FileFragment extends Fragment {
    public void onClick(View view){
        switch (view.getId()){
            case R.id.bt_fabMenu:
-               textView.setVisibility(View.VISIBLE);
-               Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
+              // textView.setVisibility(View.VISIBLE);
+              // Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
 
 
 
@@ -113,19 +113,25 @@ public class FileFragment extends Fragment {
    }
 
    //悬浮按钮菜单的点击事件
+
+    /**
+     *
+     * 有问题待修复
+     */
+
     public  void display(){
 
        floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
            @Override
            public void onMenuExpanded() {
-               textView.setVisibility(View.VISIBLE);
-               Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
+               //textView.setVisibility(View.VISIBLE);
+               //Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
 
            }
 
            @Override
            public void onMenuCollapsed() {
-               textView.setVisibility(View.GONE);
+              // textView.setVisibility(View.GONE);
 
            }
        });
