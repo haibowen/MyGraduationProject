@@ -67,6 +67,7 @@ public class FileFragment extends Fragment {
    public void onClick(View view){
        switch (view.getId()){
            case R.id.bt_fabMenu:
+               //有问题待修复
               // textView.setVisibility(View.VISIBLE);
               // Toast.makeText(getActivity(), "我被点击了", Toast.LENGTH_SHORT).show();
 
@@ -141,8 +142,21 @@ public class FileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mview=inflater.inflate(R.layout.file_fragment,null);
-        ButterKnife.bind(this,mview);
+       // mview=inflater.inflate(R.layout.file_fragment,null);
+
+        //避免ui重新绘制
+        if(mview==null){
+            mview=inflater.inflate(R.layout.file_fragment,null);
+            ButterKnife.bind(this,mview);
+        }
+        ViewGroup parent= (ViewGroup) mview.getParent();
+        if (parent!=null){
+
+            parent.removeView(mview);
+        }
+
+
+
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -162,8 +176,8 @@ public class FileFragment extends Fragment {
         }
 
 
-
         return mview;
+
 
 
 

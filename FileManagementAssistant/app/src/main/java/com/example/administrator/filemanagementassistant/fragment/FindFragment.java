@@ -56,9 +56,31 @@ public class FindFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mview = inflater.inflate(R.layout.find_fragment, null);
+        //mview = inflater.inflate(R.layout.find_fragment, null);
 
-        ButterKnife.bind(this, mview);
+
+
+        //避免ui重新绘制
+        if(mview==null){
+            mview = inflater.inflate(R.layout.find_fragment, null);
+            ButterKnife.bind(this, mview);
+            //获取系统时间
+            Calendar calendar=Calendar.getInstance();
+            int year=calendar.get(Calendar.YEAR);
+            int month=calendar.get(Calendar.MONTH)+1;
+            int day =calendar.get(Calendar.DAY_OF_MONTH);
+            textView.setText(year+"年"+month+"月"+day+"日"+"  "+"历史上的今天");
+            //请求数据
+            String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0&month="+month+"&day="+day;
+            GetInternetData(url);
+        }
+        ViewGroup parent= (ViewGroup) mview.getParent();
+        if (parent!=null){
+
+            parent.removeView(mview);
+        }
+
+
         images.add(R.drawable.first);
         images.add(R.drawable.second);
         images.add(R.drawable.third);
@@ -73,21 +95,12 @@ public class FindFragment extends Fragment {
         //recyclerview
         GridLayoutManager layoutManager=new GridLayoutManager(getActivity(),2);
         recyclerview.setLayoutManager(layoutManager);
-        //获取系统时间
-        Calendar calendar=Calendar.getInstance();
-        int year=calendar.get(Calendar.YEAR);
-        int month=calendar.get(Calendar.MONTH)+1;
-        int day =calendar.get(Calendar.DAY_OF_MONTH);
-        textView.setText(year+"年"+month+"月"+day+"日"+"  "+"历史上的今天");
-        Log.e("2222", "onCreateView: "+year );
-        Log.e("2222", "onCreateView: "+month );
-        Log.e("2222", "onCreateView: "+day );
 
 
 
-        //请求数据
-        String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0&month="+month+"&day="+day;
-        GetInternetData(url);
+
+
+
 
         return mview;
 

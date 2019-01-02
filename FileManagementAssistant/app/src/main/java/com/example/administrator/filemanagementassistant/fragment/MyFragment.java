@@ -106,8 +106,25 @@ public class MyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mview=inflater.inflate(R.layout.my_fragment,null);
-        ButterKnife.bind(this, mview);
+      //  mview=inflater.inflate(R.layout.my_fragment,null);
+
+        if (savedInstanceState!=null){
+
+            Bitmap bitmap=savedInstanceState.getParcelable("image");
+            circleImageView.setImageBitmap(bitmap);
+        }
+
+        //避免ui重新绘制
+        if(mview==null){
+            mview = inflater.inflate(R.layout.my_fragment, null);
+            ButterKnife.bind(this, mview);
+        }
+        ViewGroup parent= (ViewGroup) mview.getParent();
+        if (parent!=null){
+
+            parent.removeView(mview);
+        }
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR2)

@@ -258,17 +258,27 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         switch (position) {
             case 0:
 
-                findFragment = new FindFragment();
+                if (findFragment==null){
+                    findFragment = new FindFragment();
+                }
+
                 fragmentTransaction.replace(R.id.tb, findFragment);
                 break;
             case 1:
 
-                fileFragment = new FileFragment();
+                if (fileFragment==null){
+                    fileFragment = new FileFragment();
+                }
+
                 fragmentTransaction.replace(R.id.tb, fileFragment);
                 break;
             case 2:
 
-                myFragment = new MyFragment();
+                if (myFragment==null){
+
+                    myFragment = new MyFragment();
+                }
+
                 fragmentTransaction.replace(R.id.tb, myFragment);
                 break;
 
