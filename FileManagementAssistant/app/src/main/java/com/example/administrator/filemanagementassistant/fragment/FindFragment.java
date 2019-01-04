@@ -72,7 +72,7 @@ public class FindFragment extends Fragment {
             textView.setText(year+"年"+month+"月"+day+"日"+"  "+"历史上的今天");
             //请求数据
             String url="http://api.juheapi.com/japi/toh?key=46f212b179d15ddd8b2a28a004e8fe79&v=1.0&month="+month+"&day="+day;
-            GetInternetData(url);
+           //GetInternetData(url);
         }
         ViewGroup parent= (ViewGroup) mview.getParent();
         if (parent!=null){

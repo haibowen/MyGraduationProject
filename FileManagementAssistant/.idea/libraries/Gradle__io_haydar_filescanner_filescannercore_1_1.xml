@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: io.haydar.filescanner:filescannercore-1.1">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/filescannercore-1.1.aar/91002a12199863b5404a15289d0d9b10/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/filescannercore-1.1.aar/91002a12199863b5404a15289d0d9b10/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.haydar.filescanner/filescannercore/1.1/7bba8cfb60d6cb0727b82027f11412ea0c7a8e6a/filescannercore-1.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

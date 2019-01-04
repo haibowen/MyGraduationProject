@@ -11,12 +11,13 @@ import com.bumptech.glide.ListPreloader;
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.bean.SdcardFile;
 import com.vincent.filepicker.filter.entity.ImageFile;
+import io.haydar.filescanner.FileInfo;
 
 import java.util.List;
 
 public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapter.ViewHolder> {
 
-    private List<SdcardFile> sdcardFileslist;
+    private List<FileInfo> sdcardFileslist;
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         TextView textView;
@@ -31,7 +32,7 @@ public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapte
         }
     }
 
-    public MySdcardFileAdapter(List<SdcardFile> sdcardFileslist) {
+    public MySdcardFileAdapter(List<FileInfo> sdcardFileslist) {
         this.sdcardFileslist = sdcardFileslist;
     }
 
@@ -47,9 +48,9 @@ public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapte
     @Override
     public void onBindViewHolder(@NonNull MySdcardFileAdapter.ViewHolder viewHolder, int i) {
 
-        SdcardFile sdcardFile=sdcardFileslist.get(i);
+        FileInfo sdcardFile=sdcardFileslist.get(i);
         viewHolder.imageView.setImageResource(R.drawable.fab_bg_mini);
-        viewHolder.textView.setText(sdcardFile.getName());
+        viewHolder.textView.setText(sdcardFile.getFilePath());
     }
 
     @Override

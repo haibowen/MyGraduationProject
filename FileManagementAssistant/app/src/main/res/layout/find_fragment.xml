@@ -5,13 +5,23 @@
         android:layout_height="wrap_content"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/find_toolbar"
+            android:background="@color/colorPrimary"
+            android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
 
-    <View
+    </android.support.v7.widget.Toolbar>
+    <!--  <View
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
 
 
-    </View>
+    </View>  -->
+
+
     <com.youth.banner.Banner
             android:layout_width="match_parent"
             android:layout_height="150dp"

@@ -10,12 +10,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
@@ -34,6 +35,8 @@ import com.vincent.filepicker.filter.entity.AudioFile;
 import com.vincent.filepicker.filter.entity.ImageFile;
 import com.vincent.filepicker.filter.entity.NormalFile;
 import com.vincent.filepicker.filter.entity.VideoFile;
+import io.haydar.filescanner.FileInfo;
+import io.haydar.filescanner.FileScanner;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,12 +48,19 @@ import static com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA;
 
 public class FileFragment extends Fragment {
 
-    private String mResult = new String();
-    private String[] mFileList = null;
+    private String TAG="wenhaibo";
+    private int type;
+    private int Count;
 
-    private List<String> mydata=new ArrayList<String>();
-    private List<SdcardFile> myfile=new ArrayList<SdcardFile>();
+    private List<FileInfo> mylist=new ArrayList<>();
+
     private View mview;
+
+    @BindView(R.id.file_toolbar)
+    public Toolbar toolbar;
+
+    @BindView(R.id.text_count)
+    public TextView textViewcount;
 
     @BindView(R.id.display)
     public TextView textView;
@@ -144,10 +154,35 @@ public class FileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
        // mview=inflater.inflate(R.layout.file_fragment,null);
 
+        setHasOptionsMenu(true);
+
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            //actionBar.setDisplayHomeAsUpEnabled(true);
+
+            actionBar.setDisplayShowTitleEnabled(false);
+
+        }
+
+
+
         //避免ui重新绘制
         if(mview==null){
             mview=inflater.inflate(R.layout.file_fragment,null);
             ButterKnife.bind(this,mview);
+            //权限申请
+
+            if(ContextCompat.checkSelfPermission(getActivity(),
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+                requestPermissions(new String[]{
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+            }else {
+
+
+                fileScanner();
+            }
         }
         ViewGroup parent= (ViewGroup) mview.getParent();
         if (parent!=null){
@@ -158,23 +193,17 @@ public class FileFragment extends Fragment {
 
 
 
+
+
+
+
+
+
+
         LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        MySdcardFileAdapter adapter=new MySdcardFileAdapter(myfile);
+        MySdcardFileAdapter adapter=new MySdcardFileAdapter(mylist);
         recyclerView.setAdapter(adapter);
-
-
-        //权限申请
-
-        if(ContextCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            requestPermissions(new String[]{
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
-        }else {
-
-            search();
-        }
-
 
         return mview;
 
@@ -183,42 +212,15 @@ public class FileFragment extends Fragment {
 
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-    public void search() {
+        setHasOptionsMenu(true);
+        menu.clear();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                File path = Environment.getExternalStorageDirectory();
-                Log.e("333333", "onCreate: " + path);
-
-
-                File flist = new File(String.valueOf(Environment.getRootDirectory()));
-                mFileList = flist.list();
-
-                for (String str : mFileList) {
-                    mydata.add(str);
-                    mResult += str;
-                    mResult += "\n";
-
-
-                }
-                SdcardFile [] sdcardFiles=new SdcardFile[mydata.size()];
-                for (int i=0;i<mydata.size();i++){
-
-                   sdcardFiles[i]=new SdcardFile(mydata.get(i));
-                    myfile.add(sdcardFiles[i]);
-                }
-
-
-                Log.e("333333", "onCreate: " + mResult);
-
-
-            }
-        }).start();
-
-
+       // inflater.inflate(R.menu.toolbar,menu);
+        toolbar.inflateMenu(R.menu.toolbar);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -231,7 +233,8 @@ public class FileFragment extends Fragment {
                 if(grantResults.length>0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
 
                     //处理逻辑
-                    search();
+                    //search();
+                    fileScanner();
 
                 }else {
 
@@ -366,4 +369,72 @@ public class FileFragment extends Fragment {
 
        super.onActivityResult(requestCode, resultCode, data);
     }
+
+
+    private void fileScanner() {
+        FileScanner.getInstance(getActivity()).clear();
+        FileScanner.getInstance(getActivity()).setType(".jpg").start(new FileScanner.ScannerListener() {
+            /**
+             * 扫描开始
+             */
+            @Override
+            public void onScanBegin() {
+                Log.d(TAG, "onScanBegin: ");
+            }
+            /**
+             * 扫描结束
+             */
+            @Override
+            public void onScanEnd() {
+
+                Log.d(TAG, "onScanEnd: ");
+               // ArrayList<FileInfo> fileInfoArrayList= FileScanner.getInstance(getActivity()).getAllFiles();
+                mylist= FileScanner.getInstance(getActivity()).getAllFiles();
+
+                for (FileInfo fileInfo : mylist) {
+                    Log.d(TAG, "fileScanner: "+fileInfo.getFilePath());
+
+                }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        textViewcount.setText("该文件类型共有:"+mylist.size()+"个");
+                    }
+                });
+
+
+
+
+
+
+
+            }
+            /**
+             * 扫描进行中
+             * @param paramString 文件夹地址
+             * @param progress  扫描进度
+             */
+            @Override
+            public void onScanning(String paramString, int progress) {
+                Log.d(TAG, "onScanning: " + progress);
+            }
+            /**
+             * 扫描进行中，文件的更新
+             * @param info
+             * @param type  SCANNER_TYPE_ADD：添加；SCANNER_TYPE_DEL：删除
+             */
+            @Override
+            public void onScanningFiles(FileInfo info, int type) {
+                Log.d(TAG, "onScanningFiles: info=" + info.toString());
+            }
+        });
+
+    }
+
+
+
+
+
+
 }

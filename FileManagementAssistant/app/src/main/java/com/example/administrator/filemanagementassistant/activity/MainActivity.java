@@ -155,6 +155,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         });
 
 
+        /**
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
+         **/
 
         /**
          *  setMode() 内的参数有三种模式类型：
@@ -197,6 +199,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
 
+    /**
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -232,6 +235,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         return true;
     }
 
+    **/
+
     /**
      * 设置默认显示的fragment
      */
@@ -260,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
                 if (findFragment==null){
                     findFragment = new FindFragment();
+
                 }
 
                 fragmentTransaction.replace(R.id.tb, findFragment);

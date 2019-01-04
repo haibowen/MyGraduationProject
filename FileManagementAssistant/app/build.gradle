@@ -37,5 +37,7 @@ dependencies {
     implementation 'com.youth.banner:banner:1.4.10'
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
 
+    implementation 'io.haydar.filescanner:filescannercore:1.1'
+
 
 }
