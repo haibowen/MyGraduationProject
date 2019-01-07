@@ -3,12 +3,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,11 +40,19 @@ public class FindFragment extends Fragment {
     @BindView(R.id.banner)
     public Banner banner;
 
+    @BindView(R.id.find_toolbar)
+    public Toolbar toolbar;
+
     @BindView(R.id.recycler_history)
     public RecyclerView recyclerview;
 
     @BindView(R.id.history_data)
     public TextView textView;
+
+
+
+
+    private DrawerLayout drawerLayout;
 
     private Historydata historydata;
     private List<Integer>images=new ArrayList<>();
@@ -58,12 +69,30 @@ public class FindFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //mview = inflater.inflate(R.layout.find_fragment, null);
 
+        drawerLayout=getActivity().findViewById(R.id.drawerlayout);
+
+
+        setHasOptionsMenu(true);
+
+
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionBar.setDisplayShowTitleEnabled(false);
+
+        }
+
 
 
         //避免ui重新绘制
         if(mview==null){
             mview = inflater.inflate(R.layout.find_fragment, null);
             ButterKnife.bind(this, mview);
+
+
+
             //获取系统时间
             Calendar calendar=Calendar.getInstance();
             int year=calendar.get(Calendar.YEAR);
@@ -105,6 +134,34 @@ public class FindFragment extends Fragment {
         return mview;
 
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+
+        menu.clear();
+        //inflater.inflate(R.menu.toolbar,menu);
+
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+
+            case android.R.id.home:
+
+                drawerLayout.openDrawer(GravityCompat.START);
+
+                break;
+        }
+
+
+        return super.onOptionsItemSelected(item);
     }
 
     //请求网络数据
