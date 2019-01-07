@@ -40,8 +40,7 @@ public class FindFragment extends Fragment {
     @BindView(R.id.banner)
     public Banner banner;
 
-    @BindView(R.id.find_toolbar)
-    public Toolbar toolbar;
+   
 
     @BindView(R.id.recycler_history)
     public RecyclerView recyclerview;
@@ -75,6 +74,7 @@ public class FindFragment extends Fragment {
         setHasOptionsMenu(true);
 
 
+        /**
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionBar != null) {
@@ -83,6 +83,7 @@ public class FindFragment extends Fragment {
             actionBar.setDisplayShowTitleEnabled(false);
 
         }
+         **/
 
 
 
@@ -140,13 +141,14 @@ public class FindFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
 
-        menu.clear();
+        //menu.clear();
         //inflater.inflate(R.menu.toolbar,menu);
 
 
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -163,6 +165,7 @@ public class FindFragment extends Fragment {
 
         return super.onOptionsItemSelected(item);
     }
+    **/
 
     //请求网络数据
     public  void  GetInternetData(String url){

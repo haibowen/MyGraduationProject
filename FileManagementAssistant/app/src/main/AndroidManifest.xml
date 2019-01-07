@@ -14,11 +14,9 @@
             android:allowBackup="true"
             android:icon="@drawable/icon"
             android:label="@string/app_name"
-
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
-
         </activity>
 
         <service android:name=".service.WifiServerService">
@@ -36,6 +34,8 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".activity.FileActivity">
         </activity>
     </application>
 

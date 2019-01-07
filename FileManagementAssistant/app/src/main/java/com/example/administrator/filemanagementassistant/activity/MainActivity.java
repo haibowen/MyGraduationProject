@@ -10,10 +10,12 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -155,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         });
 
 
-        /**
+
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -164,7 +166,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-         **/
+
 
         /**
          *  setMode() 内的参数有三种模式类型：
@@ -190,7 +192,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "Home"))
-                .addItem(new BottomNavigationItem(R.drawable.ic_insert_drive_file_black_24dp, "File"))
+                //.addItem(new BottomNavigationItem(R.drawable.ic_insert_drive_file_black_24dp, "File"))
                 .addItem(new BottomNavigationItem(R.drawable.ic_account_circle_black_24dp, "My"))
                 .setFirstSelectedPosition(lastselection)
                 .initialise();
@@ -199,11 +201,25 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
 
-    /**
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.toolbar, menu);
+        getMenuInflater().inflate(R.menu.file_type_item, menu);
+
+        //MenuItem searchItem = menu.findItem(R.id.action_search);
+        //final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+       // searchView.setQueryHint("搜索文件格式...");
+        /**
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this,FileActivity.class);
+                startActivity(intent);
+            }
+        });
+         **/
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -219,15 +235,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
                 break;
 
-            case R.id.sendfile:
+            case R.id.action_search:
 
-                Intent intent=new Intent(MainActivity.this,SendActivity.class);
+                Intent intent=new Intent(MainActivity.this,FileActivity.class);
                 startActivity(intent);
+
                 break;
-            case R.id.receivefile:
-                Intent intent1=new Intent(MainActivity.this,ReciveActivity.class);
-                startActivity(intent1);
-                break;
+
 
             default:
                 break;
@@ -235,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         return true;
     }
 
-    **/
+
 
     /**
      * 设置默认显示的fragment
@@ -270,6 +284,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
                 fragmentTransaction.replace(R.id.tb, findFragment);
                 break;
+                /**
             case 1:
 
                 if (fileFragment==null){
@@ -278,7 +293,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
                 fragmentTransaction.replace(R.id.tb, fileFragment);
                 break;
-            case 2:
+                 **/
+            case 1:
 
                 if (myFragment==null){
 
