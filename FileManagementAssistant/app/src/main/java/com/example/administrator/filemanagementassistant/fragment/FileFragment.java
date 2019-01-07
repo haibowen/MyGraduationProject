@@ -400,6 +400,7 @@ public class FileFragment extends Fragment {
                 Log.d(TAG, "onScanEnd: ");
                 // ArrayList<FileInfo> fileInfoArrayList= FileScanner.getInstance(getActivity()).getAllFiles();
                 mylist = FileScanner.getInstance(getActivity()).getAllFiles();
+                Log.e(TAG, "onScanEnd: "+mylist.size());
 
                 for (FileInfo fileInfo : mylist) {
                     Log.d(TAG, "fileScanner: " + fileInfo.getFilePath());

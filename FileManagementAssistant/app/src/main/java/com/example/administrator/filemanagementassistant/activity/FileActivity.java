@@ -34,6 +34,8 @@ public class FileActivity extends AppCompatActivity {
 
     private List<FileInfo> mylist = new ArrayList<>();
 
+    private String type=".jpg";
+
 
     @BindView(R.id.file_toolbar)
     public Toolbar toolbar;
@@ -68,16 +70,14 @@ public class FileActivity extends AppCompatActivity {
         } else {
 
 
-            fileScanner();
+            //fileScanner();
+            filesearch(type);
         }
-
-        textViewcount.setText("该文件类型共有:" + mylist.size() + "个");
-
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        MySdcardFileAdapter adapter = new MySdcardFileAdapter(mylist);
-        recyclerView.setAdapter(adapter);
+
+
     }
 
 
@@ -90,7 +90,8 @@ public class FileActivity extends AppCompatActivity {
 
                     //处理逻辑
 
-                    fileScanner();
+                    //fileScanner();
+                    filesearch(type);
 
                 } else {
 
@@ -120,8 +121,15 @@ public class FileActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+               type=s;
 
-                Toast.makeText(FileActivity.this, ""+s, Toast.LENGTH_SHORT).show();
+
+               filesearch(type);
+
+
+
+
+
                 return false;
             }
 
@@ -153,9 +161,10 @@ public class FileActivity extends AppCompatActivity {
     }
 
 
-    private void fileScanner() {
+    private void filesearch(String s){
+
         FileScanner.getInstance(this).clear();
-        FileScanner.getInstance(this).setType(".mp3").start(new FileScanner.ScannerListener() {
+        FileScanner.getInstance(this).setType(s).start(new FileScanner.ScannerListener() {
             /**
              * 扫描开始
              */
@@ -173,20 +182,30 @@ public class FileActivity extends AppCompatActivity {
                 Log.d(TAG, "onScanEnd: ");
                 // ArrayList<FileInfo> fileInfoArrayList= FileScanner.getInstance(getActivity()).getAllFiles();
                 mylist = FileScanner.getInstance(FileActivity.this).getAllFiles();
+                Log.e(TAG, "onScanEnd: "+mylist.size() );
 
                 for (FileInfo fileInfo : mylist) {
                     Log.d(TAG, "fileScanner: " + fileInfo.getFilePath());
 
                 }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
 
-                /**
-                 getActivity().runOnUiThread(new Runnable() {
-                @Override public void run() {
-                textViewcount.setText("该文件类型共有:"+mylist.size()+"个");
-                }
+                        if (mylist.size()!=0){
+                            Toast.makeText(FileActivity.this, "正在搜索后缀为:"+type+"的文件,请耐心等待..", Toast.LENGTH_SHORT).show();
+                            textViewcount.setText("该文件类型共有:" + mylist.size() + "个");
+
+
+                            MySdcardFileAdapter adapter = new MySdcardFileAdapter(mylist);
+                            recyclerView.setAdapter(adapter);
+                        }else {
+                            Toast.makeText(FileActivity.this,"暂未发现该格式的文件",Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
                 });
-                 **/
-
 
             }
 
@@ -211,5 +230,8 @@ public class FileActivity extends AppCompatActivity {
             }
         });
 
+
     }
+
+
 }
