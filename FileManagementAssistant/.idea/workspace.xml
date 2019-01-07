@@ -21,9 +21,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.4/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/FileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/FileActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MySdcardFileAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MySdcardFileAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FileFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FileFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +106,7 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Groovy" value="21" />
-          <entry key="JAVA" value="10401" />
+          <entry key="JAVA" value="10417" />
           <entry key="PLAIN_TEXT" value="16" />
           <entry key="XML" value="2650" />
         </counts>
@@ -118,7 +117,7 @@
           <entry key="CLASS" value="1" />
           <entry key="Groovy" value="7" />
           <entry key="Image" value="20" />
-          <entry key="JAVA" value="103" />
+          <entry key="JAVA" value="104" />
           <entry key="XML" value="152" />
         </counts>
       </usages-collector>
@@ -160,25 +159,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-325">
-              <caret line="42" column="3" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="3" />
+            <state relative-caret-position="250">
+              <caret line="104" column="11" selection-start-line="104" selection-start-column="11" selection-end-line="104" selection-end-column="11" />
               <folding>
                 <element signature="e#7511#7795#0" expanded="true" />
                 <element signature="e#7794#7795#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_file.xml">
-          <provider editor-type-id="android-designer2" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-525">
-              <caret line="6" column="44" selection-start-line="6" selection-start-column="44" selection-end-line="6" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -215,7 +204,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MySdcardFileAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="234">
@@ -226,6 +215,15 @@
                 <element signature="e#1907#2150#0" expanded="true" />
                 <element signature="e#2149#2150#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="40" selection-start-line="40" selection-end-line="40" />
             </state>
           </provider>
         </entry>
@@ -2320,7 +2318,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_audiotrack_black_24dp.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_video_library_black_24dp.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_insert_drive_file_black_24dp.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_launch.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/util/SdCardUtil.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/recycler_item_file.xml" />
@@ -2335,7 +2332,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_header.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/file_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/find_fragment.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/file_type_item.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/ic_search_black_24dp.xml" />
@@ -2344,6 +2340,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FileFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/FileActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MySdcardFileAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java" />
       </list>
     </option>
   </component>
@@ -2657,7 +2655,7 @@
   <component name="PropertiesComponent">
     <property name="android.profiler.active" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546855002056" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1546855207904" />
     <property name="device.picker.selection" value="3df281" />
     <property name="last_opened_file_path" value="D:/AndroidTestProject/IntealideAndroidProject" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
@@ -2883,13 +2881,6 @@
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="89" selection-start-line="89" selection-end-line="89" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/nav_menu.xml">
       <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
@@ -3026,17 +3017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-325">
-          <caret line="42" column="3" selection-start-line="42" selection-start-column="3" selection-end-line="42" selection-end-column="3" />
-          <folding>
-            <element signature="e#7511#7795#0" expanded="true" />
-            <element signature="e#7794#7795#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/bean/FileTransfer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="325">
@@ -3116,6 +3096,24 @@
             <element signature="e#1587#1781#0" expanded="true" />
             <element signature="e#1907#2150#0" expanded="true" />
             <element signature="e#2149#2150#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/LaunchActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/fragment/FindFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="104" column="11" selection-start-line="104" selection-start-column="11" selection-end-line="104" selection-end-column="11" />
+          <folding>
+            <element signature="e#7511#7795#0" expanded="true" />
+            <element signature="e#7794#7795#0" expanded="true" />
           </folding>
         </state>
       </provider>
