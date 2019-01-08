@@ -122,6 +122,7 @@ public class FileActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                type=s;
+                Toast.makeText(FileActivity.this, "正在搜索后缀为:"+type+"的文件,请耐心等待..", Toast.LENGTH_SHORT).show();
 
 
                filesearch(type);
@@ -193,7 +194,7 @@ public class FileActivity extends AppCompatActivity {
                     public void run() {
 
                         if (mylist.size()!=0){
-                            Toast.makeText(FileActivity.this, "正在搜索后缀为:"+type+"的文件,请耐心等待..", Toast.LENGTH_SHORT).show();
+
                             textViewcount.setText("该文件类型共有:" + mylist.size() + "个");
 
 

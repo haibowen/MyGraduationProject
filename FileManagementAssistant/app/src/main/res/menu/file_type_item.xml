@@ -3,6 +3,14 @@
 
 
     <item
+            android:id="@+id/home"
+            android:title="home"
+            android:icon="@drawable/ic_home_black_24dp"
+            app:showAsAction="always"
+
+
+    />
+    <item
             android:id="@+id/action_search"
             android:title="搜索文件"
            android:icon="@drawable/ic_search_black_24dp"
@@ -10,6 +18,16 @@
     <item
             android:id="@+id/settings"
             android:title="设置"
+
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/exit"
+            android:title="exit"
+
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/sort"
+            android:title="sort"
 
             app:showAsAction="never"/>
 

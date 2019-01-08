@@ -62,7 +62,7 @@ public class LaunchActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(LaunchActivity.this,MainActivity.class));
+                startActivity(new Intent(LaunchActivity.this,TaskActivity.class));
                 LaunchActivity.this.finish();
 
             }

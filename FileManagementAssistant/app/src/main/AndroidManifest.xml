@@ -37,6 +37,8 @@
         </activity>
         <activity android:name=".activity.FileActivity">
         </activity>
+        <activity android:name=".activity.TaskActivity">
+        </activity>
     </application>
 
 </manifest>
