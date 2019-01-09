@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">文件管家</string>
+    <string name="download">DOWNLOAD</string>
+    <string name="dcim">DCIM</string>
+    <string name="move">MOVE</string>
+    <string name="music">MUSIC</string>
 </resources>

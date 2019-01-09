@@ -39,5 +39,7 @@ dependencies {
 
     implementation 'io.haydar.filescanner:filescannercore:1.1'
 
+    implementation 'pub.devrel:easypermissions:2.0.0'
+
 
 }

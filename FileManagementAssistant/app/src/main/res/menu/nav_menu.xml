@@ -41,6 +41,46 @@
         </menu>
 
     </item>
+    <item android:title="常用目录"
+          app:showAsAction="ifRoom">
+        <menu>
+
+
+
+
+
+            <group android:checkableBehavior="single">
+
+
+                <item
+                        android:id="@+id/nav_download"
+                        android:title="下载"
+                        android:icon="@drawable/ic_folder_black_24dp">
+
+                </item>
+                <item
+                        android:id="@+id/nav_DCIM"
+                        android:title="图片"
+                        android:icon="@drawable/ic_folder_black_24dp">
+
+                </item>
+                <item
+                        android:id="@+id/nav_move"
+                        android:title="电影"
+                        android:icon="@drawable/ic_folder_black_24dp">
+
+                </item>
+                <item
+                        android:id="@+id/nav_MUSiC"
+                        android:title="音乐"
+                        android:icon="@drawable/ic_folder_black_24dp">
+
+                </item>
+            </group>
+
+        </menu>
+
+    </item>
 
     <item
             app:showAsAction="ifRoom"

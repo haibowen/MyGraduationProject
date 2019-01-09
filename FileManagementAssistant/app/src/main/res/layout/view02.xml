@@ -7,7 +7,7 @@
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:background="@color/colorPrimary">
+            android:background="@drawable/icon_header">
 
     </LinearLayout>
 

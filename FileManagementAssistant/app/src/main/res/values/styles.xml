@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
+        <!--  recyclerview的下划线表示
+         <item name="android:listDivider">@drawable/bg_decoration</item>
+
+        -->
+
 
 
     </style>
@@ -29,6 +35,9 @@
     <style name="ItemHeight">
         <item name="listPreferredItemHeightSmall">3dp</item>
     </style>
+
+
+
 
 
 </resources>

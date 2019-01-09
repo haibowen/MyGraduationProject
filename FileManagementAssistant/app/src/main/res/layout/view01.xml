@@ -12,21 +12,37 @@
     <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <android.support.v7.widget.Toolbar
+        <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:id="@+id/toolbar"
-                android:background="@color/colorPrimary"
-                android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
+                android:layout_height="wrap_content">
 
-        </android.support.v7.widget.Toolbar>
+
+            <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:id="@+id/toolbar"
+                    android:background="@color/colorPrimary"
+                    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+                    app:layout_scrollFlags="scroll|enterAlways|snap">
+
+            </android.support.v7.widget.Toolbar>
+        </android.support.design.widget.AppBarLayout>
         <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/recyclerview">
+                android:id="@+id/recyclerview"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </android.support.v7.widget.RecyclerView>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:id="@+id/display"
+                android:background="#cfc8c8">
+
+        </TextView>
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
                 android:layout_width="wrap_content"
