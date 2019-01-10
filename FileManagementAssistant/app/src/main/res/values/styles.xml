@@ -19,7 +19,11 @@
 
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
-        <item name="android:textColor">@color/text</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+
+        <!--<item name="android:textColor">@color/text</item>  -->
+
+
     </style>
 
 

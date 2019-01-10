@@ -31,7 +31,14 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
            mcontext=viewGroup.getContext();
        }
-       View view= LayoutInflater.from(mcontext).inflate(R.layout.recycler_dir_item02,viewGroup,false);
+
+         View   view= LayoutInflater.from(mcontext).inflate(R.layout.recycler_dir_item02,viewGroup,false);
+
+
+       
+          
+       
+
 
 
 
@@ -57,12 +64,13 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        CardView cardView;
 
         ImageView imageView;
         TextView textView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            //cardView= (CardView) itemView;
+            cardView= (CardView) itemView;
             imageView=itemView.findViewById(R.id.image_dir);
             textView=itemView.findViewById(R.id.text_dir);
 

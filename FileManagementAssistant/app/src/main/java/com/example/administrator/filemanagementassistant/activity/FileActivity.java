@@ -151,6 +151,7 @@ public class FileActivity extends AppCompatActivity {
             case android.R.id.home:
 
                 finish();
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
 
                 break;
 

@@ -28,19 +28,28 @@
 
             </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/swiperefreshlayout"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
         <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/recyclerview"
+                android:layoutAnimation="@anim/layout_animation_fall_down"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </android.support.v7.widget.RecyclerView>
+        </android.support.v4.widget.SwipeRefreshLayout>
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:id="@+id/display"
-                android:background="#cfc8c8">
+                android:background="#f7eceaea">
 
         </TextView>
 

@@ -21,8 +21,8 @@
 
             app:showAsAction="never"/>
     <item
-            android:id="@+id/exit"
-            android:title="exit"
+            android:id="@+id/table"
+            android:title="表格视图"
 
             app:showAsAction="never"/>
     <item

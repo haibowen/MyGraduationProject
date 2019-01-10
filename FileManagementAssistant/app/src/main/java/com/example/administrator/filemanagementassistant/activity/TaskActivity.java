@@ -2,6 +2,7 @@ package com.example.administrator.filemanagementassistant.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +20,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.*;
 import android.util.Log;
 import android.view.*;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.administrator.filemanagementassistant.R;
@@ -57,6 +61,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private RecyclerView recyclerView;
     private FloatingActionsMenu floatingActionsMenu;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     private View view;
@@ -75,6 +80,8 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     private MyDirAdapter myDirAdapter;
     private TextView mview;
 
+    private boolean isopen=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +93,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         init();
         //申请权限
         requestpermission();
+        //下拉刷新
+        getRefresh();
+
 
 
         //侧滑菜单的点击事件
@@ -122,10 +132,11 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         floatingActionsMenu=view.findViewById(R.id.bt_fabMenu);
         mview=view.findViewById(R.id.display);
+
         displaygray();
 
-
-
+        swipeRefreshLayout=view.findViewById(R.id.swiperefreshlayout);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
 
 
@@ -152,22 +163,56 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         //recyclerview
         recyclerView=view.findViewById(R.id.recyclerview);
-        //recyclerView.addItemDecoration(new DividerItemDecoration(TaskActivity.this, DividerItemDecoration.HORIZONTAL));
-        recyclerView.addItemDecoration(new DividerItemDecorations());
+
 
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
+    }
 
+    //下拉刷新
+    public void getRefresh(){
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                recyclerView.setLayoutAnimation(  AnimationUtils.loadLayoutAnimation(TaskActivity.this,
+                        R.anim.layout_animation_fall_down));
+                recyclerView.getAdapter().notifyDataSetChanged();
+                recyclerView.scheduleLayoutAnimation();
+
+                swipeRefreshLayout.setRefreshing(false);
+
+            }
+        });
+    }
+
+    //雾板的点击事件
+    public  void displayfogdismiss(){
+        mview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isopen){
+                    mview.setVisibility(View.GONE);
+                    floatingActionsMenu.collapse();
+
+                }
+            }
+        });
 
 
     }
+
     //fabmenu的点击事件
     public void  displaygray(){
         floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
                 mview.setVisibility(View.VISIBLE);
+                isopen=true;
+                displayfogdismiss();
+
 
             }
 
@@ -378,8 +423,28 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 Intent intent = new Intent(TaskActivity.this, FileActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
 
                 break;
+            case R.id.home:
+
+                recyclerView.setLayoutAnimation(  AnimationUtils.loadLayoutAnimation(this,
+                        R.anim.layout_animation_fall_down));
+                recyclerView.getAdapter().notifyDataSetChanged();
+                recyclerView.scheduleLayoutAnimation();
+
+                break;
+            case R.id.table:
+
+                GridLayoutManager layoutManager=new GridLayoutManager(this,2);
+
+
+
+
+                recyclerView.setLayoutManager(layoutManager);
+
+                break;
+
         }
 
 
@@ -457,7 +522,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             public void run() {
                 myDirAdapter=new MyDirAdapter(Dirlist);
 
+
                 recyclerView.setAdapter(myDirAdapter);
+
             }
         });
     }
