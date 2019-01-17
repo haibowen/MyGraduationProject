@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
+import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.adapter.MyAdapter;
 import com.example.administrator.filemanagementassistant.adapter.MyDirAdapter;
@@ -88,6 +91,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_task);
 
 
+
+
+       
 
         //初始化控件
         init();
@@ -170,6 +176,21 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
+    //recyclerview的滑动监听事件
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void RecyclerViewScrollerListener(){
+
+        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+
+
+
+            }
+        });
+    }
+
     //下拉刷新
     public void getRefresh(){
 
@@ -196,6 +217,8 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 if (isopen){
                     mview.setVisibility(View.GONE);
                     floatingActionsMenu.collapse();
+                    searchFile();
+                    //SearchSdCard();
 
                 }
             }
@@ -236,6 +259,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             imageView = new ImageView(TaskActivity.this);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(16, 16));
             imageView.setPadding(16, 0, 16, 0);
+
             tips[i] = imageView;
 
             //morenxuanzhong
@@ -528,6 +552,76 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         });
     }
+    /**
+    public void searchFile(){
+        File flist = new File("/mnt/sdcard");
+
+        FileFilter ff = new FileFilter() {
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        };
+        File[] fileDir = flist.listFiles(ff);
+
+
+        DirFile[] dirFiles=new DirFile[fileDir.length];
+        for (int i = 0; i < fileDir.length; i++) {
+            String str = fileDir[i].getName();
+            Log.e("wenhaibo", "search: " + str);
+            mydata.add(str);
+            dirFiles[i]=new DirFile(mydata.get(i));
+            Dirlist.add(dirFiles[i]);
+
+            String[] mFileList = null;
+            mFileList=fileDir[i].list();
+            Log.e("999999", "searchFile: "+mFileList );
+
+            // mResult += str;
+            //mResult += "\n";
+        }
+    }
+
+**/
+
+    public void searchFile(){
+
+        File flist = new File("/mnt/sdcard");
+
+        FileFilter ff = new FileFilter() {
+            public boolean accept(File pathname) {
+                return pathname.isDirectory();
+            }
+        };
+        File[] fileDir = flist.listFiles(ff);
+
+        DirFile[] dirFiles=new DirFile[fileDir.length];
+        for (int i = 0; i < fileDir.length; i++) {
+            String str = fileDir[i].getName();
+            Log.e("wenhaibo", "search: " + str);
+            mydata.add(str);
+            dirFiles[i]=new DirFile(mydata.get(i));
+            Dirlist.add(dirFiles[i]);
+            // mResult += str;
+            //mResult += "\n";
+        }
+        if (fileDir!=null){
+            for (File file:fileDir){
+                if (file.isFile()){
+                    //Toast.makeText(this, "已经是文件", Toast.LENGTH_SHORT).show();
+                    Log.e("8888", "searchFile: "+"已经是文件了" );
+                }else {
+                    file.listFiles();
+                    Log.e("8888", "searchFile: "+file.listFiles() );
+
+
+                }
+            }
+        }
+    }
+
+
+
+
 
     //权限回调
     @Override
@@ -535,5 +629,70 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+
+
+
+
+
+
+
+private List<File>   list_file;
+
+    private void SearchSdCard() {
+        // TODO Auto-generated method stub
+        // 判断是否挂载
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {
+            // 获取sdcard
+            File sdcard = Environment.getExternalStorageDirectory();
+            // 创建集合对象
+            list_file = new ArrayList<File>();
+            // 获取该文件夹的所有子文件以及子文件假(过滤)
+            getWant(sdcard);
+            // 遍历输出集合list
+            for (File ff : list_file) {
+               // System.out.println(ff.getAbsolutePath());
+                Log.e("7777", "SearchSdCard: "+ff.getAbsolutePath() );
+            }
+        }
+
+    }
+
+    private void getWant(File sdcard) {
+        // TODO Auto-generated method stub
+        File[] files = sdcard.listFiles(new FileFilter() {
+
+            @Override
+            public boolean accept(File file) {
+                if (file.isDirectory()) {
+                    return true;
+                } else {
+                    // 取出文件的名字
+                    String filename = file.getName();
+                    // 返回后缀名是文本以及MP3的
+                    return filename.endsWith(".mp3");
+
+                }
+
+            }
+        });
+
+        // 将查询的结果添加到集合中
+        if (files != null) {
+            for (File f : files) {
+                if (f.isFile())// 若是文件，就直接保存
+                {
+                    list_file.add(f);
+                } else {
+                    // 若是文件夹就继续扫描mp3,调用自己，递归
+                    getWant(f);
+
+                }
+            }
+        }
+
     }
 }

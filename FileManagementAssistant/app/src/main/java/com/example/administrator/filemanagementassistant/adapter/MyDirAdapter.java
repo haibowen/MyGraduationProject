@@ -1,14 +1,12 @@
 package com.example.administrator.filemanagementassistant.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.*;
+import android.widget.*;
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.bean.DirFile;
 import com.vincent.filepicker.filter.entity.ImageFile;
@@ -52,7 +50,42 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
         DirFile dirFile=mlist.get(i);
         viewHolder.textView.setText(dirFile.getName());
-        viewHolder.imageView.setImageResource(R.drawable.fab_bg_mini);
+        viewHolder.imageView.setImageResource(R.drawable.ic_folder_black_24dp);
+        viewHolder.imageButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
+            @Override
+            public void onClick(View v) {
+                PopupMenu  popupMenu=new PopupMenu(mcontext,v);
+
+                popupMenu.getMenuInflater().inflate(R.menu.poup,popupMenu.getMenu());
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+
+                        switch (menuItem.getItemId()){
+
+                            case R.id.popup_add:
+
+                                break;
+
+                            case R.id.popup_delete:
+
+                                break;
+                            case R.id.popup_more:
+
+                                break;
+
+                        }
+                        return false;
+                    }
+                });
+
+                popupMenu.show();
+
+            }
+        });
+
 
 
     }
@@ -67,12 +100,16 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         CardView cardView;
 
         ImageView imageView;
+
         TextView textView;
+        ImageButton imageButton;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView= (CardView) itemView;
             imageView=itemView.findViewById(R.id.image_dir);
             textView=itemView.findViewById(R.id.text_dir);
+           imageButton=itemView.findViewById(R.id.imagebutton_dir);
+
 
         }
     }
