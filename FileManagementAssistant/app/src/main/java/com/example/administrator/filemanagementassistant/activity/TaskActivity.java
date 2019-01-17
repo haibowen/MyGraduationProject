@@ -85,6 +85,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private boolean isopen=false;
 
+    private int distance;
+    private boolean visible=true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -177,6 +180,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     //recyclerview的滑动监听事件
+    //有问题待修复
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void RecyclerViewScrollerListener(){
 
@@ -185,9 +189,23 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
 
 
+                if(distance < -ViewConfiguration.getTouchSlop() && !visible){
+                   floatingActionsMenu.setVisibility(View.VISIBLE);
 
+                    distance = 0;
+                    visible = true;
+                }else if(distance > ViewConfiguration.getTouchSlop() && visible){
+                    //隐藏
+                   floatingActionsMenu.setVisibility(View.GONE);
+
+                    distance = 0;
+                    visible = false;
+                }
 
             }
+
+
+
         });
     }
 

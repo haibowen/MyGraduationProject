@@ -26,7 +26,40 @@
                     app:layout_scrollFlags="scroll|enterAlways|snap">
 
             </android.support.v7.widget.Toolbar>
+
+            <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:id="@+id/toolbar_content"
+                    android:background="@color/colorPrimary"
+                    android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light"
+
+
+            >
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="/mnt/sdcard"
+                            android:textSize="18sp"
+                            android:gravity="center_horizontal"/>
+                    <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="10个文件夹未知有多少文件"
+                            android:gravity="center_horizontal"
+                            android:textSize="12sp"/>
+                </LinearLayout>
+
+
+            </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
+
         <android.support.v4.widget.SwipeRefreshLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -34,14 +67,14 @@
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-        <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recyclerview"
-                android:layoutAnimation="@anim/layout_animation_fall_down"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recyclerview"
+                    android:layoutAnimation="@anim/layout_animation_fall_down"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        </android.support.v7.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
         </android.support.v4.widget.SwipeRefreshLayout>
         <TextView
                 android:layout_width="match_parent"
