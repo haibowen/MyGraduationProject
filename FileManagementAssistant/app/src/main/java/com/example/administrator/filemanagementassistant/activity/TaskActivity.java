@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.os.Build;
 import android.os.Environment;
 import android.os.SystemClock;
@@ -20,6 +21,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.*;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.view.animation.AnimationUtils;
@@ -45,8 +47,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import static android.os.Build.VERSION.SDK_INT;
 import static com.vincent.filepicker.activity.AudioPickActivity.IS_NEED_RECORDER;
 import static com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA;
 
@@ -82,6 +86,8 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private MyDirAdapter myDirAdapter;
     private TextView mview;
+
+    private TextView textView_path;
 
     private boolean isopen=false;
 
@@ -142,10 +148,18 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         floatingActionsMenu=view.findViewById(R.id.bt_fabMenu);
         mview=view.findViewById(R.id.display);
 
-        displaygray();
+        textView_path=view.findViewById(R.id.textpath);
+        textView_path.setText(Environment.getExternalStorageDirectory().getPath());
+        ViewGroup.LayoutParams params=mview.getLayoutParams();
+        params.height=getScreenHeight()/2;
+        mview.setLayoutParams(params);
+
+       // displaygray();
 
         swipeRefreshLayout=view.findViewById(R.id.swiperefreshlayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
+
 
 
 
@@ -179,35 +193,16 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
-    //recyclerview的滑动监听事件
-    //有问题待修复
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void RecyclerViewScrollerListener(){
+    //获取屏幕的高度
+    public int getScreenHeight(){
 
-        recyclerView.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+        Point point=new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        return point.y;
 
-
-                if(distance < -ViewConfiguration.getTouchSlop() && !visible){
-                   floatingActionsMenu.setVisibility(View.VISIBLE);
-
-                    distance = 0;
-                    visible = true;
-                }else if(distance > ViewConfiguration.getTouchSlop() && visible){
-                    //隐藏
-                   floatingActionsMenu.setVisibility(View.GONE);
-
-                    distance = 0;
-                    visible = false;
-                }
-
-            }
-
-
-
-        });
     }
+
+
 
     //下拉刷新
     public void getRefresh(){
@@ -235,8 +230,8 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 if (isopen){
                     mview.setVisibility(View.GONE);
                     floatingActionsMenu.collapse();
-                    searchFile();
-                    //SearchSdCard();
+                    String a= Environment.getExternalStorageDirectory().getPath();
+
 
                 }
             }
@@ -250,6 +245,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
+
                 mview.setVisibility(View.VISIBLE);
                 isopen=true;
                 displayfogdismiss();
@@ -526,7 +522,15 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         if (EasyPermissions.hasPermissions(this, perms)) {
 
 
-            search();
+            //search(new File("/mnt/sdcard"));
+
+           String a= Environment.getExternalStorageDirectory().getPath();
+
+
+          //  search(new File(a));
+
+            search(new File("/mnt/sdcard/Android/data"));
+
             //...
         } else {
             //...
@@ -539,102 +543,49 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     //文件夹的搜索
-    public void search() {
+    public void search(File flist) {
 
-        File flist = new File("/mnt/sdcard");
+       //  flist = new File("/mnt/sdcard");
 
         FileFilter ff = new FileFilter() {
             public boolean accept(File pathname) {
+
                 return pathname.isDirectory();
             }
         };
-        File[] fileDir = flist.listFiles(ff);
+        FileFilter tt=new FileFilter() {
+            @Override
+            public boolean accept(File pathname) {
+                if (!pathname.isDirectory()){
+
+                }
+                return  false;
+            }
+        };
+        final File[] fileDir = flist.listFiles(ff);
         DirFile[] dirFiles=new DirFile[fileDir.length];
         for (int i = 0; i < fileDir.length; i++) {
             String str = fileDir[i].getName();
             Log.e("wenhaibo", "search: " + str);
+
+
             mydata.add(str);
             dirFiles[i]=new DirFile(mydata.get(i));
             Dirlist.add(dirFiles[i]);
-            // mResult += str;
-            //mResult += "\n";
+
         }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 myDirAdapter=new MyDirAdapter(Dirlist);
-
-
-                recyclerView.setAdapter(myDirAdapter);
+                if (Dirlist.size()==0){
+                    //Toast.makeText(TaskActivity.this,"没有文件夹了",Toast.LENGTH_SHORT).show();
+                }else {
+                    recyclerView.setAdapter(myDirAdapter);
+                }
 
             }
         });
-    }
-    /**
-    public void searchFile(){
-        File flist = new File("/mnt/sdcard");
-
-        FileFilter ff = new FileFilter() {
-            public boolean accept(File pathname) {
-                return pathname.isDirectory();
-            }
-        };
-        File[] fileDir = flist.listFiles(ff);
-
-
-        DirFile[] dirFiles=new DirFile[fileDir.length];
-        for (int i = 0; i < fileDir.length; i++) {
-            String str = fileDir[i].getName();
-            Log.e("wenhaibo", "search: " + str);
-            mydata.add(str);
-            dirFiles[i]=new DirFile(mydata.get(i));
-            Dirlist.add(dirFiles[i]);
-
-            String[] mFileList = null;
-            mFileList=fileDir[i].list();
-            Log.e("999999", "searchFile: "+mFileList );
-
-            // mResult += str;
-            //mResult += "\n";
-        }
-    }
-
-**/
-
-    public void searchFile(){
-
-        File flist = new File("/mnt/sdcard");
-
-        FileFilter ff = new FileFilter() {
-            public boolean accept(File pathname) {
-                return pathname.isDirectory();
-            }
-        };
-        File[] fileDir = flist.listFiles(ff);
-
-        DirFile[] dirFiles=new DirFile[fileDir.length];
-        for (int i = 0; i < fileDir.length; i++) {
-            String str = fileDir[i].getName();
-            Log.e("wenhaibo", "search: " + str);
-            mydata.add(str);
-            dirFiles[i]=new DirFile(mydata.get(i));
-            Dirlist.add(dirFiles[i]);
-            // mResult += str;
-            //mResult += "\n";
-        }
-        if (fileDir!=null){
-            for (File file:fileDir){
-                if (file.isFile()){
-                    //Toast.makeText(this, "已经是文件", Toast.LENGTH_SHORT).show();
-                    Log.e("8888", "searchFile: "+"已经是文件了" );
-                }else {
-                    file.listFiles();
-                    Log.e("8888", "searchFile: "+file.listFiles() );
-
-
-                }
-            }
-        }
     }
 
 
@@ -653,64 +604,4 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
 
 
-
-
-
-
-private List<File>   list_file;
-
-    private void SearchSdCard() {
-        // TODO Auto-generated method stub
-        // 判断是否挂载
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {
-            // 获取sdcard
-            File sdcard = Environment.getExternalStorageDirectory();
-            // 创建集合对象
-            list_file = new ArrayList<File>();
-            // 获取该文件夹的所有子文件以及子文件假(过滤)
-            getWant(sdcard);
-            // 遍历输出集合list
-            for (File ff : list_file) {
-               // System.out.println(ff.getAbsolutePath());
-                Log.e("7777", "SearchSdCard: "+ff.getAbsolutePath() );
-            }
-        }
-
-    }
-
-    private void getWant(File sdcard) {
-        // TODO Auto-generated method stub
-        File[] files = sdcard.listFiles(new FileFilter() {
-
-            @Override
-            public boolean accept(File file) {
-                if (file.isDirectory()) {
-                    return true;
-                } else {
-                    // 取出文件的名字
-                    String filename = file.getName();
-                    // 返回后缀名是文本以及MP3的
-                    return filename.endsWith(".mp3");
-
-                }
-
-            }
-        });
-
-        // 将查询的结果添加到集合中
-        if (files != null) {
-            for (File f : files) {
-                if (f.isFile())// 若是文件，就直接保存
-                {
-                    list_file.add(f);
-                } else {
-                    // 若是文件夹就继续扫描mp3,调用自己，递归
-                    getWant(f);
-
-                }
-            }
-        }
-
-    }
 }

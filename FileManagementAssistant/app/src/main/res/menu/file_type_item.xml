@@ -13,11 +13,11 @@
     <item
             android:id="@+id/action_search"
             android:title="搜索文件"
-           android:icon="@drawable/ic_search_black_24dp"
+            android:icon="@drawable/ic_search_black_24dp"
             app:showAsAction="always"/>
     <item
             android:id="@+id/settings"
-            android:title="设置"
+            android:title="首页目录"
 
             app:showAsAction="never"/>
     <item
@@ -27,8 +27,12 @@
             app:showAsAction="never"/>
     <item
             android:id="@+id/sort"
-            android:title="sort"
+            android:title="排序"
 
+            app:showAsAction="never"/>
+    <item
+            android:id="@+id/exit"
+            android:title="退出目录"
             app:showAsAction="never"/>
 
 

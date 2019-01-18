@@ -47,13 +47,16 @@
                             android:layout_height="wrap_content"
                             android:text="/mnt/sdcard"
                             android:textSize="18sp"
+                            android:id="@+id/textpath"
+                            android:textColor="#fff"
                             android:gravity="center_horizontal"/>
                     <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="10个文件夹未知有多少文件"
                             android:gravity="center_horizontal"
-                            android:textSize="12sp"/>
+                            android:textSize="12sp"
+                            android:textColor="#fff"/>
                 </LinearLayout>
 
 
@@ -81,6 +84,7 @@
                 android:layout_height="match_parent"
                 android:visibility="gone"
                 android:id="@+id/display"
+                android:layout_gravity="bottom"
                 android:background="#80e1dcd7">
 
         </TextView>
@@ -91,10 +95,13 @@
                 android:layout_gravity="bottom|end"
                 android:layout_margin="16dp"
                 android:id="@+id/bt_fabMenu"
+
+                app:layout_behavior="com.example.administrator.filemanagementassistant.util.ScrollAwareFABBehavior"
                 fab:fab_addButtonColorNormal="@color/colorAccent"
                 fab:fab_icon="@drawable/ic_add_black_24dp"
                 fab:fab_labelStyle="@style/menu_labels_style"
                 fab:fab_labelsPosition="left"
+                android:elevation="4dp"
 
 
         >
