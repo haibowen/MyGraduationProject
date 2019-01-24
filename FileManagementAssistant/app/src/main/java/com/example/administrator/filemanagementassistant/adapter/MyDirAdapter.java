@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import com.example.administrator.filemanagementassistant.R;
@@ -30,6 +31,7 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
     public MyDirAdapter(List<DirFile> mlist) {
         this.mlist = mlist;
+
     }
 
     @NonNull
@@ -52,9 +54,12 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
                DirFile dirFile=mlist.get(postion);
                TaskActivity taskActivity=new TaskActivity();
                String a=Environment.getExternalStorageDirectory().getPath();
+               String path="";
+               path+=a+"/"+dirFile.getName();
+               Log.e("22222", "onClick: "+path );
 
-              // taskActivity.search(new File(""));
-              // myDirAdapter.notifyDataSetChanged();
+               taskActivity.search(new File(path));
+             //  myDirAdapter.notifyDataSetChanged();
                Toast.makeText(mcontext,"wobeidianjile ",Toast.LENGTH_SHORT).show();
 
            }
@@ -64,7 +69,7 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
            public void onClick(View v) {
                int postion =holder.getAdapterPosition();
                DirFile dirFile=mlist.get(postion);
-               Toast.makeText(mcontext,"wobeidianjile ",Toast.LENGTH_SHORT).show();
+               //Toast.makeText(mcontext,"wobeidianjile ",Toast.LENGTH_SHORT).show();
 
            }
        });
@@ -131,19 +136,22 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
     }
 
     //
-   // public static int getWidth(){
+    public int getWidth(){
 
-        //DisplayMetrics displayMetrics= mcontext.getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics= mcontext.getResources().getDisplayMetrics();
 
-       // return displayMetrics.widthPixels;
-  //  }
+
+        int width=displayMetrics.widthPixels;
+        int truewidth=width/3*2;
+        return truewidth;
+    }
 
     @Override
     public int getItemCount() {
         return mlist.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+     class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
 
@@ -156,8 +164,9 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             super(itemView);
             cardView= (CardView) itemView;
             imageView=itemView.findViewById(R.id.image_dir);
-           // textView.setWidth(getWidth()/2);
+
             textView=itemView.findViewById(R.id.text_dir);
+          //  textView.setWidth(getWidth());
             textView1=itemView.findViewById(R.id.textview_time);
            imageButton=itemView.findViewById(R.id.imagebutton_dir);
 

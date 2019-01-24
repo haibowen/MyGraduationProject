@@ -34,6 +34,7 @@ import com.example.administrator.filemanagementassistant.adapter.MyAdapter;
 import com.example.administrator.filemanagementassistant.adapter.MyDirAdapter;
 import com.example.administrator.filemanagementassistant.bean.DirFile;
 import com.example.administrator.filemanagementassistant.util.DividerItemDecorations;
+import com.example.administrator.filemanagementassistant.util.MarqueeTextView;
 import com.example.administrator.filemanagementassistant.util.SdCardUtil;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.vincent.filepicker.Constant;
@@ -93,6 +94,11 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private int distance;
     private boolean visible=true;
+
+    private MarqueeTextView marqueeTextView;
+
+    private int tag=1;
+    private   File[] fileDir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +162,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
        // displaygray();
 
+
         swipeRefreshLayout=view.findViewById(R.id.swiperefreshlayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
@@ -201,6 +208,14 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         return point.y;
 
     }
+    //获取屏幕的宽度
+    public  int getScreenWidth(){
+
+        Point point=new Point();
+        getWindowManager().getDefaultDisplay().getSize(point);
+        return point.x;
+    }
+
 
 
 
@@ -522,14 +537,14 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         if (EasyPermissions.hasPermissions(this, perms)) {
 
 
-            //search(new File("/mnt/sdcard"));
-
            String a= Environment.getExternalStorageDirectory().getPath();
 
 
-          //  search(new File(a));
+           // search(new File("/mnt/sdcard/Android/data"));
+            search(new File(a));
 
-            search(new File("/mnt/sdcard/Android/data"));
+            myDirAdapter=new MyDirAdapter(Dirlist);
+            recyclerView.setAdapter(myDirAdapter);
 
             //...
         } else {
@@ -542,10 +557,12 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     }
 
-    //文件夹的搜索
+    //文件夹以及文件的搜索
     public void search(File flist) {
+        //final File[] fileDir;
+        DirFile[] dirFiles;
 
-       //  flist = new File("/mnt/sdcard");
+
 
         FileFilter ff = new FileFilter() {
             public boolean accept(File pathname) {
@@ -553,39 +570,66 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 return pathname.isDirectory();
             }
         };
+        fileDir = flist.listFiles(ff);
+        if (fileDir==null){
+            //Toast.makeText(TaskActivity.this,"目录为空",Toast.LENGTH_SHORT).show();
+        }else {
+            dirFiles=new DirFile[fileDir.length];
+            for (int i = 0; i < fileDir.length; i++) {
+                String str = fileDir[i].getName();
+                Log.e("wenhaibo", "search: " + str);
+
+
+                mydata.add(str);
+                dirFiles[i]=new DirFile(mydata.get(i));
+                Dirlist.add(dirFiles[i]);
+
+            }
+
+        }
+
         FileFilter tt=new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                if (!pathname.isDirectory()){
-
-                }
-                return  false;
+                return  pathname.isFile();
             }
         };
-        final File[] fileDir = flist.listFiles(ff);
-        DirFile[] dirFiles=new DirFile[fileDir.length];
-        for (int i = 0; i < fileDir.length; i++) {
-            String str = fileDir[i].getName();
-            Log.e("wenhaibo", "search: " + str);
+
+            fileDir = flist.listFiles(tt);
+            if (fileDir==null){
+                //Toast.makeText(TaskActivity.this,"文件为空",Toast.LENGTH_SHORT).show();
+
+            }else {
+
+                dirFiles=new DirFile[fileDir.length];
+                for (int i = 0; i < fileDir.length; i++) {
+                    String str = fileDir[i].getName();
+                    Log.e("wenhaibo", "search: " + str);
 
 
-            mydata.add(str);
-            dirFiles[i]=new DirFile(mydata.get(i));
-            Dirlist.add(dirFiles[i]);
+                    mydata.add(str);
+                    dirFiles[i]=new DirFile(mydata.get(i));
+                    Dirlist.add(dirFiles[i]);
 
-        }
+                }
+
+            }
+
+
+/**
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 myDirAdapter=new MyDirAdapter(Dirlist);
-                if (Dirlist.size()==0){
-                    //Toast.makeText(TaskActivity.this,"没有文件夹了",Toast.LENGTH_SHORT).show();
-                }else {
-                    recyclerView.setAdapter(myDirAdapter);
-                }
+
+                //recyclerView.setAdapter(myDirAdapter);
+                recyclerView.swapAdapter(myDirAdapter,false);
+
 
             }
         });
+
+ **/
     }
 
 
