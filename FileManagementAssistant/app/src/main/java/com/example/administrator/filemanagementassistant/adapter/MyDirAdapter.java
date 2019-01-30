@@ -31,6 +31,7 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
     private List<DirFile> mlist;
 
     private MyDirAdapter myDirAdapter;
+    private String path;
 
     public MyDirAdapter(List<DirFile> mlist) {
         this.mlist = mlist;
@@ -57,24 +58,21 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
                 DirFile dirFile = mlist.get(postion);
                 TaskActivity taskActivity = new TaskActivity();
                 String a = Environment.getExternalStorageDirectory().getPath();
-                String path =a;
+                 path =a;
                 path += "/" + dirFile.getName();
                 Log.e("22222", "onClick: " + path);
-
-                //taskActivity.search(new File(path));
                 Intent intent=new Intent(mcontext,TaskActivity.class);
-               // intent.putExtra("mylist", (Serializable) taskActivity.search(new File(path)));
                 intent.putExtra("path",path);
 
                 mcontext.startActivity(intent);
 
-               // myDirAdapter=new MyDirAdapter(mlist);
+
 
                 Log.e("45454545", "onClick: "+mlist.size() );
 
 
 
-                //Toast.makeText(mcontext, "wobeidianjile ", Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -85,18 +83,17 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
                 DirFile dirFile = mlist.get(postion);
                 TaskActivity taskActivity = new TaskActivity();
                 String a = Environment.getExternalStorageDirectory().getPath();
-                String path = a;
+                 path = a;
                 path +=  "/" + dirFile.getName();
                 Log.e("00000000000000", "onClick: " + path);
 
-                //taskActivity.search(new File(path));
+
                 Intent intent=new Intent(mcontext,TaskActivity.class);
-                // intent.putExtra("mylist", (Serializable) taskActivity.search(new File(path)));
+
                 intent.putExtra("path",path);
 
                 mcontext.startActivity(intent);
 
-                // myDirAdapter=new MyDirAdapter(mlist);
 
                 Log.e("45454545", "onClick: "+mlist.size() );
 

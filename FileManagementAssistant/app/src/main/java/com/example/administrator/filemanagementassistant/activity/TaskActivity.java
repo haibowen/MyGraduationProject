@@ -551,7 +551,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             path= intent.getStringExtra("path");
             if (path==null){
 
-                searchDir(new File("/storage/emulated/0/Android/data"));
+                searchDir(new File(a));
 
                 text_file_number.setText(Dirlist.size()+"个文件夹");
 

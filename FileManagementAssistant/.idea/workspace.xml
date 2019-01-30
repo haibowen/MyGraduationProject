@@ -23,8 +23,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/TaskActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/TaskActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MyDirAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MyDirAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/bean/DirFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/bean/DirFile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/view01.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/view01.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,7 +70,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="3109" />
+          <entry key="JAVA" value="3132" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="XML" value="443" />
         </counts>
@@ -84,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/TaskActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12875">
-              <caret line="561" column="39" selection-start-line="561" selection-start-column="39" selection-end-line="561" selection-end-column="39" />
+            <state relative-caret-position="349">
+              <caret line="103" selection-start-line="103" selection-end-line="103" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,8 +103,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MyDirAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="101" lean-forward="true" selection-start-line="101" selection-end-line="101" />
+            <state relative-caret-position="272">
+              <caret line="93" selection-start-line="93" selection-end-line="93" />
               <folding>
                 <element signature="e#2792#3843#0" expanded="true" />
                 <element signature="e#3842#3843#0" expanded="true" />
@@ -2229,13 +2227,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/util/MarqueeTextView.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/recycler_dir_item02.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/bean/DirFile.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MyDirAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/view01.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/TaskActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MyDirAdapter.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1346" />
@@ -2378,7 +2376,7 @@
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="D:/AndroidSdk/android-sdk-windows" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548811745712" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548816654556" />
     <property name="device.picker.selection" value="3df281" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
@@ -2444,8 +2442,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24885496" />
@@ -2526,16 +2523,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/TaskActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12875">
-          <caret line="561" column="39" selection-start-line="561" selection-start-column="39" selection-end-line="561" selection-end-column="39" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/anim/item_animation_fall_down.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
@@ -2586,10 +2573,20 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/activity/TaskActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="349">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/administrator/filemanagementassistant/adapter/MyDirAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="107" column="11" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
+        <state relative-caret-position="272">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
           <folding>
             <element signature="e#2792#3843#0" expanded="true" />
             <element signature="e#3842#3843#0" expanded="true" />
