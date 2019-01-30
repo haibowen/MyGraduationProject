@@ -2,13 +2,11 @@ package com.example.administrator.filemanagementassistant.activity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
@@ -21,11 +19,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.*;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,7 +29,6 @@ import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.adapter.MyAdapter;
 import com.example.administrator.filemanagementassistant.adapter.MyDirAdapter;
 import com.example.administrator.filemanagementassistant.bean.DirFile;
-import com.example.administrator.filemanagementassistant.util.DividerItemDecorations;
 import com.example.administrator.filemanagementassistant.util.MarqueeTextView;
 import com.example.administrator.filemanagementassistant.util.SdCardUtil;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -48,10 +43,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 import java.io.File;
 import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static android.os.Build.VERSION.SDK_INT;
 import static com.vincent.filepicker.activity.AudioPickActivity.IS_NEED_RECORDER;
 import static com.vincent.filepicker.activity.ImagePickActivity.IS_NEED_CAMERA;
 
@@ -82,23 +75,26 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     private ViewGroup viewGroup;
     private int mode;
-    private List<DirFile> Dirlist=new ArrayList<>();
-    private List<String> mydata=new ArrayList<>();
+    private List<DirFile> Dirlist = new ArrayList<>();
+    private List<String> mydata = new ArrayList<>();
 
     private MyDirAdapter myDirAdapter;
     private TextView mview;
 
     private TextView textView_path;
+    private TextView text_file_number;
 
-    private boolean isopen=false;
+
+    private boolean isopen = false;
 
     private int distance;
-    private boolean visible=true;
+    private boolean visible = true;
 
     private MarqueeTextView marqueeTextView;
 
-    private int tag=1;
-    private   File[] fileDir;
+    private int tag = 1;
+    private File[] fileDir;
+    private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,19 +102,12 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         setContentView(R.layout.activity_task);
 
 
-
-
-       
-
         //初始化控件
         init();
         //申请权限
         requestpermission();
         //下拉刷新
         getRefresh();
-
-
-
         //侧滑菜单的点击事件
         navOnclick();
         //界面2的nav点击事件
@@ -139,7 +128,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         mode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
 
 
-
         viewPager = findViewById(R.id.viewpager);
 
         view = getLayoutInflater().inflate(R.layout.view01, null);
@@ -151,24 +139,34 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         navigationView1 = view1.findViewById(R.id.nav_view);
 
 
-        floatingActionsMenu=view.findViewById(R.id.bt_fabMenu);
-        mview=view.findViewById(R.id.display);
+        floatingActionsMenu = view.findViewById(R.id.bt_fabMenu);
+        mview = view.findViewById(R.id.display);
 
-        textView_path=view.findViewById(R.id.textpath);
-        textView_path.setText(Environment.getExternalStorageDirectory().getPath());
-        ViewGroup.LayoutParams params=mview.getLayoutParams();
-        params.height=getScreenHeight()/2;
+        textView_path = view.findViewById(R.id.textpath);
+        Intent intent=getIntent();
+        path= intent.getStringExtra("path");
+        if (path==null){
+
+            textView_path.setText(Environment.getExternalStorageDirectory().getPath());
+
+        }else {
+
+            textView_path.setText(path);
+
+        }
+
+        text_file_number=view.findViewById(R.id.text_file_number);
+
+
+        ViewGroup.LayoutParams params = mview.getLayoutParams();
+        params.height = getScreenHeight() / 2;
         mview.setLayoutParams(params);
 
-       // displaygray();
+        // displaygray();
 
 
-        swipeRefreshLayout=view.findViewById(R.id.swiperefreshlayout);
+        swipeRefreshLayout = view.findViewById(R.id.swiperefreshlayout);
         swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
-
-
-
-
 
 
         //toolbar设置
@@ -192,41 +190,54 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         viewPager.addOnPageChangeListener(this);
 
         //recyclerview
-        recyclerView=view.findViewById(R.id.recyclerview);
+        recyclerView = view.findViewById(R.id.recyclerview);
 
 
-        LinearLayoutManager layoutManager=new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+
+
+        Log.e("77777", "init: "+path );
+
+
+
+          //  Dirlist= (List<DirFile>) getIntent().getSerializableExtra("mylist");
+
+
+
+
+
+
 
     }
 
     //获取屏幕的高度
-    public int getScreenHeight(){
+    public int getScreenHeight() {
 
-        Point point=new Point();
+        Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
         return point.y;
 
     }
-    //获取屏幕的宽度
-    public  int getScreenWidth(){
 
-        Point point=new Point();
+    //获取屏幕的宽度
+    public int getScreenWidth() {
+
+        Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
         return point.x;
     }
 
 
-
-
     //下拉刷新
-    public void getRefresh(){
+    public void getRefresh() {
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
 
-                recyclerView.setLayoutAnimation(  AnimationUtils.loadLayoutAnimation(TaskActivity.this,
+                recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(TaskActivity.this,
                         R.anim.layout_animation_fall_down));
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
@@ -238,14 +249,14 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     //雾板的点击事件
-    public  void displayfogdismiss(){
+    public void displayfogdismiss() {
         mview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isopen){
+                if (isopen) {
                     mview.setVisibility(View.GONE);
                     floatingActionsMenu.collapse();
-                    String a= Environment.getExternalStorageDirectory().getPath();
+                    String a = Environment.getExternalStorageDirectory().getPath();
 
 
                 }
@@ -256,13 +267,13 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     //fabmenu的点击事件
-    public void  displaygray(){
+    public void displaygray() {
         floatingActionsMenu.setOnFloatingActionsMenuUpdateListener(new FloatingActionsMenu.OnFloatingActionsMenuUpdateListener() {
             @Override
             public void onMenuExpanded() {
 
                 mview.setVisibility(View.VISIBLE);
-                isopen=true;
+                isopen = true;
                 displayfogdismiss();
 
 
@@ -306,7 +317,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
 
     }
-   //侧滑的点击事件
+    //侧滑的点击事件
 
     public void navOnclick() {
 
@@ -476,12 +487,12 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                 Intent intent = new Intent(TaskActivity.this, FileActivity.class);
                 startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
                 break;
             case R.id.home:
 
-                recyclerView.setLayoutAnimation(  AnimationUtils.loadLayoutAnimation(this,
+                recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(this,
                         R.anim.layout_animation_fall_down));
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
@@ -489,9 +500,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 break;
             case R.id.table:
 
-                GridLayoutManager layoutManager=new GridLayoutManager(this,2);
-
-
+                GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
 
 
                 recyclerView.setLayoutManager(layoutManager);
@@ -536,15 +545,34 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         String[] perms = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
 
+            String a = Environment.getExternalStorageDirectory().getPath();
 
-           String a= Environment.getExternalStorageDirectory().getPath();
+            Intent intent=getIntent();
+            path= intent.getStringExtra("path");
+            if (path==null){
+
+                searchDir(new File("/storage/emulated/0/Android/data"));
+
+                text_file_number.setText(Dirlist.size()+"个文件夹");
+
+            }else {
+                Dirlist.clear();
+                searchDir(new File(path));
+
+                if (Dirlist.size()==0){
+                    Dirlist.clear();
+                    searchFile(new File(path));
+                    //searchfiletest(new File(path));
+                }
+                text_file_number.setText(Dirlist.size()+"个文件夹");
 
 
-           // search(new File("/mnt/sdcard/Android/data"));
-            search(new File(a));
-
-            myDirAdapter=new MyDirAdapter(Dirlist);
+            }
+            myDirAdapter = new MyDirAdapter(Dirlist);
             recyclerView.setAdapter(myDirAdapter);
+            myDirAdapter.notifyDataSetChanged();
+
+
 
             //...
         } else {
@@ -558,10 +586,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
 
     //文件夹以及文件的搜索
-    public void search(File flist) {
+    public List<DirFile> searchDir(File flist) {
         //final File[] fileDir;
         DirFile[] dirFiles;
-
 
 
         FileFilter ff = new FileFilter() {
@@ -571,69 +598,82 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             }
         };
         fileDir = flist.listFiles(ff);
-        if (fileDir==null){
-            //Toast.makeText(TaskActivity.this,"目录为空",Toast.LENGTH_SHORT).show();
-        }else {
-            dirFiles=new DirFile[fileDir.length];
+        if (fileDir == null) {
+
+        } else {
+            dirFiles = new DirFile[fileDir.length];
             for (int i = 0; i < fileDir.length; i++) {
                 String str = fileDir[i].getName();
                 Log.e("wenhaibo", "search: " + str);
 
 
                 mydata.add(str);
-                dirFiles[i]=new DirFile(mydata.get(i));
+                dirFiles[i] = new DirFile(mydata.get(i));
                 Dirlist.add(dirFiles[i]);
 
             }
 
         }
 
-        FileFilter tt=new FileFilter() {
+        return Dirlist;
+
+
+
+    }
+
+    public void searchfiletest(File flist){
+
+       String mResult = new String();
+        String[] mFileList = null;
+
+        //File flist = new File("/mnt/sdcard");
+        mFileList = flist.list();
+
+            for(String str: mFileList){
+                mResult += str;
+                mResult += "\n";
+            }
+            Log.e("555555", "searchfiletest: "+mResult );
+
+
+
+    }
+
+    public List<DirFile>searchFile(File flist){
+        DirFile[] dirFiles;
+
+
+        FileFilter tt = new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return  pathname.isFile();
+                return pathname.isFile();
             }
         };
 
-            fileDir = flist.listFiles(tt);
-            if (fileDir==null){
-                //Toast.makeText(TaskActivity.this,"文件为空",Toast.LENGTH_SHORT).show();
-
-            }else {
-
-                dirFiles=new DirFile[fileDir.length];
-                for (int i = 0; i < fileDir.length; i++) {
-                    String str = fileDir[i].getName();
-                    Log.e("wenhaibo", "search: " + str);
+        fileDir = flist.listFiles(tt);
+        if (fileDir == null) {
 
 
-                    mydata.add(str);
-                    dirFiles[i]=new DirFile(mydata.get(i));
-                    Dirlist.add(dirFiles[i]);
+        } else {
 
-                }
+            dirFiles = new DirFile[fileDir.length];
+            for (int i = 0; i < fileDir.length; i++) {
+                String str = fileDir[i].getName();
+                Log.e("wenhaibo", "search: " + str);
+
+
+                mydata.add(str);
+                dirFiles[i] = new DirFile(mydata.get(i));
+                Dirlist.add(dirFiles[i]);
 
             }
 
 
-/**
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                myDirAdapter=new MyDirAdapter(Dirlist);
-
-                //recyclerView.setAdapter(myDirAdapter);
-                recyclerView.swapAdapter(myDirAdapter,false);
+        }
+        return Dirlist;
 
 
-            }
-        });
-
- **/
     }
-
-
-
 
 
     //权限回调
@@ -643,9 +683,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
-
-
-
 
 
 }

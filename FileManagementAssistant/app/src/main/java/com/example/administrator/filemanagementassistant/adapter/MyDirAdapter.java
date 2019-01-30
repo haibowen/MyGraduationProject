@@ -2,8 +2,10 @@ package com.example.administrator.filemanagementassistant.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +20,7 @@ import com.example.administrator.filemanagementassistant.util.MarqueeTextView;
 import com.vincent.filepicker.filter.entity.ImageFile;
 
 import java.io.File;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -37,53 +40,75 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-       if (mcontext==null){
+        if (mcontext == null) {
 
-           mcontext=viewGroup.getContext();
-       }
+            mcontext = viewGroup.getContext();
+        }
 
-         View   view= LayoutInflater.from(mcontext).inflate(R.layout.recycler_dir_item02,viewGroup,false);
+        View view = LayoutInflater.from(mcontext).inflate(R.layout.recycler_dir_item02, viewGroup, false);
 
 
-       //myDirAdapter=new MyDirAdapter(mlist);
-       final  ViewHolder holder=new ViewHolder(view);
-       holder.textView.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               int postion =holder.getAdapterPosition();
-               DirFile dirFile=mlist.get(postion);
-               TaskActivity taskActivity=new TaskActivity();
-               String a=Environment.getExternalStorageDirectory().getPath();
-               String path="";
-               path+=a+"/"+dirFile.getName();
-               Log.e("22222", "onClick: "+path );
+        //myDirAdapter=new MyDirAdapter(mlist);
+        final ViewHolder holder = new ViewHolder(view);
+        holder.textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int postion = holder.getAdapterPosition();
+                DirFile dirFile = mlist.get(postion);
+                TaskActivity taskActivity = new TaskActivity();
+                String a = Environment.getExternalStorageDirectory().getPath();
+                String path =a;
+                path += "/" + dirFile.getName();
+                Log.e("22222", "onClick: " + path);
 
-               taskActivity.search(new File(path));
-             //  myDirAdapter.notifyDataSetChanged();
-               Toast.makeText(mcontext,"wobeidianjile ",Toast.LENGTH_SHORT).show();
+                //taskActivity.search(new File(path));
+                Intent intent=new Intent(mcontext,TaskActivity.class);
+               // intent.putExtra("mylist", (Serializable) taskActivity.search(new File(path)));
+                intent.putExtra("path",path);
 
-           }
-       });
-       holder.textView1.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               int postion =holder.getAdapterPosition();
-               DirFile dirFile=mlist.get(postion);
-               //Toast.makeText(mcontext,"wobeidianjile ",Toast.LENGTH_SHORT).show();
+                mcontext.startActivity(intent);
 
-           }
-       });
+               // myDirAdapter=new MyDirAdapter(mlist);
 
-       
-          
-       
+                Log.e("45454545", "onClick: "+mlist.size() );
 
 
 
+                //Toast.makeText(mcontext, "wobeidianjile ", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+        holder.textView1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int postion = holder.getAdapterPosition();
+                DirFile dirFile = mlist.get(postion);
+                TaskActivity taskActivity = new TaskActivity();
+                String a = Environment.getExternalStorageDirectory().getPath();
+                String path = a;
+                path +=  "/" + dirFile.getName();
+                Log.e("00000000000000", "onClick: " + path);
+
+                //taskActivity.search(new File(path));
+                Intent intent=new Intent(mcontext,TaskActivity.class);
+                // intent.putExtra("mylist", (Serializable) taskActivity.search(new File(path)));
+                intent.putExtra("path",path);
+
+                mcontext.startActivity(intent);
+
+                // myDirAdapter=new MyDirAdapter(mlist);
+
+                Log.e("45454545", "onClick: "+mlist.size() );
 
 
 
-       // return new ViewHolder(view);
+                //Toast.makeText(mcontext, "wobeidianjile ", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+        // return new ViewHolder(view);
         return holder;
     }
 
@@ -92,7 +117,7 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
         //获取当前时间
         Date date = new Date(System.currentTimeMillis());
-        DirFile dirFile=mlist.get(i);
+        DirFile dirFile = mlist.get(i);
         viewHolder.textView.setText(dirFile.getName());
         viewHolder.textView1.setText(simpleDateFormat.format(date));
         viewHolder.imageView.setImageResource(R.drawable.ic_folder_black_24dp);
@@ -100,15 +125,15 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             @SuppressLint("ResourceType")
             @Override
             public void onClick(View v) {
-                PopupMenu  popupMenu=new PopupMenu(mcontext,v);
+                PopupMenu popupMenu = new PopupMenu(mcontext, v);
 
-                popupMenu.getMenuInflater().inflate(R.menu.poup,popupMenu.getMenu());
+                popupMenu.getMenuInflater().inflate(R.menu.poup, popupMenu.getMenu());
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
 
-                        switch (menuItem.getItemId()){
+                        switch (menuItem.getItemId()) {
 
                             case R.id.popup_add:
 
@@ -132,17 +157,16 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         });
 
 
-
     }
 
     //
-    public int getWidth(){
+    public int getWidth() {
 
-        DisplayMetrics displayMetrics= mcontext.getResources().getDisplayMetrics();
+        DisplayMetrics displayMetrics = mcontext.getResources().getDisplayMetrics();
 
 
-        int width=displayMetrics.widthPixels;
-        int truewidth=width/3*2;
+        int width = displayMetrics.widthPixels;
+        int truewidth = width / 3 * 2;
         return truewidth;
     }
 
@@ -151,7 +175,7 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         return mlist.size();
     }
 
-     class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         CardView cardView;
 
@@ -160,15 +184,16 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         TextView textView1;
         MarqueeTextView textView;
         ImageButton imageButton;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            cardView= (CardView) itemView;
-            imageView=itemView.findViewById(R.id.image_dir);
+            cardView = (CardView) itemView;
+            imageView = itemView.findViewById(R.id.image_dir);
 
-            textView=itemView.findViewById(R.id.text_dir);
-          //  textView.setWidth(getWidth());
-            textView1=itemView.findViewById(R.id.textview_time);
-           imageButton=itemView.findViewById(R.id.imagebutton_dir);
+            textView = itemView.findViewById(R.id.text_dir);
+            //  textView.setWidth(getWidth());
+            textView1 = itemView.findViewById(R.id.textview_time);
+            imageButton = itemView.findViewById(R.id.imagebutton_dir);
 
 
         }

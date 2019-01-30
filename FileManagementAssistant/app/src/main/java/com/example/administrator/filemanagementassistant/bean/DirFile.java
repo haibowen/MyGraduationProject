@@ -1,6 +1,8 @@
 package com.example.administrator.filemanagementassistant.bean;
 
-public class DirFile {
+import java.io.Serializable;
+
+public class DirFile implements Serializable {
 
     private String name;
 
