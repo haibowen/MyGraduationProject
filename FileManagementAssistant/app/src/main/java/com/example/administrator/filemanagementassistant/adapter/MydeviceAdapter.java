@@ -21,6 +21,18 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
     private Context mContext;
     private SendActivity senContext;
 
+    private OnClickListener clickListener;
+
+    public interface OnClickListener {
+
+        void onItemClick(int position);
+
+    }
+
+    public void setClickListener(OnClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
   static   class ViewHolder extends RecyclerView.ViewHolder{
 
          TextView devicename;
@@ -60,9 +72,14 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
       viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              int postion=viewHolder.getAdapterPosition();
+              if (clickListener!=null){
+                  clickListener.onItemClick((Integer) v.getTag());
+              }
+              //int postion=viewHolder.getAdapterPosition();
+              //devicesList.get(postion+1);
               //Toast.makeText(mContext, "正在连接"+devicesList.get(postion).deviceName, Toast.LENGTH_SHORT).show();
-              senContext.connect();
+              //senContext.connect(devicesList.get(postion+1));
+             // senContext.connect();
 
           }
       });
@@ -78,6 +95,8 @@ public class MydeviceAdapter extends RecyclerView.Adapter<MydeviceAdapter.ViewHo
         viewHolder.devicename.setText("设备名称:"+"  "+devicesList.get(i).deviceName);
         viewHolder.deviceip.setText("设备地址:"+"  "+devicesList.get(i).deviceAddress);
         viewHolder.devicestatus.setText("设备状态:"+"  "+MainActivity.getDeviceStatus(devicesList.get(i).status));
+
+        viewHolder.itemView.setTag(i);
 
     }
 

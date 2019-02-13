@@ -112,6 +112,20 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
         mdevicelist = new ArrayList<>();
         mydeviceAdapter = new MydeviceAdapter(mdevicelist,this);
+        //wenhaibo add 20190213[start]
+
+        mydeviceAdapter.setClickListener(new MydeviceAdapter.OnClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                wifiP2pDevice = mdevicelist.get(position);
+                //showToast(wifiP2pDeviceList.get(position).deviceName);
+                connect();
+            }
+        });
+
+        //wenhaibo add 20190213[end]
+
+
         recyclerView.setAdapter(mydeviceAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -249,8 +263,12 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
     public  void connect() {
 
         WifiP2pConfig config = new WifiP2pConfig();
-        if (config.deviceAddress != null && mdevicelist != null) {
+       // Log.e("33333333333", "connect: "+wifiP2pDevice.deviceAddress );
+        if (config.deviceAddress != null && wifiP2pDevice != null) {
+            //config.deviceAddress = wifiP2pDevice.deviceAddress;
+
             config.deviceAddress = wifiP2pDevice.deviceAddress;
+            Log.e("hahahhhahhha", "connect: "+wifiP2pDevice.deviceAddress );
             config.wps.setup = WpsInfo.PBC;
             Toast.makeText(this, "正在连接" + wifiP2pDevice.deviceName, Toast.LENGTH_SHORT).show();
             wifiP2pManager.connect(channel, config, new WifiP2pManager.ActionListener() {
@@ -266,6 +284,9 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
                 }
             });
+        }else {
+
+            Toast.makeText(this, "没有设备信息", Toast.LENGTH_SHORT).show();
         }
     }
 
