@@ -81,7 +81,7 @@
                 android:id="@+id/text_devicetarget"
                 android:layout_margin="5dp"
                 android:layout_gravity="center_horizontal"
-                android:text="设备名："
+                android:text="设备名称："
         />
         <TextView
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:id="@+id/text_addresstarget"
                 android:layout_margin="5dp"
                 android:layout_gravity="center_horizontal"
-                android:text="设备ip："
+                android:text="设备地址："
         />
         <TextView
                 android:layout_width="match_parent"

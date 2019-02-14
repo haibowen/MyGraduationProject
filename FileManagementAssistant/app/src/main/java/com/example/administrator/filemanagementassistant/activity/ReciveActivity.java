@@ -13,11 +13,13 @@ import android.os.Bundle;
 
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +44,17 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
     @BindView(R.id.bt_disrecreate)
     public Button button1;
+
+    @BindView(R.id.text_view_receive)
+    public TextView textView0;
+    @BindView(R.id.text_device_receive)
+    public TextView textView1;
+    @BindView(R.id.text_address_receive)
+    public TextView textView2;
+    @BindView(R.id.text_status_receive)
+    public TextView textView3;
+
+
 
     private WifiP2pManager wifiP2pManager;
     private WifiP2pManager.Channel channel;
@@ -137,6 +150,13 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
     }
 
+    //wenhaibo add 20190214[start]
+
+
+
+
+    //wenhaibo add 20190214[end]
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -148,6 +168,8 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
         }
         unregisterReceiver(broadcastReceiver);
+
+        removeGroup();
 
         stopService(new Intent(this, WifiServerService.class));
 
@@ -252,6 +274,18 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+        Log.e("55555", "onConnectionInfoAvailable: "+wifiP2pInfo.isGroupOwner );
+        Log.e("5555", "onConnectionInfoAvailable: "+wifiP2pInfo.groupOwnerAddress.getHostAddress() );
+        Log.e("55555", "onConnectionInfoAvailable: "+wifiP2pInfo.groupFormed );
+        //textView2.setText("设备地址:"+"  "+wifiP2pInfo.groupOwnerAddress.getHostAddress());
+        //textView3.setText("是否群组:"+"  "+wifiP2pInfo.isGroupOwner);
+
+        if (wifiP2pInfo.groupFormed && wifiP2pInfo.isGroupOwner) {
+            if (wifiServerService != null) {
+                startService(new Intent(this, WifiServerService.class));
+            }
+        }
+
 
     }
 
@@ -263,10 +297,22 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
     @Override
     public void onSelfDeviceAvailable(WifiP2pDevice wifiP2pDevice) {
 
+        textView1.setText("设备名称:"+"  "+wifiP2pDevice.deviceName);
+
+        textView2.setText("设备地址:"+"  "+wifiP2pDevice.deviceAddress);
+        textView3.setText("设备状态:"+"  "+getDeviceStatus(wifiP2pDevice.status));
+
+
+        Log.e("0000000", "onSelfDeviceAvailable: "+wifiP2pDevice.deviceName);
+
     }
 
     @Override
     public void onPeersAvailable(Collection<WifiP2pDevice> wifiP2pDeviceList) {
+
+
+
+
 
     }
 
@@ -294,5 +340,22 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
         }
 
+    }
+
+    public static String getDeviceStatus(int deviceStatus) {
+        switch (deviceStatus) {
+            case WifiP2pDevice.AVAILABLE:
+                return "可用";
+            case WifiP2pDevice.INVITED:
+                return "邀请中";
+            case WifiP2pDevice.CONNECTED:
+                return "已连接";
+            case WifiP2pDevice.FAILED:
+                return "失败的";
+            case WifiP2pDevice.UNAVAILABLE:
+                return "不可用";
+            default:
+                return "未知";
+        }
     }
 }

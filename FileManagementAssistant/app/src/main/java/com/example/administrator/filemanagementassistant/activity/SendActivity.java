@@ -232,31 +232,40 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
 
             if (resultCode == RESULT_OK) {
+                Log.e("444444", "onActivityResult: "+"wozhixingle" );
                 Uri uri = data.getData();
+                Log.e("44444", "onActivityResult: "+uri);
                 if (uri != null) {
 
                     String path = getPath(this, uri);
+                    Log.e("444448888", "onActivityResult: "+path );
                     if (path != null) {
 
                         File file = new File(path);
                         if (file.exists() && wifiP2pInfo != null) {
                             FileTransfer fileTransfer = new FileTransfer(file.getPath(), file.length());
+                            Log.e("44444", "onActivityResult: "+fileTransfer );
                             new WifiClientTask(this, fileTransfer).execute(wifiP2pInfo.groupOwnerAddress.getHostAddress());
 
                         }
                     }
 
                 }
+                else {
 
+                    Toast.makeText(SendActivity.this, "没有找dao到路径", Toast.LENGTH_SHORT).show();
+
+
+                }
             }
         }
 
 
-        super.onActivityResult(requestCode, resultCode, data);
+
     }
 
 
@@ -292,7 +301,7 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
     private String getPath(Context context, Uri uri) {
 
-        if ("context".equalsIgnoreCase(uri.getScheme())) {
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
 
             Cursor cursor = context.getContentResolver().query(uri, new String[]{"_data"}, null, null, null);
             if (cursor != null) {
@@ -324,6 +333,7 @@ public class SendActivity extends AppCompatActivity implements DirectActionListe
 
     @Override
     public void onConnectionInfoAvailable(WifiP2pInfo wifiP2pInfo) {
+        //textView1.setText("设备地址:"+"  "+wifiP2pInfo.groupOwnerAddress.getHostAddress());
 
 
         mdevicelist.clear();

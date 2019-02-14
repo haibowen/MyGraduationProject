@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/text_view_receive"
                 android:layout_gravity="center_horizontal"
-                android:text="文件源设备信息"
+                android:text="设备信息"
                 android:layout_margin="5dp"
                 android:gravity="center_horizontal"/>
         <TextView
