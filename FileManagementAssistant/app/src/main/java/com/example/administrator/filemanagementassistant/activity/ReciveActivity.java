@@ -244,15 +244,20 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
         try {
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
-            String mime = mimeTypeMap.getExtensionFromMimeType(ext.substring(1));
+            String mime = mimeTypeMap.getMimeTypeFromExtension(ext.substring(1));
+            //String mime = mimeTypeMap.getExtensionFromMimeType(ext.substring(1));
+            Log.e("1111111", "openFile: "+mime );
             mime = TextUtils.isEmpty(mime) ? "" : mime;
             Intent intent = new Intent();
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.setAction(android.content.Intent.ACTION_VIEW);
             intent.setDataAndType(Uri.fromFile(new File(filePath)), mime);
+            Log.e("11111", "openFile: "+Uri.fromFile(new File(filePath)) );
             startActivity(intent);
 
         } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("222222", "openFile: " );
             Toast.makeText(ReciveActivity.this, "文件打开异常", Toast.LENGTH_SHORT).show();
 
 

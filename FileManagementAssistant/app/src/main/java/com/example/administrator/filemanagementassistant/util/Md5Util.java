@@ -43,7 +43,7 @@ public class Md5Util {
         for (byte b:md5Bytes){
             int val=((int)b)&0xff;
             if (val<16){
-                hexValue.append(0);
+                hexValue.append("0");
             }
             hexValue.append(Integer.toHexString(val));
         }

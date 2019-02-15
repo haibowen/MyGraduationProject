@@ -53,7 +53,7 @@ public class WifiServerService extends IntentService {
     public WifiServerService() {
         super("WifiServerService");
     }
-   public  IBinder onBinder(Intent intent){
+   public  IBinder onBind(Intent intent){
         return new MyBinder();
 
 
