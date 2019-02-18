@@ -3,6 +3,7 @@ package com.example.administrator.filemanagementassistant.client;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import com.example.administrator.filemanagementassistant.bean.FileTransfer;
 import com.example.administrator.filemanagementassistant.util.Md5Util;
 
@@ -43,6 +44,7 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
     protected Boolean doInBackground(String... strings) {
         fileTransfer.setMd5(Md5Util.getMd5(new File(fileTransfer.getFilePath())));
 
+        Log.e("22222", "文件的MD5码值是：" + fileTransfer.getMd5());
         Socket socket=null;
 
         OutputStream outputStream=null;
@@ -60,7 +62,11 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
 
             long filesize=fileTransfer.getFileLength();
             long total=0;
-            byte [] buf=new  byte[512];
+            //wenhaibo modify the byte[] buf
+            byte[] buf=new byte[1024];
+           // byte [] buf=new  byte[512];
+
+
 
             int len;
             while ((len=inputStream.read(buf))!=-1){

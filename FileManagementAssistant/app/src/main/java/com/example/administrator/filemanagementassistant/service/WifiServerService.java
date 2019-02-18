@@ -6,7 +6,9 @@ import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import com.example.administrator.filemanagementassistant.bean.FileTransfer;
+import com.example.administrator.filemanagementassistant.util.Md5Util;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -53,7 +55,10 @@ public class WifiServerService extends IntentService {
     public WifiServerService() {
         super("WifiServerService");
     }
-   public  IBinder onBind(Intent intent){
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
         return new MyBinder();
 
 
@@ -61,7 +66,7 @@ public class WifiServerService extends IntentService {
 
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    protected void onHandleIntent( Intent intent) {
 
         clean();
         File file=null;
@@ -82,10 +87,9 @@ public class WifiServerService extends IntentService {
             file=new File(Environment.getExternalStorageDirectory()+"/"+name);
 
             fileOutputStream=new FileOutputStream(file);
-            byte[] buf=new byte[512];
+            byte buf[]=new byte[512];
             int len;
-
-            long total=0;
+            long total = 0;
             int progress;
             while ((len=inputStream.read(buf))!=-1){
                 fileOutputStream.write(buf,0,len);
@@ -108,6 +112,9 @@ public class WifiServerService extends IntentService {
             inputStream=null;
             objectInputStream=null;
             fileOutputStream=null;
+
+
+            Log.e("22222", "文件接收成功，文件的MD5码是：" + Md5Util.getMd5(file));
 
 
 

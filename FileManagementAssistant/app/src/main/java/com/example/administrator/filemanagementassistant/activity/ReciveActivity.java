@@ -110,6 +110,7 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
                     if (file != null && file.exists()) {
 
                         openFile(file.getPath());
+                        Log.e("22222", "run: "+file.getPath() );
                     }
                 }
             });
@@ -257,7 +258,7 @@ public class ReciveActivity extends AppCompatActivity implements DirectActionLis
 
         } catch (Exception e) {
             e.printStackTrace();
-            Log.e("222222", "openFile: " );
+            Log.e("01010010101", "openFile: "+e.getMessage() );
             Toast.makeText(ReciveActivity.this, "文件打开异常", Toast.LENGTH_SHORT).show();
 
 
