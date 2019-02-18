@@ -41,7 +41,9 @@
         </menu>
 
     </item>
-    <item android:title="常用目录"
+
+
+    <!--  <item android:title="常用目录"
           app:showAsAction="ifRoom">
         <menu>
 
@@ -80,7 +82,8 @@
 
         </menu>
 
-    </item>
+    </item>   -->
+
 
     <item
             app:showAsAction="ifRoom"

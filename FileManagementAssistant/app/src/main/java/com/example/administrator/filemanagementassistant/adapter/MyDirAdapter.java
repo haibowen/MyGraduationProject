@@ -56,10 +56,13 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             public void onClick(View v) {
                 int postion = holder.getAdapterPosition();
                 DirFile dirFile = mlist.get(postion);
-                TaskActivity taskActivity = new TaskActivity();
-                String a = Environment.getExternalStorageDirectory().getPath();
-                 path =a;
+
+                String a=Environment.getExternalStorageDirectory().getPath();
+                path=a;
+
                 path += "/" + dirFile.getName();
+
+
                 Log.e("22222", "onClick: " + path);
                 Intent intent=new Intent(mcontext,TaskActivity.class);
                 intent.putExtra("path",path);

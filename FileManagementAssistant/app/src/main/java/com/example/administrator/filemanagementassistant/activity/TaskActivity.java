@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -152,6 +153,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         }else {
 
             textView_path.setText(path);
+
 
         }
 
@@ -302,7 +304,7 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
             tips[i] = imageView;
 
-            //morenxuanzhong
+            //默认选中
             if (i == 0) {
                 tips[i].setBackgroundResource(R.mipmap.cir_fouce);
             } else {
@@ -373,6 +375,36 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
                         finish();
                         break;
+
+
+                        /**
+
+                    case R.id.nav_download:
+                        Intent intent = new Intent("android.intent.action.VIEW");
+                        intent.addCategory("android.intent.category.DEFAULT");
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        Uri uri = Uri.fromFile(new File("/storage/emulated/0/Download" ));
+                        intent.setDataAndType(uri, "image/*");
+                        startActivity(intent);
+
+
+
+                        break;
+
+                    case R.id.nav_DCIM:
+
+
+                        break;
+
+                    case R.id.nav_move:
+
+                        break;
+
+                    case R.id.nav_MUSiC:
+
+                        break;
+
+                         **/
 
                     default:
                         break;
@@ -504,6 +536,20 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
 
 
                 recyclerView.setLayoutManager(layoutManager);
+
+                break;
+
+            case R.id.settings:
+
+
+
+
+
+                break;
+
+            case R.id.exit:
+
+                finish();
 
                 break;
 

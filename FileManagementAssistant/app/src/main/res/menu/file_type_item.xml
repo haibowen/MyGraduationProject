@@ -25,14 +25,15 @@
             android:title="表格视图"
 
             app:showAsAction="never"/>
-    <item
+    <!--   <item
             android:id="@+id/sort"
             android:title="排序"
 
-            app:showAsAction="never"/>
+            app:showAsAction="never"/> -->
+
     <item
             android:id="@+id/exit"
-            android:title="退出目录"
+            android:title="返回上级"
             app:showAsAction="never"/>
 
 
