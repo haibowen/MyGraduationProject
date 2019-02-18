@@ -111,9 +111,9 @@ public class FindFragment extends Fragment {
         }
 
 
-        images.add(R.drawable.first);
-        images.add(R.drawable.second);
-        images.add(R.drawable.third);
+        images.add(R.drawable.ic_launcher_background);
+        images.add(R.drawable.ic_launcher_background);
+        images.add(R.drawable.ic_launcher_background);
         //轮播图
         banner  .setImages( images)
 
