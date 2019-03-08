@@ -19,11 +19,11 @@ import com.example.administrator.filemanagementassistant.bean.DirFile;
 import com.example.administrator.filemanagementassistant.util.MarqueeTextView;
 import com.vincent.filepicker.filter.entity.ImageFile;
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> {
 
@@ -146,7 +146,7 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
         //获取当前时间
         Date date = new Date(System.currentTimeMillis());
-        DirFile dirFile = mlist.get(i);
+        final DirFile dirFile = mlist.get(i);
         viewHolder.textView.setText(dirFile.getName());
         viewHolder.textView1.setText(simpleDateFormat.format(date));
         viewHolder.imageView.setImageResource(R.drawable.ic_folder_black_24dp);
@@ -166,12 +166,32 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
                             case R.id.popup_add:
 
+                                File file=new File(dirFile.getName());
+                                if (!file.exists()){
+
+                                    file.mkdir();
+
+                                }
+
+
+
                                 break;
 
                             case R.id.popup_delete:
 
+                                //deleteDirs("/storage/emulated/0/Music");
+
+
                                 break;
                             case R.id.popup_more:
+
+                                File file1=new File(dirFile.getName());
+                                if (!file1.exists()){
+
+                                   // file1.
+
+                                }
+
 
                                 break;
 
@@ -187,6 +207,103 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
 
     }
+
+    //wenhaibo add 20190219
+
+
+    /**
+     * 删除某个目录
+     * @param path 要删除的目录路径
+     * @return
+     */
+    private boolean deleteDirs(String path){
+
+        File file = new File(path);
+        if (!file.exists()){
+            return true;
+        }
+        if (file.isDirectory()){
+            File[] childs = file.listFiles();
+            if (null == childs){
+                return false;
+            }
+            boolean result = true;
+            for (File child : childs){
+                result = result && deleteDirs(child.getAbsolutePath());
+            }
+
+            try{
+                boolean ret = file.delete();
+                return result && ret;
+            }catch(Exception e){
+                e.printStackTrace();
+                return false;
+            }
+
+        }else {
+
+            try {
+                boolean ret = file.delete();
+                return ret;
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+
+        }
+    }
+
+
+
+//复制文件
+    public static int copyFile(String fromFilePath, String toFilePath) {
+        File fromFile = new File(fromFilePath);
+        if (!fromFile.exists()) {
+            return -1;
+        }
+        //获取子文件
+        File[] fromFiles = fromFile.listFiles();
+        File toFile = new File(toFilePath);
+        if (!toFile.exists()) {
+            toFile.mkdirs();
+        }
+        for (int i = 0; i < fromFiles.length; i++) {
+            if (fromFiles[i].isDirectory()) {
+                // 子文件是目录，循环
+                copyFile(fromFiles[i].getPath(), toFilePath + "/" + fromFiles[i].getName());
+            } else {
+                //复制文件
+                copyDirFile(fromFiles[i].getPath(), toFilePath + "/" + fromFiles[i].getName());
+            }
+        }
+        return 0;
+    }
+
+    //复制目录
+    public static int copyDirFile(String fromFilePath, String toFilePath) {
+        try {
+            InputStream inStream = new FileInputStream(fromFilePath);
+            OutputStream outStream = new FileOutputStream(toFilePath);
+            byte[] bytes = new byte[1024];
+            int i = 0;
+            while ((i = inStream.read(bytes)) > 0) {
+                outStream.write(bytes, 0, i);
+            }
+            inStream.close();
+            outStream.close();
+            return 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
+    //wenhaibo add 20190219
+
+
+
+
 
     //
     public int getWidth() {
