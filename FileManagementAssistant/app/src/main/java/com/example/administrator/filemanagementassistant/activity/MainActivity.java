@@ -53,17 +53,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     @BindView(R.id.nav_view)
     public NavigationView navigationView;
-
-
-
-
-
-
-
-
-
-
-
     private CircleImageView circleImageView;
     private FileFragment fileFragment;
     private FindFragment findFragment;
@@ -103,24 +92,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                         intent1.putExtra(IS_NEED_CAMERA, true);
                         intent1.putExtra(Constant.MAX_NUMBER, 9);
                         startActivityForResult(intent1, Constant.REQUEST_CODE_PICK_IMAGE);
-
                         break;
-
                     case R.id.nav_second:
                         Intent intent4 = new Intent(MainActivity.this, NormalFilePickActivity.class);
                         intent4.putExtra(Constant.MAX_NUMBER, 9);
                         intent4.putExtra(NormalFilePickActivity.SUFFIX, new String[]{"xlsx", "xls", "doc", "docx", "ppt", "pptx", "pdf"});
                         startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
-
-
                         break;
                     case R.id.nav_third:
                         Intent intent3 = new Intent(MainActivity.this, AudioPickActivity.class);
                         intent3.putExtra(IS_NEED_RECORDER, true);
                         intent3.putExtra(Constant.MAX_NUMBER, 9);
                         startActivityForResult(intent3, Constant.REQUEST_CODE_PICK_AUDIO);
-
-
                         break;
                     case R.id.nav_fourth:
                         Intent intent2 = new Intent(MainActivity.this, VideoPickActivity.class);
@@ -137,7 +120,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                         } else {
                             // blah blah
                         }
-
                         recreate();
                         break;
 
@@ -149,15 +131,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                     default:
                         break;
                 }
-
-
-
                 return true;
             }
         });
-
-
-
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -165,9 +141,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
-
-
         /**
          *  setMode() 内的参数有三种模式类型：
          *  MODE_DEFAULT 自动模式：导航栏Item的个数<=3 用 MODE_FIXED 模式，否则用 MODE_SHIFTING 模式
@@ -189,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
          *  BACKGROUND_STYLE_STATIC: 静态样式 点击无波纹效果
          *  BACKGROUND_STYLE_RIPPLE: 波纹样式 点击有波纹效果
          */
-
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.ic_home_black_24dp, "Home"))
                 //.addItem(new BottomNavigationItem(R.drawable.ic_insert_drive_file_black_24dp, "File"))
@@ -200,16 +172,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.file_type_item, menu);
-
         //MenuItem searchItem = menu.findItem(R.id.action_search);
         //final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
        // searchView.setQueryHint("搜索文件格式...");
         /**
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -222,34 +189,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
          **/
         return super.onCreateOptionsMenu(menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         switch (item.getItemId()) {
-
             case android.R.id.home:
-
                 drawerLayout.openDrawer(GravityCompat.START);
-
                 break;
-
             case R.id.action_search:
-
                 Intent intent=new Intent(MainActivity.this,FileActivity.class);
                 startActivity(intent);
-
                 break;
-
-
             default:
                 break;
         }
         return true;
     }
-
-
 
     /**
      * 设置默认显示的fragment
@@ -261,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         findFragment = new FindFragment();
         fragmentTransaction.replace(R.id.tb, findFragment);
         fragmentTransaction.commit();
-
     }
 
     /**
@@ -281,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                     findFragment = new FindFragment();
 
                 }
-
                 fragmentTransaction.replace(R.id.tb, findFragment);
                 break;
                 /**
@@ -310,46 +262,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         fragmentTransaction.commit();
 
     }
-
     @Override
     public void onTabUnselected(int position) {
-
     }
-
     @Override
     public void onTabReselected(int position) {
-
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
     }
-
-
 
     public static String getDeviceStatus(int deviceStatus) {
 
         switch (deviceStatus) {
 
             case WifiP2pDevice.AVAILABLE:
-
                 return "可用的";
-
             case WifiP2pDevice.CONNECTED:
-
                 return "已连接";
-
             case WifiP2pDevice.FAILED:
-
                 return "失败的";
-
             case WifiP2pDevice.INVITED:
                 return "邀请中";
-
             case WifiP2pDevice.UNAVAILABLE:
                 return "不可用";
-
             default:
                 return "未知";
         }

@@ -19,10 +19,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.example.administrator.filemanagementassistant.R;
 import com.example.administrator.filemanagementassistant.adapter.MySdcardFileAdapter;
+
 import io.haydar.filescanner.FileInfo;
 import io.haydar.filescanner.FileScanner;
 
@@ -30,19 +33,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileActivity extends AppCompatActivity {
-    private String TAG="wenhaibo";
-
+    private String TAG = "wenhaibo";
     private List<FileInfo> mylist = new ArrayList<>();
-
-    private String type=".jpg";
-
+    private String type = ".jpg";
 
     @BindView(R.id.file_toolbar)
     public Toolbar toolbar;
-
     @BindView(R.id.text_count)
     public TextView textViewcount;
-
     @BindView(R.id.recycler_show_file)
     public RecyclerView recyclerView;
 
@@ -60,7 +58,6 @@ public class FileActivity extends AppCompatActivity {
             //actionBar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
             actionBar.setDisplayShowTitleEnabled(false);
         }
-
         //权限申请
 
         if (ContextCompat.checkSelfPermission(this,
@@ -69,7 +66,6 @@ public class FileActivity extends AppCompatActivity {
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         } else {
 
-
             //fileScanner();
             filesearch(type);
         }
@@ -77,10 +73,7 @@ public class FileActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-
     }
-
-
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
@@ -99,38 +92,24 @@ public class FileActivity extends AppCompatActivity {
 
                 }
                 break;
-
-
-
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
-
         getMenuInflater().inflate(R.menu.file_menu_search, menu);
-
         //找到searchView
         MenuItem searchItem = menu.findItem(R.id.action_search_file);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setIconified(false);
-
         searchView.setQueryHint("请输入要搜索的文件后缀...");
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-               type=s;
-                Toast.makeText(FileActivity.this, "正在搜索后缀为:"+type+"的文件,请耐心等待..", Toast.LENGTH_SHORT).show();
-
-
-               filesearch(type);
-
-
-
-
-
+                type = s;
+                Toast.makeText(FileActivity.this, "正在搜索后缀为:" + type + "的文件,请耐心等待..", Toast.LENGTH_SHORT).show();
+                filesearch(type);
                 return false;
             }
 
@@ -146,24 +125,23 @@ public class FileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
 
             case android.R.id.home:
 
                 finish();
-                overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 
                 break;
 
         }
 
 
-
         return super.onOptionsItemSelected(item);
     }
 
 
-    private void filesearch(String s){
+    private void filesearch(String s) {
 
         FileScanner.getInstance(this).clear();
         FileScanner.getInstance(this).setType(s).start(new FileScanner.ScannerListener() {
@@ -184,7 +162,7 @@ public class FileActivity extends AppCompatActivity {
                 Log.d(TAG, "onScanEnd: ");
                 // ArrayList<FileInfo> fileInfoArrayList= FileScanner.getInstance(getActivity()).getAllFiles();
                 mylist = FileScanner.getInstance(FileActivity.this).getAllFiles();
-                Log.e(TAG, "onScanEnd: "+mylist.size() );
+                Log.e(TAG, "onScanEnd: " + mylist.size());
 
                 for (FileInfo fileInfo : mylist) {
                     Log.d(TAG, "fileScanner: " + fileInfo.getFilePath());
@@ -194,15 +172,15 @@ public class FileActivity extends AppCompatActivity {
                     @Override
                     public void run() {
 
-                        if (mylist.size()!=0){
+                        if (mylist.size() != 0) {
 
                             textViewcount.setText("该文件类型共有:" + mylist.size() + "个");
 
 
                             MySdcardFileAdapter adapter = new MySdcardFileAdapter(mylist);
                             recyclerView.setAdapter(adapter);
-                        }else {
-                            Toast.makeText(FileActivity.this,"暂未发现该格式的文件",Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(FileActivity.this, "暂未发现该格式的文件", Toast.LENGTH_SHORT).show();
 
                         }
 
@@ -231,7 +209,6 @@ public class FileActivity extends AppCompatActivity {
                 Log.d(TAG, "onScanningFiles: info=" + info.toString());
             }
         });
-
 
     }
 
