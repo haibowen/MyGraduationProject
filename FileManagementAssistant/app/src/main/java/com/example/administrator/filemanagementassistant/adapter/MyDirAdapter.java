@@ -29,55 +29,34 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
 
     private Context mcontext;
     private List<DirFile> mlist;
-
     private MyDirAdapter myDirAdapter;
     private String path;
-
     public MyDirAdapter(List<DirFile> mlist) {
         this.mlist = mlist;
 
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         if (mcontext == null) {
-
             mcontext = viewGroup.getContext();
         }
-
         View view = LayoutInflater.from(mcontext).inflate(R.layout.recycler_dir_item02, viewGroup, false);
-
-
         //myDirAdapter=new MyDirAdapter(mlist);
         final ViewHolder holder = new ViewHolder(view);
-
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 int postion = holder.getAdapterPosition();
                 DirFile dirFile = mlist.get(postion);
-
                 String a=Environment.getExternalStorageDirectory().getPath();
                 path=a;
-
                 path += "/" + dirFile.getName();
-
-
                 Log.e("22222", "onClick: " + path);
                 Intent intent=new Intent(mcontext,TaskActivity.class);
                 intent.putExtra("path",path);
-
                 mcontext.startActivity(intent);
-
-
-
                 Log.e("45454545", "onClick: "+mlist.size() );
-
-
-
             }
         });
         holder.textView.setOnClickListener(new View.OnClickListener() {
@@ -85,27 +64,14 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             public void onClick(View v) {
                 int postion = holder.getAdapterPosition();
                 DirFile dirFile = mlist.get(postion);
-
                 String a=Environment.getExternalStorageDirectory().getPath();
                 path=a;
-
                 path += "/" + dirFile.getName();
-
-
                 Log.e("22222", "onClick: " + path);
                 Intent intent=new Intent(mcontext,TaskActivity.class);
                 intent.putExtra("path",path);
-
                 mcontext.startActivity(intent);
-
-
-
                 Log.e("45454545", "onClick: "+mlist.size() );
-
-
-
-
-
             }
         });
         holder.textView1.setOnClickListener(new View.OnClickListener() {
@@ -118,25 +84,13 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
                  path = a;
                 path +=  "/" + dirFile.getName();
                 Log.e("00000000000000", "onClick: " + path);
-
-
                 Intent intent=new Intent(mcontext,TaskActivity.class);
-
                 intent.putExtra("path",path);
-
                 mcontext.startActivity(intent);
-
-
                 Log.e("45454545", "onClick: "+mlist.size() );
-
-
-
                 //Toast.makeText(mcontext, "wobeidianjile ", Toast.LENGTH_SHORT).show();
-
             }
         });
-
-
         // return new ViewHolder(view);
         return holder;
     }
@@ -155,69 +109,41 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 PopupMenu popupMenu = new PopupMenu(mcontext, v);
-
                 popupMenu.getMenuInflater().inflate(R.menu.poup, popupMenu.getMenu());
-
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-
                         switch (menuItem.getItemId()) {
-
                             case R.id.popup_add:
-
                                 File file=new File(dirFile.getName());
                                 if (!file.exists()){
-
                                     file.mkdir();
-
                                 }
-
-
-
                                 break;
-
                             case R.id.popup_delete:
-
                                 //deleteDirs("/storage/emulated/0/Music");
-
-
                                 break;
                             case R.id.popup_more:
-
                                 File file1=new File(dirFile.getName());
                                 if (!file1.exists()){
-
                                    // file1.
-
                                 }
-
-
                                 break;
-
                         }
                         return false;
                     }
                 });
-
                 popupMenu.show();
-
             }
         });
-
-
     }
-
     //wenhaibo add 20190219
-
-
     /**
      * 删除某个目录
      * @param path 要删除的目录路径
      * @return
      */
     private boolean deleteDirs(String path){
-
         File file = new File(path);
         if (!file.exists()){
             return true;
@@ -231,7 +157,6 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             for (File child : childs){
                 result = result && deleteDirs(child.getAbsolutePath());
             }
-
             try{
                 boolean ret = file.delete();
                 return result && ret;
@@ -249,11 +174,8 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
                 e.printStackTrace();
                 return false;
             }
-
         }
     }
-
-
 
 //复制文件
     public static int copyFile(String fromFilePath, String toFilePath) {
@@ -278,7 +200,6 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
         }
         return 0;
     }
-
     //复制目录
     public static int copyDirFile(String fromFilePath, String toFilePath) {
         try {
@@ -297,51 +218,32 @@ public class MyDirAdapter extends RecyclerView.Adapter<MyDirAdapter.ViewHolder> 
             return -1;
         }
     }
-
-
     //wenhaibo add 20190219
-
-
-
-
-
     //
     public int getWidth() {
-
         DisplayMetrics displayMetrics = mcontext.getResources().getDisplayMetrics();
-
-
         int width = displayMetrics.widthPixels;
         int truewidth = width / 3 * 2;
         return truewidth;
     }
-
     @Override
     public int getItemCount() {
         return mlist.size();
     }
-
     class ViewHolder extends RecyclerView.ViewHolder {
-
         CardView cardView;
-
         ImageView imageView;
-
         TextView textView1;
         MarqueeTextView textView;
         ImageButton imageButton;
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView = (CardView) itemView;
             imageView = itemView.findViewById(R.id.image_dir);
-
             textView = itemView.findViewById(R.id.text_dir);
             //  textView.setWidth(getWidth());
             textView1 = itemView.findViewById(R.id.textview_time);
             imageButton = itemView.findViewById(R.id.imagebutton_dir);
-
-
         }
     }
 }

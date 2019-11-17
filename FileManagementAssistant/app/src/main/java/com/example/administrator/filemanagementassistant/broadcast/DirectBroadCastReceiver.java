@@ -1,6 +1,5 @@
 package com.example.administrator.filemanagementassistant.broadcast;
 
-import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +11,7 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.text.TextUtils;
 import android.util.Log;
-import com.example.administrator.filemanagementassistant.R;
+
 import com.example.administrator.filemanagementassistant.callback.DirectActionListener;
 
 import java.util.ArrayList;
@@ -21,9 +20,7 @@ import java.util.List;
 public class DirectBroadCastReceiver  extends BroadcastReceiver {
 
     private static final String TAG = "DirectBroadcastReceiver";
-
     private WifiP2pManager mWifiP2pManager;
-
     private WifiP2pManager.Channel mChannel;
     /**是一个自定义监听 回调接口**/
     private DirectActionListener mWifiDirectActionListener;
@@ -33,7 +30,6 @@ public class DirectBroadCastReceiver  extends BroadcastReceiver {
         mChannel = channel;
         mWifiDirectActionListener = directActionListener;
     }
-
     public static IntentFilter getIntentFilter() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -59,7 +55,6 @@ public class DirectBroadCastReceiver  extends BroadcastReceiver {
                         mWifiDirectActionListener.onPeersAvailable(wifiP2pDeviceList);
                     }
                     break;
-
                 /**表明可用的对等点的列表发生了改变 **/
                 case WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION:
                     mWifiP2pManager.requestPeers(mChannel, new WifiP2pManager.PeerListListener() {
@@ -69,7 +64,6 @@ public class DirectBroadCastReceiver  extends BroadcastReceiver {
                         }
                     });
                     break;
-
                 /**表示Wi-Fi对等网络的连接状态发生了改变 **/
                 case WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION:
                     NetworkInfo networkInfo = intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
@@ -92,16 +86,13 @@ public class DirectBroadCastReceiver  extends BroadcastReceiver {
                         Log.i(TAG, "与P2P设备已断开连接");
                     }
                     break;
-
                 /**表示该设备的配置信息发生了改变**/
                 case WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION:
                     mWifiDirectActionListener.onSelfDeviceAvailable((WifiP2pDevice) intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE));
                     break;
                 default:
-
                     break;
             }
         }
     }
-
 }

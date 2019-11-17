@@ -35,8 +35,6 @@
             android:id="@+id/nav_view"
             android:layout_gravity="start"
             app:menu="@menu/nav_menu">
-
-
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

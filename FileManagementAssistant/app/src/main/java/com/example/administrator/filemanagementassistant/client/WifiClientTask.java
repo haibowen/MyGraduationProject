@@ -22,7 +22,6 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
     private static final int PORT=4786;
 
     public WifiClientTask(Context  context,FileTransfer fileTransfer){
-
         this.fileTransfer=fileTransfer;
         progressDialog=new ProgressDialog(context);
         progressDialog.setTitle("正在发送文件");
@@ -30,9 +29,6 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMax(100);
-
-
-
     }
 
     @Override
@@ -46,7 +42,6 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
 
         Log.e("22222", "文件的MD5码值是：" + fileTransfer.getMd5());
         Socket socket=null;
-
         OutputStream outputStream=null;
         ObjectOutputStream  objectOutputStream=null;
         InputStream inputStream=null;
@@ -54,7 +49,6 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
             socket=new Socket();
             socket.bind(null);
             socket.connect((new InetSocketAddress(strings[0],PORT)),10000);
-
             outputStream=socket.getOutputStream();
             objectOutputStream=new ObjectOutputStream(outputStream);
             objectOutputStream.writeObject(fileTransfer);
@@ -65,18 +59,12 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
             //wenhaibo modify the byte[] buf
             byte[] buf=new byte[1024];
            // byte [] buf=new  byte[512];
-
-
-
             int len;
             while ((len=inputStream.read(buf))!=-1){
-
                 outputStream.write(buf,0,len);
                 total+=len;
                 int progress= (int) ((total*100)/filesize);
-
                 publishProgress(progress);
-
             }
             outputStream.close();
             objectOutputStream.close();
@@ -87,11 +75,7 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
             inputStream=null;
             socket=null;
             return true;
-
-
         }catch (Exception e){
-
-
         }finally {
             if (outputStream!=null){
                 try {
@@ -101,21 +85,13 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
                     e.printStackTrace();
                 }
             }
-
-
             if (objectOutputStream!=null){
-
                 try {
                     objectOutputStream.close();
                 }catch (IOException e){
                     e.printStackTrace();
-
-
                 }
-
-
             }
-
             if (inputStream!=null){
                 try {
                     inputStream.close();
@@ -123,7 +99,6 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
                     e.printStackTrace();
                 }
             }
-
             if (socket!=null){
                 try {
                     socket.close();
@@ -132,11 +107,8 @@ public class WifiClientTask extends AsyncTask<String ,Integer,Boolean> {
                 }
             }
         }
-
         return false;
-
     }
-
 
     @Override
     protected void onProgressUpdate(Integer... values) {

@@ -50,7 +50,6 @@ public class FileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file);
         ButterKnife.bind(this);
-
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -59,13 +58,11 @@ public class FileActivity extends AppCompatActivity {
             actionBar.setDisplayShowTitleEnabled(false);
         }
         //权限申请
-
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{
                     Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         } else {
-
             //fileScanner();
             filesearch(type);
         }
@@ -76,20 +73,14 @@ public class FileActivity extends AppCompatActivity {
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
         switch (requestCode) {
             case 1:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
                     //处理逻辑
-
                     //fileScanner();
                     filesearch(type);
-
                 } else {
-
                     Toast.makeText(this, "拒绝权限导致功能不可用", Toast.LENGTH_SHORT).show();
-
                 }
                 break;
         }
@@ -103,7 +94,6 @@ public class FileActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setIconified(false);
         searchView.setQueryHint("请输入要搜索的文件后缀...");
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -112,7 +102,6 @@ public class FileActivity extends AppCompatActivity {
                 filesearch(type);
                 return false;
             }
-
             @Override
             public boolean onQueryTextChange(String s) {
                 return false;
@@ -124,25 +113,16 @@ public class FileActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
-
             case android.R.id.home:
-
                 finish();
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-
                 break;
-
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
-
     private void filesearch(String s) {
-
         FileScanner.getInstance(this).clear();
         FileScanner.getInstance(this).setType(s).start(new FileScanner.ScannerListener() {
             /**
@@ -158,25 +138,18 @@ public class FileActivity extends AppCompatActivity {
              */
             @Override
             public void onScanEnd() {
-
                 Log.d(TAG, "onScanEnd: ");
                 // ArrayList<FileInfo> fileInfoArrayList= FileScanner.getInstance(getActivity()).getAllFiles();
                 mylist = FileScanner.getInstance(FileActivity.this).getAllFiles();
                 Log.e(TAG, "onScanEnd: " + mylist.size());
-
                 for (FileInfo fileInfo : mylist) {
                     Log.d(TAG, "fileScanner: " + fileInfo.getFilePath());
-
                 }
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         if (mylist.size() != 0) {
-
                             textViewcount.setText("该文件类型共有:" + mylist.size() + "个");
-
-
                             MySdcardFileAdapter adapter = new MySdcardFileAdapter(mylist);
                             recyclerView.setAdapter(adapter);
                         } else {
@@ -209,8 +182,6 @@ public class FileActivity extends AppCompatActivity {
                 Log.d(TAG, "onScanningFiles: info=" + info.toString());
             }
         });
-
     }
-
 
 }

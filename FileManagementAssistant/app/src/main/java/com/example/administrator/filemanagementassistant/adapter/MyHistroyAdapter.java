@@ -21,30 +21,22 @@ import com.example.administrator.filemanagementassistant.bean.Historydata;
 import java.util.List;
 
 public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.ViewHolder> {
-
-
     private Context context;
     private List<Historydata> mlists;
 
     public  MyHistroyAdapter(List<Historydata> lists,Context mcontext){
-
         mlists=lists;
         context=mcontext;
     }
-
     static class  ViewHolder extends  RecyclerView.ViewHolder{
         CardView cardView;
         ImageView imageView;
         TextView textView;
-
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cardView= (CardView) itemView;
             imageView=itemView.findViewById(R.id.item_image);
             textView=itemView.findViewById(R.id.item_textview);
-
-
         }
     }
 
@@ -53,7 +45,6 @@ public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.View
     public MyHistroyAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         if (context==null){
             context=viewGroup.getContext();
-
         }
         View view= LayoutInflater.from(context).inflate(R.layout.recycler_history,viewGroup,false);
         final  ViewHolder holder=new ViewHolder(view);
@@ -66,14 +57,9 @@ public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.View
                 builder.setTitle("历史上的今天");
                 builder.setMessage(historydata.getContent());
                 builder.create().show();
-
-
-
             }
         });
-
         return holder;
-
     }
 
     @Override
@@ -82,11 +68,7 @@ public class MyHistroyAdapter extends RecyclerView.Adapter<MyHistroyAdapter.View
         viewHolder.textView.setText(news.getTitle());
         Log.e("wenhaibo", "onBindViewHolder: "+news.getTitle() );
         Glide.with(context).load(news.getImage()).into(viewHolder.imageView);
-
     }
-
-
-
     @Override
     public int getItemCount() {
         return mlists.size();

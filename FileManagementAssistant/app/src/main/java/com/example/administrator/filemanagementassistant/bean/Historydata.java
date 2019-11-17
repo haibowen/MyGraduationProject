@@ -4,14 +4,12 @@ public class Historydata {
     private String title;
     private String image;
     private String content;
-
     public Historydata(String ti, String im,String co) {
 
         title=ti;
         image=im;
         content=co;
     }
-
     public String getTitle() {
         return title;
     }

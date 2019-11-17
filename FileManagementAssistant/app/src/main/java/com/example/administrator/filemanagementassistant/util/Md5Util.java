@@ -4,12 +4,9 @@ import java.io.*;
 import java.security.MessageDigest;
 
 public class Md5Util {
-
     public static String getMd5(File file){
-
         InputStream inputStream=null;
         byte[] buffer=new byte[2048];
-
         int NumRead;
         MessageDigest md5;
         try {
@@ -26,7 +23,6 @@ public class Md5Util {
             return null;
         }finally {
             if (inputStream!=null){
-
                 try {
                     inputStream.close();
                 }catch (IOException e){
@@ -34,11 +30,9 @@ public class Md5Util {
                 }
             }
         }
-
     }
 
     private static String md5ToString(byte[] md5Bytes) {
-
         StringBuilder hexValue=new StringBuilder();
         for (byte b:md5Bytes){
             int val=((int)b)&0xff;
@@ -47,10 +41,6 @@ public class Md5Util {
             }
             hexValue.append(Integer.toHexString(val));
         }
-
         return hexValue.toString();
-
-
-
     }
 }

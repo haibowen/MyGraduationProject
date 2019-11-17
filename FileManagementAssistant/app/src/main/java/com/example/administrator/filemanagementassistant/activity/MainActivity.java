@@ -67,9 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
         mode=getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
         setContentView(R.layout.activity_header);
         ButterKnife.bind(this);
-
         //头像更换跳转页面
-
         View nav_header=navigationView.inflateHeaderView(R.layout.myfragment_header);
         circleImageView=nav_header.findViewById(R.id.image_header_myfragment);
         circleImageView.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 //Toast.makeText(MainActivity.this, "我被点击了", Toast.LENGTH_SHORT).show();
                 onTabSelected(2);
                 drawerLayout.closeDrawers();
-
-
             }
         });
         //侧滑菜单的点击事件
@@ -111,7 +107,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                         intent2.putExtra(Constant.MAX_NUMBER, 9);
                         startActivityForResult(intent2, Constant.REQUEST_CODE_PICK_VIDEO);
                         break;
-
                     case R.id.zhuti:
                         if(mode == Configuration.UI_MODE_NIGHT_YES) {
                             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -122,12 +117,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                         }
                         recreate();
                         break;
-
                     case R.id.tuichu:
-
                         finish();
                         break;
-
                     default:
                         break;
                 }
@@ -147,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
          *  MODE_FIXED 固定模式：未选中的Item显示文字，无切换动画效果。
          *  MODE_SHIFTING 切换模式：未选中的Item不显示文字，选中的显示文字，有切换动画效果。
          */
-
         bottomNavigationBar
                 .setTabSelectedListener((BottomNavigationBar.OnTabSelectedListener) this)
                 .setMode(BottomNavigationBar.MODE_FIXED)
@@ -169,7 +160,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 .setFirstSelectedPosition(lastselection)
                 .initialise();
         SetDefaultFragment();
-
     }
 
     @Override
@@ -209,7 +199,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      * 设置默认显示的fragment
      */
     public void SetDefaultFragment() {
-
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         findFragment = new FindFragment();
@@ -222,17 +211,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
      *实现接口的方法
      * @param position
      */
-
     @Override
     public void onTabSelected(int position) {
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         switch (position) {
             case 0:
-
                 if (findFragment==null){
                     findFragment = new FindFragment();
-
                 }
                 fragmentTransaction.replace(R.id.tb, findFragment);
                 break;
@@ -247,20 +233,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
                 break;
                  **/
             case 1:
-
                 if (myFragment==null){
-
                     myFragment = new MyFragment();
                 }
-
                 fragmentTransaction.replace(R.id.tb, myFragment);
                 break;
-
             default:
                 break;
         }
         fragmentTransaction.commit();
-
     }
     @Override
     public void onTabUnselected(int position) {
@@ -274,9 +255,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
     }
 
     public static String getDeviceStatus(int deviceStatus) {
-
         switch (deviceStatus) {
-
             case WifiP2pDevice.AVAILABLE:
                 return "可用的";
             case WifiP2pDevice.CONNECTED:
@@ -290,7 +269,5 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationB
             default:
                 return "未知";
         }
-
     }
-
 }

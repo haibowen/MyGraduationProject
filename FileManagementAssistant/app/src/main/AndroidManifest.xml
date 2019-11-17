@@ -23,8 +23,6 @@
         </activity>
         <activity android:name=".activity.ReciveActivity">
         </activity>
-        <activity android:name=".activity.ReceiveActivity">
-        </activity>
         <activity android:name=".activity.LaunchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

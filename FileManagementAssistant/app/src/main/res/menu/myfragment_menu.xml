@@ -1,68 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <group android:checkableBehavior="single"
-           android:id="@+id/group1">
-
-
-        <item
-                android:id="@+id/nav_sendfile"
-                android:title="发送文件"
-                android:icon="@drawable/ic_send_black_24dp">
-
-        </item>
-    </group>
-    <group
-            android:checkableBehavior="single"
-            android:id="@+id/group2">
-        <item
-                android:id="@+id/nav_receivefile"
-                android:title="接收文件"
-                android:icon="@drawable/ic_keyboard_tab_black_24dp">
-
-        </item>
-    </group>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group
-            android:checkableBehavior="single"
-            android:id="@+id/group3">
-
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
         <item
-
-                android:id="@+id/nav_overfile"
-                android:title="已传列表"
-                android:icon="@drawable/ic_playlist_add_check_black_24dp">
-
-        </item>
-    </group>
-
-    <group
-            android:checkableBehavior="single"
-            android:id="@+id/group4">
-
-        <item
-
-                android:id="@+id/nav_sdcard"
-                android:title="存储空间"
-                android:icon="@drawable/ic_sd_card_black_24dp">
-
-        </item>
+            android:id="@+id/nav_sendfile"
+            android:icon="@drawable/ic_send_black_24dp"
+            android:title="发送文件"></item>
     </group>
     <group
-            android:checkableBehavior="single"
-            android:id="@+id/group5">
-
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
         <item
-
-                android:id="@+id/nav_sdcard1"
-                android:title=""
-                >
-
-        </item>
+            android:id="@+id/nav_receivefile"
+            android:icon="@drawable/ic_keyboard_tab_black_24dp"
+            android:title="接收文件"></item>
     </group>
-
-
-
+    <group
+        android:id="@+id/group3"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_overfile"
+            android:icon="@drawable/ic_playlist_add_check_black_24dp"
+            android:title="已传列表"></item>
+    </group>
+    <group
+        android:id="@+id/group4"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_sdcard"
+            android:icon="@drawable/ic_sd_card_black_24dp"
+            android:title="存储空间"></item>
+    </group>
+    <group
+        android:id="@+id/group5"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_sdcard1"
+            android:title=""></item>
+    </group>
 </menu>
 
 

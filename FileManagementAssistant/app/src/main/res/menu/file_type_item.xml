@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
-
     <item
             android:id="@+id/home"
             android:title="home"
             android:icon="@drawable/ic_home_black_24dp"
-            app:showAsAction="always"
-
-
-    />
+            app:showAsAction="always" />
     <item
             android:id="@+id/action_search"
             android:title="搜索文件"
@@ -18,23 +13,17 @@
     <item
             android:id="@+id/settings"
             android:title="首页目录"
-
             app:showAsAction="never"/>
     <item
             android:id="@+id/table"
             android:title="表格视图"
-
             app:showAsAction="never"/>
     <!--   <item
             android:id="@+id/sort"
             android:title="排序"
-
             app:showAsAction="never"/> -->
-
     <item
             android:id="@+id/exit"
             android:title="返回上级"
             app:showAsAction="never"/>
-
-
 </menu>

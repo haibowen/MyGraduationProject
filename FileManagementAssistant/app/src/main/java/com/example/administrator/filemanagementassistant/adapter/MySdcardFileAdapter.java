@@ -25,18 +25,12 @@ public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapte
     static class ViewHolder extends RecyclerView.ViewHolder{
         ImageView imageView;
         TextView textView;
-
-
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             imageView=itemView.findViewById(R.id.image_file);
             textView=itemView.findViewById(R.id.text_file);
-
         }
     }
-
     public MySdcardFileAdapter(List<FileInfo> sdcardFileslist) {
         this.sdcardFileslist = sdcardFileslist;
     }
@@ -47,12 +41,9 @@ public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapte
         if (context==null){
             context=viewGroup.getContext();
         }
-
-
         final View view= LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.recycler_item_file,viewGroup,false);
         final ViewHolder viewHolder=new ViewHolder(view);
-
         viewHolder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,12 +54,8 @@ public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapte
                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 intent.setDataAndType(Uri.parse(sdcardinfo.getFilePath()), "image/*");
                 context.startActivity(intent);
-
-
-
             }
         });
-
         viewHolder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,15 +65,12 @@ public class MySdcardFileAdapter extends RecyclerView.Adapter<MySdcardFileAdapte
         });
         return viewHolder;
     }
-
     @Override
     public void onBindViewHolder(@NonNull MySdcardFileAdapter.ViewHolder viewHolder, int i) {
-
         FileInfo sdcardFile=sdcardFileslist.get(i);
         viewHolder.imageView.setImageResource(R.drawable.fab_bg_mini);
         viewHolder.textView.setText(sdcardFile.getFilePath());
     }
-
     @Override
     public int getItemCount() {
         return sdcardFileslist.size();

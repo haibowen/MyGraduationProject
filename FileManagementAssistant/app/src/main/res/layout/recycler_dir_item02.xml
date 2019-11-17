@@ -1,75 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="4dp">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="4dp">
     <!--  -->
-
-
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <ImageView
-                android:layout_width="57sp"
-                android:layout_height="57sp"
-                android:id="@+id/image_dir"
-                android:scaleType="centerCrop"
-                android:background="@drawable/ic_folder_black_24dp"
-        />
-
+            android:id="@+id/image_dir"
+            android:layout_width="57sp"
+            android:layout_height="57sp"
+            android:background="@drawable/ic_folder_black_24dp"
+            android:scaleType="centerCrop" />
         <com.example.administrator.filemanagementassistant.util.MarqueeTextView
-                android:ellipsize="marquee"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:singleLine="true"
-
-
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:id="@+id/text_dir"
-                android:layout_marginLeft="10dp"
-                android:textSize="18sp"
-                android:layout_marginTop="4dp"
-
-
-
-                android:layout_toRightOf="@id/image_dir"
-
-        />
+            android:id="@+id/text_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="4dp"
+            android:layout_toRightOf="@id/image_dir"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:textSize="18sp" />
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/text_dir"
-                android:text="@string/app_name"
-                android:id="@+id/textview_time"
-                android:layout_toRightOf="@id/image_dir"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="4dp"
-
-                android:textSize="12sp"/>
+            android:id="@+id/textview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_dir"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="4dp"
+            android:layout_toRightOf="@id/image_dir"
+            android:gravity="center_horizontal"
+            android:text="@string/app_name"
+            android:textSize="12sp" />
         <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-
-                android:layout_marginRight="8dp"
-                android:id="@+id/imagebutton_dir"
-                android:layout_centerInParent="true"
-                android:background="@drawable/ic_more_vert_black_24dp"/>
-
-
+            android:id="@+id/imagebutton_dir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/ic_more_vert_black_24dp" />
     </RelativeLayout>
 </android.support.v7.widget.CardView>

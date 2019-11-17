@@ -25,7 +25,6 @@ public class LaunchActivity extends AppCompatActivity {
     private String url="http://guolin.tech/api/bing_pic";
     @BindView(R.id.image_launch)
     public ImageView imagView;
-
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -38,7 +37,6 @@ public class LaunchActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launch);
         sharedPreferences=getPreferences(MODE_PRIVATE);
-
         //切记使用该三方库这句必须有，要不然程序容易空指针
         ButterKnife.bind(this);
         String bing_pic=sharedPreferences.getString("bing_pic",null);
@@ -47,40 +45,27 @@ public class LaunchActivity extends AppCompatActivity {
         }else {
             getImage();
         }
-
-
         delay();
-
-
-
-
     }
     //延时跳转
     public void delay(){
-
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startActivity(new Intent(LaunchActivity.this,TaskActivity.class));
                 LaunchActivity.this.finish();
-
             }
         },3000);
     }
-
     //加载壁纸
     public  void getImage(){
-
         MyHttpUtil.SendRequestWithOkHttp(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
-
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
                 //切记这里是 response.body().string();    是 string();
                  final String result=response.body().string();
                  //sp临时存取一下图片链接
@@ -88,9 +73,6 @@ public class LaunchActivity extends AppCompatActivity {
                         getDefaultSharedPreferences(LaunchActivity.this).edit();
                 editor.putString("bing_pic",result);
                 editor.apply();
-
-                Log.e("5555555", "onResponse: "+result );
-                Log.e("55", "onResponse: "+response);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -99,9 +81,6 @@ public class LaunchActivity extends AppCompatActivity {
                 });
             }
         });
-
-
-
     }
 
 }

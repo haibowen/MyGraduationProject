@@ -1,80 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardBackgroundColor="@color/colorPrimary"
+    app:cardCornerRadius="4dp"
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context=".activity.MainActivity"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="4dp"
-        app:cardBackgroundColor="@color/colorPrimary">
+        android:layout_height="200dp"
+        android:orientation="vertical">
 
         <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:orientation="vertical">
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-                <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/bt_create"
-                        android:layout_weight="1"
-                        android:text="创建群组"
-                        style="@style/Widget.AppCompat.Button.Colored"/>
-                <Button
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:id="@+id/bt_disrecreate"
-                        android:text="删除群组"
-                        style="@style/Widget.AppCompat.Button.Colored"/>
+            <Button
+                android:id="@+id/bt_create"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="创建群组" />
 
-
-            </LinearLayout>
-
+            <Button
+                android:id="@+id/bt_disrecreate"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="删除群组" />
+        </LinearLayout>
 
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_view_receive"
-                android:layout_gravity="center_horizontal"
-                android:text="设备信息"
-                android:layout_margin="5dp"
-                android:gravity="center_horizontal"/>
+            android:id="@+id/text_view_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:gravity="center_horizontal"
+            android:text="设备信息" />
+
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_device_receive"
-                android:layout_margin="5dp"
-                android:layout_gravity="center_horizontal"
-                android:text="设备名："
-        />
+            android:id="@+id/text_device_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:text="设备名：" />
+
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_address_receive"
-                android:layout_margin="5dp"
-                android:layout_gravity="center_horizontal"
-                android:text="设备ip："
-        />
+            android:id="@+id/text_address_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:text="设备ip：" />
+
         <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/text_status_receive"
-                android:layout_margin="5dp"
-                android:layout_gravity="center_horizontal"
-                android:text="设备状态："
-        />
-
-
-
-
+            android:id="@+id/text_status_receive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:text="设备状态：" />
     </LinearLayout>
-
-
 </android.support.v7.widget.CardView>

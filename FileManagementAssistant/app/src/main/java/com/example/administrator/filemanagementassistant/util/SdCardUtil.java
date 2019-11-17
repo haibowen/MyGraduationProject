@@ -11,7 +11,6 @@ import java.io.File;
 
 public class SdCardUtil {
 
-
     /**
      * 判断sd卡是否可用
      */
@@ -19,9 +18,6 @@ public class SdCardUtil {
         return Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED);
     }
-
-
-
     /**
      * 获取手机内部存储空间
      *
@@ -37,9 +33,6 @@ public class SdCardUtil {
         long size = blockCountLong * blockSizeLong;
         return Formatter.formatFileSize(context, size);
     }
-
-
-
     /**
      * 获取手机内部可用存储空间
      *
@@ -87,9 +80,4 @@ public class SdCardUtil {
         return Formatter.formatFileSize(context, availableBlocksLong
                 * blockSizeLong);
     }
-
-
-
-
-
 }

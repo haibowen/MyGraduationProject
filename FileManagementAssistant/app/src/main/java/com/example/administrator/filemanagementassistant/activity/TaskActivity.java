@@ -94,8 +94,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task);
-
-
         //初始化控件
         init();
         //申请权限
@@ -111,7 +109,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         //viewpager底部小圆点的显示
         showGroup();
     }
-
     //控件初始化
     public void init() {
         //夜间模式的设置
@@ -139,7 +136,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         if (path == null) {
             textView_path.setText(Environment.getExternalStorageDirectory().getPath());
         } else {
-
             textView_path.setText(path);
         }
         text_file_number = view.findViewById(R.id.text_file_number);
@@ -172,14 +168,12 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     }
     //获取屏幕的高度
     public int getScreenHeight() {
-
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
         return point.y;
     }
     //获取屏幕的宽度
     public int getScreenWidth() {
-
         Point point = new Point();
         getWindowManager().getDefaultDisplay().getSize(point);
         return point.x;
@@ -189,13 +183,11 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
                 recyclerView.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(TaskActivity.this,
                         R.anim.layout_animation_fall_down));
                 recyclerView.getAdapter().notifyDataSetChanged();
                 recyclerView.scheduleLayoutAnimation();
                 swipeRefreshLayout.setRefreshing(false);
-
             }
         });
     }
@@ -221,11 +213,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 isopen = true;
                 displayfogdismiss();
             }
-
             @Override
             public void onMenuCollapsed() {
                 mview.setVisibility(View.GONE);
-
             }
         });
     }
@@ -250,7 +240,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             viewGroup.addView(tips[i]);
         }
     }
-
     //侧滑的点击事件
     public void navOnclick() {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -295,7 +284,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                         finish();
                         break;
                     /**
-
                      case R.id.nav_download:
                      Intent intent = new Intent("android.intent.action.VIEW");
                      intent.addCategory("android.intent.category.DEFAULT");
@@ -320,7 +308,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         });
 
     }
-
     //二界面的点击事件
     public void nav1Onclick() {
         navigationView1.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -336,10 +323,8 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                         Intent intent1 = new Intent(TaskActivity.this, ReciveActivity.class);
                         startActivity(intent1);
                         break;
-
                     case R.id.nav_sdcard:
                         /**
-
                          File sdDir = null;
                          boolean sdCardExist = Environment.getExternalStorageState()
                          .equals(android.os.Environment.MEDIA_MOUNTED);//判断sd卡是否存在
@@ -383,7 +368,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 return false;
             }
         });
-
     }
 
     //菜单的创建
@@ -427,23 +411,16 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onPageScrolled(int i, float v, int i1) {
 
-
     }
-
     @Override
     public void onPageSelected(int i) {
-
-
         tips[i].setBackgroundResource(R.mipmap.cir_fouce);
         for (int j = 0; j < pageview.size(); j++) {
             if (i != j) {
-
                 tips[j].setBackgroundResource(R.mipmap.cir_unfouce);
             }
         }
-
     }
-
     @Override
     public void onPageScrollStateChanged(int i) {
 
@@ -460,11 +437,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             if (path == null) {
                 searchDir(new File(a));
                 text_file_number.setText(Dirlist.size() + "个文件夹");
-
             } else {
                 Dirlist.clear();
                 searchDir(new File(path));
-
                 if (Dirlist.size() == 0) {
                     Dirlist.clear();
                     searchFile(new File(path));
@@ -478,29 +453,24 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
             //...
         } else {
             //...
-
             EasyPermissions.requestPermissions(this, "应用需要照相机和sdcard权限",
                     22, perms);
         }
     }
     //wenhaibo add 20190218 回调
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-
             case Constant.REQUEST_CODE_PICK_IMAGE:
                 if (resultCode == RESULT_OK) {
-                    ArrayList<ImageFile> list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_IMAGE);
-
+                    ArrayList<ImageFile> list = data.getParcelableArrayListExtra(
+                            Constant.RESULT_PICK_IMAGE);
                     ArrayList<Uri> utilist = new ArrayList<>();
                     List<String> mylist = new ArrayList<>();
-
                     for (ImageFile file : list) {
                         String path = file.getPath();
                         mylist.add(path);
-
                     }
                     for (int i = 0; i < mylist.size(); i++) {
                         utilist.add(Uri.fromFile(new File(mylist.get(i))));
@@ -518,15 +488,13 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                 break;
             case Constant.REQUEST_CODE_PICK_VIDEO:
                 if (resultCode == RESULT_OK) {
-                    ArrayList<VideoFile> list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_VIDEO);
-
+                    ArrayList<VideoFile> list = data.getParcelableArrayListExtra(
+                            Constant.RESULT_PICK_VIDEO);
                     ArrayList<Uri> utilist = new ArrayList<>();
                     List<String> mylist = new ArrayList<>();
-
                     for (VideoFile file : list) {
                         String path = file.getPath();
                         mylist.add(path);
-
                     }
                     for (int i = 0; i < mylist.size(); i++) {
                         utilist.add(Uri.fromFile(new File(mylist.get(i))));
@@ -547,16 +515,13 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                     ArrayList<AudioFile> list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_AUDIO);
                     ArrayList<Uri> utilist = new ArrayList<>();
                     List<String> mylist = new ArrayList<>();
-
                     for (AudioFile file : list) {
                         String path = file.getPath();
                         mylist.add(path);
-
                     }
                     for (int i = 0; i < mylist.size(); i++) {
                         utilist.add(Uri.fromFile(new File(mylist.get(i))));
                     }
-
                     Intent shareIntent = new Intent();
                     //打开分享界面的Action
                     shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
@@ -573,16 +538,13 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                     ArrayList<NormalFile> list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
                     ArrayList<Uri> utilist = new ArrayList<>();
                     List<String> mylist = new ArrayList<>();
-
                     for (NormalFile file : list) {
                         String path = file.getPath();
                         mylist.add(path);
-
                     }
                     for (int i = 0; i < mylist.size(); i++) {
                         utilist.add(Uri.fromFile(new File(mylist.get(i))));
                     }
-
                     Intent shareIntent = new Intent();
                     //打开分享界面的Action
                     shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
@@ -592,11 +554,9 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
                     shareIntent.setType("text/*");
                     //打开分享
                     startActivity(Intent.createChooser(shareIntent, "分享到"));
-
                 }
                 break;
         }
-
     }
     //wenhaibo add 20190218 分享的回调
     //文件夹以及文件的搜索
@@ -610,7 +570,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         };
         fileDir = flist.listFiles(ff);
         if (fileDir == null) {
-
         } else {
             dirFiles = new DirFile[fileDir.length];
             for (int i = 0; i < fileDir.length; i++) {
@@ -628,7 +587,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         String[] mFileList = null;
         //File flist = new File("/mnt/sdcard");
         mFileList = flist.list();
-
         for (String str : mFileList) {
             mResult += str;
             mResult += "\n";
@@ -646,7 +604,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
         fileDir = flist.listFiles(tt);
         if (fileDir == null) {
         } else {
-
             dirFiles = new DirFile[fileDir.length];
             for (int i = 0; i < fileDir.length; i++) {
                 String str = fileDir[i].getName();
@@ -662,7 +619,6 @@ public class TaskActivity extends AppCompatActivity implements ViewPager.OnPageC
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
     @Override

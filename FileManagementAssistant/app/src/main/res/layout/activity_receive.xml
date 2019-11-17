@@ -12,7 +12,6 @@
             android:background="@color/colorPrimary"
             android:theme="@style/Base.ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/Base.ThemeOverlay.AppCompat.Light">
-
     </android.support.v7.widget.Toolbar>
 
     <include
@@ -27,15 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#696666">
-
     </View>
-
 
     <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/recycler_view_receive">
-
     </android.support.v7.widget.RecyclerView>
 
 </LinearLayout>

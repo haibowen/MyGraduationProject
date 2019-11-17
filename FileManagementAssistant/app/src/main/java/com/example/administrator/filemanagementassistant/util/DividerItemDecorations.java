@@ -10,13 +10,11 @@ import android.view.View;
 public class DividerItemDecorations extends RecyclerView.ItemDecoration {
     private float mDividerHeight;
     private Paint mPaint;
-
     public DividerItemDecorations() {
         mPaint=new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setColor(Color.GRAY);
     }
-
     //这个方法是针对每一个item的
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -28,9 +26,7 @@ public class DividerItemDecorations extends RecyclerView.ItemDecoration {
             mDividerHeight=1;
         }
     }
-
     //这个是针对整个recyclerview所以每次都要计算每个分割线左上角坐标和右下角的坐标
-
     @Override
     public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
         super.onDraw(c, parent, state);

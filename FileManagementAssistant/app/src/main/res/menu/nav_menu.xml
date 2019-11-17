@@ -1,59 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item android:title="文件类型"
-          app:showAsAction="ifRoom">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:title="文件类型"
+        app:showAsAction="ifRoom">
         <menu>
-
-
-
-
-
-    <group android:checkableBehavior="single">
-
-
-        <item
-                android:id="@+id/nav_fist"
-                android:title="相册"
-                android:icon="@drawable/ic_image_black_24dp">
-
-        </item>
-        <item
-                android:id="@+id/nav_second"
-                android:title="文档"
-                android:icon="@drawable/ic_insert_drive_file_black_24dp">
-
-        </item>
-        <item
-                android:id="@+id/nav_third"
-                android:title="声音"
-                android:icon="@drawable/ic_audiotrack_black_24dp">
-
-        </item>
-        <item
-                android:id="@+id/nav_fourth"
-                android:title="视频"
-                android:icon="@drawable/ic_video_library_black_24dp">
-
-        </item>
-    </group>
-
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_fist"
+                    android:icon="@drawable/ic_image_black_24dp"
+                    android:title="相册"></item>
+                <item
+                    android:id="@+id/nav_second"
+                    android:icon="@drawable/ic_insert_drive_file_black_24dp"
+                    android:title="文档"></item>
+                <item
+                    android:id="@+id/nav_third"
+                    android:icon="@drawable/ic_audiotrack_black_24dp"
+                    android:title="声音"></item>
+                <item
+                    android:id="@+id/nav_fourth"
+                    android:icon="@drawable/ic_video_library_black_24dp"
+                    android:title="视频"></item>
+            </group>
         </menu>
-
     </item>
-
-
     <!--  <item android:title="常用目录"
           app:showAsAction="ifRoom">
         <menu>
-
-
-
-
-
             <group android:checkableBehavior="single">
-
-
                 <item
                         android:id="@+id/nav_download"
                         android:title="下载"
@@ -76,39 +51,23 @@
                         android:id="@+id/nav_MUSiC"
                         android:title="音乐"
                         android:icon="@drawable/ic_folder_black_24dp">
-
                 </item>
             </group>
-
         </menu>
 
     </item>   -->
-
-
     <item
-            app:showAsAction="ifRoom"
-            android:title="设置">
-
+        android:title="设置"
+        app:showAsAction="ifRoom">
         <menu>
-
-
             <item
-                    android:id="@+id/zhuti"
-                    android:title="夜间"
-                    android:icon="@drawable/ic_assistant_black_24dp">
-
-
-            </item>
-
+                android:id="@+id/zhuti"
+                android:icon="@drawable/ic_assistant_black_24dp"
+                android:title="夜间"></item>
             <item
-                    android:id="@+id/tuichu"
-                    android:title="退出"
-                    android:icon="@drawable/ic_power_settings_new_black_24dp">
-
-
-            </item>
+                android:id="@+id/tuichu"
+                android:icon="@drawable/ic_power_settings_new_black_24dp"
+                android:title="退出"></item>
         </menu>
     </item>
-
-
 </menu>
